@@ -3,13 +3,13 @@ POST http://localhost:5001/estudiante
 Content-Type: application/json
 
 {
-    "id_estudiante": "1067593914",
+    "id_estudiante": "12345678",
     "carrera": "Ingeniería de Sistemas",
-    "semestre": 5,
+    "semestre": 9,
     "usuario": {
-    "nombre": "Laura Altahona",
-    "correo": "lvaltahona@unicesar.edu.co",
-    "contraseña": "Miniño123"
+    "nombre": "Juan Peralta",
+    "correo": "jperalta@unicesar.edu.co",
+    "contraseña": "hola1234"
     }
 }
 

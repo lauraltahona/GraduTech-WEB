@@ -6,6 +6,17 @@ export class StudentModel{
     
         try{
             await connection.beginTransaction();
+
+            const [existingUser] = await connection.query(
+                'SELECT FROM Usuario WHERE correo = ?', [usuario.correo]
+            );
+            const [existingStudent] = await connection.query(
+                'SELECT FROM Estudiante WHERE id_estudiante = ?', [id_estudiante]
+            );
+
+            if(existingStudent.length > 0){
+            }
+
             //insertar usuario
             const [userResult] = await connection.query(
                 'INSERT INTO Usuario(nombre, correo, contraseña, id_rol) VALUES (?, ?, ?, ?)',
