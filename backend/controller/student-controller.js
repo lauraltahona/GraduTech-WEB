@@ -4,10 +4,8 @@ import bcrypt from 'bcryptjs';
 
 export class StudentController{
     static async createStudent(req,res){
-        console.log(req.body);
         
         const result = validateStudent(req.body);
-        console.log(result);
         
         if(!result.success){
             return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})

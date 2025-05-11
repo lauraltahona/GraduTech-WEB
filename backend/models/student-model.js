@@ -8,13 +8,17 @@ export class StudentModel{
             await connection.beginTransaction();
 
             const [existingUser] = await connection.query(
-                'SELECT FROM Usuario WHERE correo = ?', [usuario.correo]
+                'SELECT correo FROM Usuario WHERE correo = ?', [usuario.correo]
             );
             const [existingStudent] = await connection.query(
-                'SELECT FROM Estudiante WHERE id_estudiante = ?', [id_estudiante]
+                'SELECT id_estudiante FROM Estudiante WHERE id_estudiante = ?', [id_estudiante]
             );
 
             if(existingStudent.length > 0){
+                throw new Error('STUDENT_ALREADY_REGISTERED');
+            }
+            if(existingUser.length > 0){
+                throw new Error('EMAIL_ALREADY_REGISTERED');
             }
 
             //insertar usuario

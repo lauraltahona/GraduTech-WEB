@@ -7,6 +7,20 @@ export class TeacherModel{
         try{
             await connection.beginTransaction();
 
+            const [existingUser] = await connection.query(
+                'SELECT correo FROM Usuario WHERE correo = ?', [usuario.correo]
+            );
+            const [existingTeacher] = await connection.query(
+                'SELECT id_docente FROM Docente WHERE id_docente = ?', [id_docente]
+            );
+
+            if(existingTeacher.length > 0){
+                throw new Error('TEACHER_ALREADY_REGISTERED');
+            }
+            if(existingUser.length > 0){
+                throw new Error('EMAIL_ALREADY_REGISTERED');
+            }
+
             //insertar usuario
             const [userResult] = await connection.query(
                 'INSERT INTO Usuario(nombre, correo, contraseña, id_rol) VALUES (?, ?, ?, ?)',
