@@ -14,7 +14,6 @@ Content-Type: application/json
 }
 
 ###POST DOCENTE
-
 POST http://localhost:5001/docente
 Content-Type: application/json
 
@@ -28,4 +27,13 @@ Content-Type: application/json
     "contraseña": "hola123"
     }
 
+}
+
+### POST LOGIN
+POST http://localhost:5001/usuario/login
+Content-Type: application/json
+
+{
+  "correo": "pablo@unicesar.edu.co",
+  "contraseña": "hola123"
 }

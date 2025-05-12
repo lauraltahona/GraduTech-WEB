@@ -1,14 +1,24 @@
 import express from 'express';
 import { corsMiddleware } from './middleware/cors.js';
+import { fileUploadMiddleware } from './middleware/fileUpload.js';
+
 import studentRouter from './routes/student-router.js';
 import teacherRouter from './routes/teacher-router.js';
+import userRouter from './routes/user-router.js';
+import fileRouter from './routes/file-router.js';
+
 import { PORT } from './config.js';
+
 const app = express();
 
 app.use(corsMiddleware);
+app.use(fileUploadMiddleware);
 app.use(express.json());
+
 app.use('/estudiante', studentRouter);
 app.use('/docente', teacherRouter);
+app.use('/usuario', userRouter);
+app.use('/upload', fileRouter)
 
 
 app.listen(PORT, ()=>{

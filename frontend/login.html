@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradutech</title>
+</head>
+<body>
+    <form id="loginForm">
+        <input type="email" id="correo" placeholder="Correo" required />
+        <input type="password" id="contraseña" placeholder="Contraseña" required />
+        <button type="submit">Login</button>
+    </form>
+    <div id="errorMessage"></div>
+
+</body>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const correo = document.getElementById('correo').value;
+    const contraseña = document.getElementById('contraseña').value;
+
+    try {
+        const response = await fetch('http://localhost:5001/usuario/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ correo, contraseña }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Login exitoso, puedes redirigir a otra página o almacenar el token
+            console.log(data);  // Aquí puedes manejar los datos de usuario devueltos
+            alert('Login exitoso');
+        } else {
+            // Si el login falla
+            document.getElementById('errorMessage').innerText = data.message;
+        }
+    } catch (error) {
+        console.error('Error al hacer la petición:', error);
+    }
+    });
+
+</script>
+</html>

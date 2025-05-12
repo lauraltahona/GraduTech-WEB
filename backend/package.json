@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:1": "nodemon ./index.js",
-    "start":"node ./index.js"
+    "dev": "nodemon ./index.js",
+    "start": "node ./index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "ejs": "3.1.10",
     "express": "5.1.0",
+    "express-fileupload": "^1.5.1",
     "mysql2": "^3.14.1",
     "zod": "3.24.4"
   }
