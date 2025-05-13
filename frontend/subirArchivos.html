@@ -103,25 +103,30 @@
         const formData = new FormData();
         formData.append('file', file);
 
-        try{
+        try {
             const response = await fetch('http://localhost:5001/upload', {
                 method: 'POST',
                 body: formData,
-            })
-            .then(res => res.text())
-            .then(data => {console.log(data);
-            })
-            .catch(error => console.log(error));
-            
-            const responseText = await response.text();
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+
+            const data = await response.json(); 
+
             document.querySelector(
                 `#${id} .status-text`
-            ).innerHTML = `<span class="success">Archivo subido correctamente</span>`;
+            ).innerHTML = `
+                <span class="success">${data.message}</span><br>
+                <a href="http://localhost:5001${data.fileUrl}" target="_blank">Ver archivo</a>
+            `;
 
-        } catch(error){
+        } catch (error) {
             document.querySelector(
                 `#${id} .status-text`
             ).innerHTML = `<span class="failure">Archivo no pudo subirse</span>`;
+            console.error('Error al subir el archivo:', error);
         }
     }
 

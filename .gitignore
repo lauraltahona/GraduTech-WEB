@@ -1,0 +1,89 @@
+# =======================================
+# GENERAL
+# =======================================
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Entornos y logs
+.env
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =======================================
+# NODE.JS / BACKEND
+# =======================================
+
+# Dependencias
+**/node_modules/
+
+# Archivos de producción
+dist/
+build/
+
+# Archivos temporales de testing
+coverage/
+.nyc_output/
+
+# =======================================
+# FRONTEND (React / Vite / etc.)
+# =======================================
+
+# Build de producción
+frontend/mi-app/build/
+frontend/mi-app/dist/
+
+# Dependencias (ya cubierto arriba)
+# frontend/mi-app/node_modules/
+
+# Cache de herramientas
+frontend/mi-app/.next/
+frontend/mi-app/.turbo/
+frontend/mi-app/.cache/
+
+# Archivos de lock si no se usan ambos
+pnpm-lock.yaml
+yarn.lock
+
+# =======================================
+# EDITOR / IDE (VSCode)
+# =======================================
+
+.vscode/
+
+# =======================================
+# OTROS
+# =======================================
+
+# Archivos PDF u otros cargados por el usuario
+backend/uploads/
+
+# Base de datos local (si aplica)
+*.sqlite
+*.db
+
+# =======================================
+# GIT
+# =======================================
+
+# Ignorar commits mal preparados
+*.patch
+
+/.pnp
+.pnp.js
+/coverage
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+# Extras del frontend (de mi-app)
+frontend/mi-app/.pnp
+frontend/mi-app/.pnp.js
+frontend/mi-app/coverage/
+frontend/mi-app/.env.local
+frontend/mi-app/.env.development.local
+frontend/mi-app/.env.test.local
+frontend/mi-app/.env.production.local

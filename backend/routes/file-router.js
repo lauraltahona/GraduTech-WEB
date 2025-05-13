@@ -1,11 +1,8 @@
-import { Router } from "express";
+import { Router } from 'express';
+import { uploadFileController } from '../controller/file-controller.js';
 
 const fileRouter = Router();
-5
-fileRouter.post('/', (req,res) =>{
-    console.log(req.files);
-    res.send(`Archivo ${req.files.file.name} subido correctamente al servidor`);
-    //fileUpload.mv
-})
+
+fileRouter.post('/', uploadFileController);
 
 export default fileRouter;

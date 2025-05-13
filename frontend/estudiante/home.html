@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1 id="nombreEst"></h1>
+</body>
+<script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('nombreEst').innerText = 'Hola ' + user.nombre;
+    } else {
+         // Si no hay sesión, vuelve al login
+        window.location.href = '../login.html';
+    }
+</script>
+</html>

@@ -34,6 +34,6 @@ POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "pablo@unicesar.edu.co",
-  "contraseña": "hola123"
+  "correo": "jperalta@unicesar.edu.co",
+  "contraseña": "hola1234"
 }

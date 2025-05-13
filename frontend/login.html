@@ -30,15 +30,23 @@
             body: JSON.stringify({ correo, contraseña }),
         });
 
-        const data = await response.json();
-
+        const result = await response.json();
+        console.log(result);
+        
         if (response.ok) {
             // Login exitoso, puedes redirigir a otra página o almacenar el token
-            console.log(data);  // Aquí puedes manejar los datos de usuario devueltos
-            alert('Login exitoso');
+            const user = result.data;
+            alert('Login exitoso como ' + user.rol);
+            if (user.rol === 'Estudiante') {
+                window.location.href = './estudiante/home.html'; // Asegúrate de tener esta página
+            } else if (user.rol === 'Docente') {
+                window.location.href = './docente/home.html'; // O la ruta que definas
+            } else {
+                alert('Rol no reconocido');
+            }
         } else {
             // Si el login falla
-            document.getElementById('errorMessage').innerText = data.message;
+            document.getElementById('errorMessage').innerText = result.message;
         }
     } catch (error) {
         console.error('Error al hacer la petición:', error);
