@@ -1,6 +1,7 @@
 import { uploadFileService } from '../service/file-service.js';
 
 export class uploadFileController {
+    
     static async upload(req, res) {
         if (!req.files || !req.files.file) {
             return res.status(400).json({ message: 'No se envió ningún archivo' });
