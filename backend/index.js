@@ -12,6 +12,7 @@ import teacherRouter from './routes/teacher-router.js';
 import userRouter from './routes/user-router.js';
 import fileRouter from './routes/file-router.js';
 import proyectRouter from './routes/proyect-router.js';
+import entregaRouter from './routes/entrega-router.js';
 
 import { PORT } from './config.js';
 
@@ -32,7 +33,8 @@ app.use('/docente', teacherRouter);
 app.use('/usuario', userRouter);
 app.use('/upload', fileRouter);
 app.use('/files', express.static(path.join(__dirname, 'uploads')));
-app.use('/proyecto', proyectRouter);
+app.use('/proyectos', proyectRouter);
+app.use('/entrega', entregaRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 

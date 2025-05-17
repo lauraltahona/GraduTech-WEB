@@ -22,20 +22,23 @@ function Login() {
 
     if (response.ok) {
       const user = result.user;
+      console.log(user);
+      
       alert('Ingresado como '+ user.rol);
       localStorage.setItem('token', result.token); // si tienes token
-      localStorage.setItem('userId', user.id);     // o el campo que uses como ID
-      localStorage.setItem('userRol', user.rol);   // opcional, si lo necesitas
+      localStorage.setItem('userId', user.id_usuario);   
+      localStorage.setItem('userRol', user.rol);  
 
       // redireccionar según el rol
       if (user.rol === 'Estudiante') {
         navigate('/homeEstudiante'); 
       }
       if(user.rol === 'Docente'){
-        navigate('/planEntrega');
+        navigate('/proyectosAsignados');
       }
     } else {
       alert('Credenciales incorrectas');
+      throw new Error(`Error ${response.status}: ${await response.text()}`);
     }
   };
 

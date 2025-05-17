@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function PlanEntregaDocente() {
+export default function PlanEntrega() {
   const [entregas, setEntregas] = useState([]);
   const [formData, setFormData] = useState({
     nro_entrega: "",
@@ -9,13 +9,37 @@ export default function PlanEntregaDocente() {
     fecha_limite: "",
   });
 
+  const id_proyecto = localStorage.getItem("id_proyecto");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAdd = () => {
-    setEntregas([...entregas, formData]);
-    setFormData({ nro_entrega: "", titulo: "", descripcion: "", fecha_limite: "" });
+  const handleAdd = async () => {
+    const nuevaEntrega = {
+      id_proyecto: Number(id_proyecto),
+      ...formData,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5001/entrega/planear", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: nuevaEntrega }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al crear plan de entrega");
+      }
+
+      setEntregas([...entregas, nuevaEntrega]);
+      setFormData({ nro_entrega: "", titulo: "", descripcion: "", fecha_limite: "" });
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo registrar el plan de entrega.");
+    }
   };
 
   return (

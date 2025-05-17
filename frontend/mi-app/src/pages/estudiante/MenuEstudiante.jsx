@@ -12,7 +12,7 @@ const MenuEstudiante = () => {
             <li><Link to="registrarProyecto" style={styles.link}>Mis Proyectos</Link></li>
             <li><Link to="calendario" style={styles.link}>Calendario</Link></li>
             <li><Link to="miProyecto" style={styles.link}>Mi proyecto</Link></li>
-            <li><Link to="mensajes" style={styles.link}>Mensajes</Link></li>
+            <li><Link to="entregasEstudiante" style={styles.link}>Entregas</Link></li>
             <li><Link to="revisionJurados" style={styles.link}>Revisión Jurado</Link></li>
             <li><Link to="repositorio" style={styles.link}>Repositorio</Link></li>
           </ul>

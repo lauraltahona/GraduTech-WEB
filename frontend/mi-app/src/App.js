@@ -8,6 +8,9 @@ import MiProyecto from './pages/estudiante/MiProyecto.jsx';
 import RevisionJurados from './pages/estudiante/RevisionJurados.jsx';
 import Calendario from './pages/estudiante/Calendario.jsx';
 import PlanEntrega from './pages/docente/PlanEntrega.jsx';
+import ProyectosAsignados from './pages/docente/ProyectosAsignados.jsx';
+import EntregasEstudiante from './pages/estudiante/EntregasEstudiante.jsx';
+import SubirEntrega from './pages/estudiante/SubirEntrega.jsx';
 function App() {
   return (
     <Router>
@@ -19,7 +22,10 @@ function App() {
           <Route path= "miProyecto" element={<MiProyecto />}/>
           <Route path= "revisionJurados" element={<RevisionJurados />}/>
           <Route path= "calendario" element={<Calendario />}/>
+          <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
+          <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />
         </Route>
+        <Route path="/proyectosAsignados" element={<ProyectosAsignados />} />
         <Route path="/planEntrega" element={<PlanEntrega />} />
       </Routes>
     </Router>

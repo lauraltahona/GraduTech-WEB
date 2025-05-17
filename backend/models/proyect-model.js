@@ -32,21 +32,32 @@ export class ProyectModel{
         }
     }
 
-  static async obtenerProyectosAsignados(id_docente) {
+  static async obtenerProyectosAsignados(id_usuario) {
+
     const connection = await db.getConnection();
     try {
+      
+      const [docenteResult] = await connection.query(
+      `SELECT id_docente FROM Docente WHERE id_usuario = ?`, 
+      [id_usuario]
+      );
+
+      if (docenteResult.length === 0) {
+        throw new Error("No se encontró un docente con ese usuario.");
+      }
+      const id_docente = docenteResult[0].id_docente;
       const [rows] = await connection.query(`
         SELECT 
           p.id_proyecto,
           p.titulo,
           p.estado,
-          e.nombre AS estudiante
+          u.nombre AS estudiante
         FROM Proyecto p
         JOIN Estudiante e ON e.id_estudiante = p.id_estudiante
-        JOIN ProyectoDocente pd ON pd.id_proyecto = p.id_proyecto
-        WHERE pd.id_docente = ?
+        JOIN Usuario u ON u.id_usuario = e.id_usuario
+        WHERE p.id_docente = ?
       `, [id_docente]);
-
+      await connection.commit();
       return rows;
     } catch (error) {
       throw new Error("Error al obtener proyectos asignados: " + error.message);
@@ -54,4 +65,5 @@ export class ProyectModel{
       connection.release();
     }
   }
+
 }

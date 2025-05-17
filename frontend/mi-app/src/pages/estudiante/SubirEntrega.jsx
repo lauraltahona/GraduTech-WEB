@@ -19,9 +19,7 @@ export default function ProyectoEstudiante() {
     handleFiles(files);
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+  const handleDragOver = (e) => e.preventDefault();
 
   const handleFiles = (files) => {
     for (const file of files) {
@@ -48,8 +46,9 @@ export default function ProyectoEstudiante() {
             id,
             name: file.name,
             url: fileUrl,
-            status: 'Cargando...',
+            status: 'cargando',
             file,
+            fileUrlServer: null,
           },
         ]);
 
@@ -71,20 +70,12 @@ export default function ProyectoEstudiante() {
       });
 
       const data = await res.json();
-
-      setRutaDocumento(data.fileUrl); // ⬅️ Guarda la ruta para usarla después
+      setRutaDocumento(data.fileUrl);
 
       setPreview((prev) =>
         prev.map((item) =>
           item.id === id
-            ? {
-                ...item,
-                status: (
-                  <span className="text-green-600">
-                    {data.message} - <a href={`http://localhost:5001${data.fileUrl}`} target="_blank" rel="noreferrer" className="underline">Ver archivo</a>
-                  </span>
-                ),
-              }
+            ? { ...item, status: 'subido', fileUrlServer: data.fileUrl }
             : item
         )
       );
@@ -92,7 +83,7 @@ export default function ProyectoEstudiante() {
       console.error(error);
       setPreview((prev) =>
         prev.map((item) =>
-          item.id === id ? { ...item, status: <span className="text-red-600">Error al subir</span> } : item
+          item.id === id ? { ...item, status: 'error' } : item
         )
       );
     }
@@ -124,16 +115,39 @@ export default function ProyectoEstudiante() {
       alert('Proyecto guardado exitosamente');
       console.log(data);
 
-      // Limpiar campos si deseas
       setTitulo('');
       setTipo('Pasantía');
       setIdEstudiante('');
       setRutaDocumento('');
       setPreview([]);
-
     } catch (error) {
       console.error('Error al guardar proyecto:', error);
       alert('Hubo un error al guardar el proyecto');
+    }
+  };
+
+  const renderStatus = (file) => {
+    switch (file.status) {
+      case 'cargando':
+        return <span className="text-yellow-600">Cargando...</span>;
+      case 'subido':
+        return (
+          <span className="text-green-600">
+            Archivo subido -{' '}
+            <a
+              href={`http://localhost:5001${file.fileUrlServer}`}
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              Ver archivo
+            </a>
+          </span>
+        );
+      case 'error':
+        return <span className="text-red-600">Error al subir</span>;
+      default:
+        return null;
     }
   };
 
@@ -198,7 +212,7 @@ export default function ProyectoEstudiante() {
             {preview.map((file) => (
               <div key={file.id} className="flex flex-col text-green-800">
                 <span className="font-semibold">{file.name}</span>
-                <span className="text-sm">{file.status}</span>
+                <span className="text-sm">{renderStatus(file)}</span>
               </div>
             ))}
           </div>
