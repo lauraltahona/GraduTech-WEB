@@ -1,5 +1,12 @@
 import { db } from "../db.js";
 
+/**
+ * Dentro del desarrollo de las apis es recomendable tener en vez de bastante variables que pueden enredan
+ * y no dan contexto es mejor utilizar DTOS.
+ * class ProyectoDTO{
+ * 
+ * }
+ */
 export class ProyectModel{
     static async createProyect({titulo, tipo, ruta_documento, id_estudiante }){
         const connection = await db.getConnection();

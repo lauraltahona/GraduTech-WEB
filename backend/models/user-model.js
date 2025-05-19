@@ -36,4 +36,7 @@ export class UserModel{
             connection.release();
         }
     }
+    static async find (){
+        
+    }
 }
