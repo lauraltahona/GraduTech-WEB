@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-
+import '../styles/RegistrarProyecto.css';
 export default function ProyectoEstudiante() {
   const [titulo, setTitulo] = useState('');
   const [tipo, setTipo] = useState('Pasantía');
@@ -138,10 +138,10 @@ export default function ProyectoEstudiante() {
   };
 
   return (
-    <div className="min-h-screen bg-green-100 p-8 font-sans">
-      <h1 className="text-3xl font-bold text-green-800 mb-6">Registrar Proyecto</h1>
+    <div className="min-h-screen bg-green-gradient p-8">
+      <h1 className="title">Registrar Proyecto</h1>
 
-      <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-6">
+      <div className="max-w-2xl mx-auto form-card space-y-6">
         <div>
           <label className="block text-green-700 font-semibold mb-1">Título del proyecto</label>
           <input
@@ -149,7 +149,7 @@ export default function ProyectoEstudiante() {
             placeholder="Escribe el título"
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="input-field"
           />
         </div>
 
@@ -158,7 +158,7 @@ export default function ProyectoEstudiante() {
           <select
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="select-field"
           >
             <option value="Pasantía">Pasantía</option>
             <option value="Proyecto de grado">Proyecto de grado</option>
@@ -172,12 +172,12 @@ export default function ProyectoEstudiante() {
             placeholder="Ej: 12345678"
             value={idEstudiante}
             onChange={(e) => setIdEstudiante(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="input-field"
           />
         </div>
 
         <div
-          className="border-2 border-dashed border-green-400 rounded-xl p-6 text-center cursor-pointer hover:bg-green-50"
+          className="drop-zone"
           onClick={() => inputRef.current.click()}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
@@ -194,7 +194,7 @@ export default function ProyectoEstudiante() {
         </div>
 
         {preview.length > 0 && (
-          <div className="bg-green-50 rounded p-4 space-y-4 border border-green-200">
+          <div className="preview-box">
             {preview.map((file) => (
               <div key={file.id} className="flex flex-col text-green-800">
                 <span className="font-semibold">{file.name}</span>
@@ -206,7 +206,7 @@ export default function ProyectoEstudiante() {
 
         <button
           onClick={handleGuardar}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded"
+          className="save-button"
         >
           Guardar
         </button>

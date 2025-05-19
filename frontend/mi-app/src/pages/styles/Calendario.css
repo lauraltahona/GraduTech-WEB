@@ -1,0 +1,71 @@
+/* Contenedor principal */
+.calendario-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #f0fdf4;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Título principal */
+.titulo {
+  color: #047857;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Subtítulo */
+.subtitulo {
+  color: #065f46;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+/* Calendario wrapper para escalarlo */
+.calendario-wrapper {
+  display: flex;
+  justify-content: center;
+  scale: 1.2;
+  margin-bottom: 2rem;
+}
+
+/* Día marcado con entrega */
+.marcado {
+  background-color: #bbf7d0 !important;
+  border-radius: 50% !important;
+  font-weight: bold;
+  color: #064e3b !important;
+  box-shadow: 0 0 0 2px #04785755;
+}
+
+/* Tooltip del 📌 */
+abbr[title] {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Detalle de la entrega seleccionada */
+.detalle-entrega {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  box-shadow: 0 3px 10px rgba(0, 128, 0, 0.1);
+  text-align: left;
+  color: #064e3b;
+}
+
+.detalle-entrega h3 {
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 0.5rem;
+}
+
+.detalle-entrega p {
+  font-size: 1rem;
+}

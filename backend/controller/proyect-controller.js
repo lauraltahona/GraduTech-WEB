@@ -39,4 +39,17 @@ export class ProyectController{
             res.status(400).json({message: `Error con la petición de obtener proyectos asignados ${error.message}`});
         }
     }
+
+    static async obtenerProyectos(req, res){
+        const {id_usuario} = req.params;
+        console.log(id_usuario);
+        
+        try{
+            const proyecto = await ProyectModel.obtenerProyecto(id_usuario);
+            res.status(200).json(proyecto);
+        } catch (error){
+            console.log(error);
+            res.status(400).json({message: `Error con la petición de obtener proyecto ${error.message}`});
+        }
+    }
 }

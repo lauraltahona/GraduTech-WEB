@@ -11,6 +11,7 @@ import PlanEntrega from './pages/docente/PlanEntrega.jsx';
 import ProyectosAsignados from './pages/docente/ProyectosAsignados.jsx';
 import EntregasEstudiante from './pages/estudiante/EntregasEstudiante.jsx';
 import SubirEntrega from './pages/estudiante/SubirEntrega.jsx';
+import EntregasPorPlan from './pages/docente/EntregaPorPlan.jsx';
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
         </Route>
         <Route path="/proyectosAsignados" element={<ProyectosAsignados />} />
         <Route path="/planEntrega" element={<PlanEntrega />} />
+        <Route path="/entrega-por-plan/:id_plan_entrega" element={<EntregasPorPlan />} />
       </Routes>
     </Router>
   );

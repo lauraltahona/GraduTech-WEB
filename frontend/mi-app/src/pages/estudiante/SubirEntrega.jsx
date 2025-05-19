@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 
-export default function ProyectoEstudiante() {
-  const [titulo, setTitulo] = useState('');
-  const [tipo, setTipo] = useState('Pasantía');
-  const [idEstudiante, setIdEstudiante] = useState('');
+export default function EntregaEstudiante() {
+  const { id_plan_entrega } = useParams(); 
+  const [descripcion, setDescripcion] = useState('');
+  const idUsuario = localStorage.getItem('userId');
   const [preview, setPreview] = useState([]);
   const [rutaDocumento, setRutaDocumento] = useState('');
   const inputRef = useRef(null);
@@ -90,39 +91,37 @@ export default function ProyectoEstudiante() {
   };
 
   const handleGuardar = async () => {
-    if (!titulo || !tipo || !idEstudiante || !rutaDocumento) {
+    if (!descripcion || !idUsuario || !rutaDocumento) {
       alert('Por favor completa todos los campos y sube un archivo.');
       return;
     }
 
-    const proyecto = {
-      titulo,
-      tipo,
+    const data = {
+      id_plan_entrega: id_plan_entrega,
+      id_usuario: idUsuario,
+      descripcion,
       ruta_documento: rutaDocumento,
-      id_estudiante: idEstudiante
     };
-
+    console.log(data);
+    
     try {
-      const res = await fetch('http://localhost:5001/proyectos', {
+      const res = await fetch('http://localhost:5001/entrega/subir', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(proyecto)
+        body: JSON.stringify( data ),
       });
 
-      const data = await res.json();
-      alert('Proyecto guardado exitosamente');
-      console.log(data);
+      const result = await res.json();
+      alert(result.message || 'Entrega subida con éxito');
 
-      setTitulo('');
-      setTipo('Pasantía');
-      setIdEstudiante('');
+      setDescripcion('');
       setRutaDocumento('');
       setPreview([]);
     } catch (error) {
-      console.error('Error al guardar proyecto:', error);
-      alert('Hubo un error al guardar el proyecto');
+      console.error('Error al subir entrega:', error);
+      alert('Hubo un error al subir la entrega');
     }
   };
 
@@ -153,42 +152,20 @@ export default function ProyectoEstudiante() {
 
   return (
     <div className="min-h-screen bg-green-100 p-8 font-sans">
-      <h1 className="text-3xl font-bold text-green-800 mb-6">Registrar Proyecto</h1>
+      <h1 className="text-3xl font-bold text-green-800 mb-6">Subir Entrega</h1>
 
       <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-6">
         <div>
-          <label className="block text-green-700 font-semibold mb-1">Título del proyecto</label>
+          <label className="block text-green-700 font-semibold mb-1">Descripción</label>
           <input
             type="text"
-            placeholder="Escribe el título"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
+            placeholder="Escribe una descripción"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
             className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
 
-        <div>
-          <label className="block text-green-700 font-semibold mb-1">Tipo</label>
-          <select
-            value={tipo}
-            onChange={(e) => setTipo(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="Pasantía">Pasantía</option>
-            <option value="Proyecto de grado">Proyecto de grado</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-green-700 font-semibold mb-1">ID del estudiante</label>
-          <input
-            type="text"
-            placeholder="Ej: 12345678"
-            value={idEstudiante}
-            onChange={(e) => setIdEstudiante(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-        </div>
 
         <div
           className="border-2 border-dashed border-green-400 rounded-xl p-6 text-center cursor-pointer hover:bg-green-50"
@@ -222,7 +199,7 @@ export default function ProyectoEstudiante() {
           onClick={handleGuardar}
           className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded"
         >
-          Guardar
+          Subir Entrega
         </button>
       </div>
     </div>

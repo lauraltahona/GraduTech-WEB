@@ -3,6 +3,8 @@ import { EntregaModel } from "../models/entrega-model.js";
 export class EntregaController{
     static async crearPlanEntrega(req, res){
         const result = req.body;
+        console.log(result);
+        
         const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite} = result.data;
         try{
             const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite);
@@ -27,8 +29,9 @@ export class EntregaController{
 
     static async subirEntrega(req, res){
 
-        const result = req.body;
-        const {id_plan_entrega, id_usuario, ruta_documento, descripcion } = result.data;
+        const {id_plan_entrega, id_usuario, ruta_documento, descripcion } = req.body;
+        console.log(req.body);
+        
         try{
             const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion);
             if(!result.success){
@@ -36,7 +39,49 @@ export class EntregaController{
             }
             return res.status(200).json({message: 'Entrega subida con exito'});
         } catch(error){
+            console.log('error al registrar entrega', error);
             res.status(500).json({message: 'Error al registrar entrega'+ error.message});
+        }
+    }
+
+    static async obtenerPlanesEntrega(req, res){
+        const {id_proyecto} = req.params;
+
+        try{
+            const result = await EntregaModel.obtenerPlanesEntrega(id_proyecto);
+            console.log(result);
+            
+            res.status(200).json(result);
+        }
+        catch (error){
+            console.error("Error al obtener entregas por proyecto:", error);
+            res.status(500).json({ error: "Error al obtener las entregas." });
+
+        }
+    }
+
+    static async obtenerEntregasPorPlan(req, res){
+        const {id_plan_entrega} = req.params;
+        console.log(id_plan_entrega);
+        
+        try{
+            const result = await EntregaModel.obtenerEntregasPorPlan(id_plan_entrega);
+            console.log(result);
+            res.status(200).json(result);
+        } catch(error){
+            console.error("Error al obtener entregas por plan", error);
+            res.status(500).json({ error: "Error al obtener las entregas." });
+        }
+    }
+
+    static async obtenerFechaLimite(req, res){
+        const {id_usuario} = req.params;
+        try{
+            const fechas = await EntregaModel.obtenerFechaLimite(id_usuario);
+            res.status(200).json(fechas);
+        } catch(error){
+            res.status(400).json({error: 'Error al obtener las fechas limites'});
+            console.log('error al obtener fechas', error.message);
         }
     }
 }

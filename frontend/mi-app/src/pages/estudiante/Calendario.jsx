@@ -1,41 +1,65 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import '../styles/Calendario.css'; // Asegúrate de tener este archivo
 
-const fechasImportantes = [
-  { fecha: new Date(2025, 4, 20), descripcion: 'Entrega de avance 1' },
-  { fecha: new Date(2025, 4, 27), descripcion: 'Revisión del jurado' },
-];
-
-export default function Calendario() {
+export default function Calendario({ idEstudiante }) {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+  const [fechasImportantes, setFechasImportantes] = useState([]);
+  const id_usuario = localStorage.getItem("userId");
+
+  const esMismaFecha = (f1, f2) =>
+    f1.getFullYear() === f2.getFullYear() &&
+    f1.getMonth() === f2.getMonth() &&
+    f1.getDate() === f2.getDate();
+
+  useEffect(() => {
+    const obtenerEntregas = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/entrega/fechas/${id_usuario}`);
+        const data = await response.json();
+
+        const fechas = data.map(entrega => ({
+          fecha: new Date(entrega.fecha_limite),
+          descripcion: entrega.titulo
+        }));
+
+        setFechasImportantes(fechas);
+      } catch (error) {
+        console.error('Error al cargar entregas:', error);
+      }
+    };
+
+    obtenerEntregas();
+  }, [id_usuario]);
 
   const obtenerEntrega = (fecha) => {
-    return fechasImportantes.find(f =>
-      f.fecha.toDateString() === fecha.toDateString()
-    );
+    return fechasImportantes.find(f => esMismaFecha(f.fecha, fecha));
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-green-50 rounded-xl shadow">
-      <h2 className="text-2xl font-bold text-green-700 mb-4">Calendario de Entregas</h2>
+    <div className="calendario-container">
+      <h2 className="titulo">📅 Calendario de Entregas</h2>
+      <h3 className="subtitulo">¡Este es tu calendario! Aquí verás marcadas las fechas donde tienes que entregar algún avance.</h3>
       
-      <Calendar
-        onClickDay={(value) => setFechaSeleccionada(value)}
-        tileClassName={({ date }) => {
-          return fechasImportantes.some(f =>
-            f.fecha.toDateString() === date.toDateString()
-          )
-            ? 'marcado'
-            : null;
-        }}
-      />
+      <div className="calendario-wrapper">
+        <Calendar
+          onClickDay={(value) => setFechaSeleccionada(value)}
+          tileClassName={({ date }) =>
+            fechasImportantes.some(f => esMismaFecha(f.fecha, date)) ? 'marcado' : null
+          }
+          tileContent={({ date, view }) => {
+            const entrega = fechasImportantes.find(f => esMismaFecha(f.fecha, date));
+            return entrega && view === 'month' ? (
+              <abbr title={entrega.descripcion}>📌</abbr>
+            ) : null;
+          }}
+        />
+      </div>
 
       {fechaSeleccionada && (
-        <div className="mt-4 p-3 border rounded-lg bg-white shadow">
-          <h3 className="text-green-700 font-semibold">
-            {fechaSeleccionada.toDateString()}
-          </h3>
+        <div className="detalle-entrega">
+          <h3>{fechaSeleccionada.toDateString()}</h3>
           <p>
             {obtenerEntrega(fechaSeleccionada)?.descripcion || 'Sin entregas programadas.'}
           </p>

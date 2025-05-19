@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PlanEntrega() {
   const [entregas, setEntregas] = useState([]);
+  const [planesExistentes, setPlanesExistentes] = useState([]);
   const [formData, setFormData] = useState({
     nro_entrega: "",
     titulo: "",
@@ -10,6 +11,21 @@ export default function PlanEntrega() {
   });
 
   const id_proyecto = localStorage.getItem("id_proyecto");
+
+  useEffect(() => {
+    const fetchPlanes = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/entrega/proyecto/${id_proyecto}`);
+        if (!response.ok) throw new Error("Error al obtener planes existentes");
+        const data = await response.json();
+        setPlanesExistentes(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPlanes();
+  }, [id_proyecto]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,6 +52,11 @@ export default function PlanEntrega() {
 
       setEntregas([...entregas, nuevaEntrega]);
       setFormData({ nro_entrega: "", titulo: "", descripcion: "", fecha_limite: "" });
+
+      // Recargar los planes existentes para que se actualicen automáticamente
+      const updated = await fetch(`http://localhost:5001/entrega/proyecto/${id_proyecto}`);
+      const updatedData = await updated.json();
+      setPlanesExistentes(updatedData);
     } catch (error) {
       console.error(error);
       alert("No se pudo registrar el plan de entrega.");
@@ -45,6 +66,7 @@ export default function PlanEntrega() {
   return (
     <div style={{ padding: '1.5rem' }}>
       <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Planificación de entregas</h2>
+
       <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
         <div>
           <label>N° Entrega</label>
@@ -65,6 +87,25 @@ export default function PlanEntrega() {
         <div style={{ alignSelf: 'end' }}>
           <button onClick={handleAdd}>Agregar</button>
         </div>
+      </div>
+
+      {/* Mostramos los planes ya creados abajo como enlaces */}
+      <div style={{ marginTop: '2rem' }}>
+        <h3 style={{ fontWeight: 'bold', marginBottom: '1rem' }}>Planes de entrega ya creados:</h3>
+        <ul>
+          {planesExistentes.map((plan) => (
+            <li key={plan.id}>
+              <a
+                href={`/entrega-por-plan/${plan.id_plan_entrega}`} // Asegúrate de tener esta ruta configurada en tu app
+                style={{ color: 'blue', textDecoration: 'underline' }}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Entrega #{plan.nro_entrega}: {plan.titulo} - {new Date(plan.fecha_limite).toLocaleDateString()}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div style={{ marginTop: '1rem' }}>

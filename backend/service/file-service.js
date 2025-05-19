@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import slugify from 'slugify';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,11 +13,25 @@ export const uploadFileService = (file) => {
             fs.mkdirSync(uploadsPath);
         }
 
-        const filePath = path.join(uploadsPath, file.name);
+        // Obtener nombre y extensión
+        const ext = path.extname(file.name);
+        const baseName = path.basename(file.name, ext);
+
+        // Limpiar el nombre del archivo (sin tildes, ñ, espacios, etc.)
+        const safeName = slugify(baseName, {
+            lower: true,
+            remove: /[*+~.()'"!:@¿¡?¡%&#/\\]/g, // quita caracteres especiales
+            strict: true
+        });
+
+        const finalName = `${safeName}${ext}`;
+        const filePath = path.join(uploadsPath, finalName);
 
         file.mv(filePath, (err) => {
             if (err) return reject(err);
-            resolve(`/files/${file.name}`);
+
+            // Retornar ruta pública accesible
+            resolve(`/files/${finalName}`);
         });
     });
 };

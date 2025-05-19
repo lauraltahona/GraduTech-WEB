@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right top, #e6f4ea, #d1f5d0);
+}
+
+.container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #81c784;
+  padding-bottom: 10px;
+}
+
+.tarjeta {
+  background-color: #ffffff;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(46, 125, 50, 0.2);
+  border-left: 8px solid #66bb6a;
+}
+
+.seccion {
+  margin-bottom: 25px;
+}
+
+.seccion h2 {
+  font-size: 20px;
+  color: #388e3c;
+  margin-bottom: 8px;
+}
+
+.seccion p,
+.seccion a {
+  font-size: 16px;
+  color: #444;
+}
+
+.seccion a {
+  text-decoration: none;
+  color: #2e7d32;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.seccion a:hover {
+  color: #1b5e20;
+}
+
+
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.btn.editar {
+  background-color: #43a047;
+}
+
+.btn.editar:hover {
+  background-color: #2e7d32;
+}
+
+.btn.subir {
+  background-color: #2e8b57;
+}
+
+.btn.subir:hover {
+  background-color: #1b5e20;
+}
+
+.loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 20px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}

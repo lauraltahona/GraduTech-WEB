@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/EntregasEstudiante.css";
 
 function EntregasEstudiante() {
   const [entregas, setEntregas] = useState([]);
@@ -12,9 +13,7 @@ function EntregasEstudiante() {
     async function fetchEntregas() {
       try {
         const response = await fetch(`http://localhost:5001/entrega/asignadas/${id_usuario}`);
-        if (!response.ok) {
-          throw new Error("Error al obtener las entregas");
-        }
+        if (!response.ok) throw new Error("Error al obtener las entregas");
         const data = await response.json();
         setEntregas(data);
       } catch (err) {
@@ -24,48 +23,36 @@ function EntregasEstudiante() {
       }
     }
 
-    if (id_usuario) {
-      fetchEntregas();
-    }
+    if (id_usuario) fetchEntregas();
   }, [id_usuario]);
 
-  if (loading) return <p>Cargando entregas...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="status-message">Cargando entregas...</p>;
+  if (error) return <p className="status-message error">Error: {error}</p>;
 
   return (
-    <div>
-      <h2>Entregas Asignadas</h2>
+    <div className="entregas-container">
+      <h2 className="entregas-title">Entregas Asignadas</h2>
       {entregas.length === 0 ? (
-        <p>No tienes entregas asignadas.</p>
+        <p className="status-message">No tienes entregas asignadas.</p>
       ) : (
-        <table border="1" style={{ borderCollapse: 'collapse', width: '100%' }}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Título</th>
-              <th>Descripción</th>
-              <th>N° Entrega</th>
-              <th>Fecha Límite</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entregas.map((entrega, index) => (
-              <tr key={entrega.id_plan_entrega}>
-                <td>{index + 1}</td>
-                <td>{entrega.titulo}</td>
-                <td>{entrega.descripcion}</td>
-                <td>{entrega.nro_entrega}</td>
-                <td>{new Date(entrega.fecha_limite).toLocaleString()}</td>
-                <td>
-                  <button onClick={() => navigate(`/menuEstudiante/subir-entrega/${entrega.id_plan_entrega}`)}>
-                    Subir entrega
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="entregas-list">
+          {entregas.map((entrega, index) => (
+            <div key={entrega.id_plan_entrega} className="entrega-card">
+              <div className="entrega-header">
+                <span className="entrega-numero">Entrega #{entrega.nro_entrega}</span>
+                <h3 className="entrega-titulo">{entrega.titulo}</h3>
+              </div>
+              <p className="entrega-descripcion">{entrega.descripcion}</p>
+              <p className="entrega-fecha">Fecha límite: <strong>{new Date(entrega.fecha_limite).toLocaleString()}</strong></p>
+              <button
+                className="entrega-button"
+                onClick={() => navigate(`/menuEstudiante/subir-entrega/${entrega.id_plan_entrega}`)}
+              >
+                Subir entrega
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
