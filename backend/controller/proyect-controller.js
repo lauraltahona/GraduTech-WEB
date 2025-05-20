@@ -23,7 +23,6 @@ export class ProyectController{
     static async getProyectosAsignados(req, res) {
 
         const {id_usuario} = req.params;
-        console.log(id_usuario);
         
         try{
             const proyectos = await ProyectModel.obtenerProyectosAsignados(id_usuario);
@@ -42,7 +41,6 @@ export class ProyectController{
 
     static async obtenerProyectos(req, res){
         const {id_usuario} = req.params;
-        console.log(id_usuario);
         
         try{
             const proyecto = await ProyectModel.obtenerProyecto(id_usuario);
