@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 import bcrypt from "bcryptjs";
+import { User } from "../shared/schemas.js";
 
 export class UserModel{
     static async login({correo, contraseña}){
@@ -38,5 +39,12 @@ export class UserModel{
     }
     static async find (){
         
+    }
+    
+    static async findbyEmail (correo){
+        const find = await User.findOne({
+            where:{ correo }
+        })
+        return find
     }
 }

@@ -11,6 +11,8 @@ export class StudentController{
             return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})
         }
 
+        console.log(req.body);
+        
         const {id_estudiante, carrera, semestre, usuario} = result.data;
 
         try{

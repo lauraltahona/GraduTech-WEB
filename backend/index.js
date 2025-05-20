@@ -13,8 +13,10 @@ import userRouter from './routes/user-router.js';
 import fileRouter from './routes/file-router.js';
 import proyectRouter from './routes/proyect-router.js';
 import entregaRouter from './routes/entrega-router.js';
+import { syncModels } from './shared/schemas.js';
 
 import { PORT } from './config.js';
+import { Connect } from './db.js';
 
 
 const app = express();
@@ -28,6 +30,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(authMiddleware);
 
+Connect()
 
 app.use('/estudiante', studentRouter);
 app.use('/docente', teacherRouter);
