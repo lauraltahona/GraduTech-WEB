@@ -64,6 +64,7 @@ backend/uploads/
 # Base de datos local (si aplica)
 *.sqlite
 *.db
+/backend/shared/migrations/
 
 # =======================================
 # GIT
