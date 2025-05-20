@@ -4,7 +4,6 @@ import { SECRET_JWT_KEY } from "../config.js";
 import cookieParser from "cookie-parser";
 export class UserController{
     static async login(req,res){
-        console.log(req.body);
         const {correo, contraseña} = req.body;
         
         try{

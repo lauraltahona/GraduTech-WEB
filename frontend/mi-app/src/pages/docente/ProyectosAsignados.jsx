@@ -30,7 +30,7 @@ export default function ProyectosAsignados() {
 
   const irAPlanEntrega = (id_proyecto) => {
     localStorage.setItem("id_proyecto", id_proyecto);
-    navigate("/planEntrega"); // Asegúrate que esta ruta existe
+    navigate("/planEntrega"); 
   };
 
   return (

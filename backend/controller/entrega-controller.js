@@ -3,7 +3,6 @@ import { EntregaModel } from "../models/entrega-model.js";
 export class EntregaController{
     static async crearPlanEntrega(req, res){
         const result = req.body;
-        console.log(result);
         
         const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite} = result.data;
         try{
@@ -17,7 +16,6 @@ export class EntregaController{
 
     static async obtenerEntregasEstudiante(req, res) {
         const {id_usuario} = req.params;
-        console.log(id_usuario);
         
         try {
             const entregas = await EntregaModel.obtenerEntregasPorEstudiante(id_usuario);
@@ -30,8 +28,6 @@ export class EntregaController{
     static async subirEntrega(req, res){
 
         const {id_plan_entrega, id_usuario, ruta_documento, descripcion } = req.body;
-        console.log(req.body);
-        
         try{
             const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion);
             if(!result.success){
@@ -49,8 +45,6 @@ export class EntregaController{
 
         try{
             const result = await EntregaModel.obtenerPlanesEntrega(id_proyecto);
-            console.log(result);
-            
             res.status(200).json(result);
         }
         catch (error){
@@ -62,11 +56,9 @@ export class EntregaController{
 
     static async obtenerEntregasPorPlan(req, res){
         const {id_plan_entrega} = req.params;
-        console.log(id_plan_entrega);
         
         try{
             const result = await EntregaModel.obtenerEntregasPorPlan(id_plan_entrega);
-            console.log(result);
             res.status(200).json(result);
         } catch(error){
             console.error("Error al obtener entregas por plan", error);

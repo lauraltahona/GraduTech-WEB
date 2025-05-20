@@ -2,7 +2,6 @@ import { db } from "../db.js";
 
 export class EntregaModel{
     static async crearPlanEntrega(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite ) {
-        console.log(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite);
         
         const connection = await db.getConnection();
         try{
@@ -52,8 +51,6 @@ export class EntregaModel{
             WHERE p.id_estudiante = ?`, [id_estudiante]
         );
         await connection.commit();
-        console.log(rows);
-        
         return rows;
     }
 
