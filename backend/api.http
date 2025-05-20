@@ -37,3 +37,22 @@ Content-Type: application/json
   "correo": "jperalta@unicesar.edu.co",
   "contraseña": "hola1234"
 }
+
+### GET
+GET http://localhost:5001/proyectos/asignados/4
+
+###GET ENTREGAS ASIGNADAS
+GET http://localhost:5001/entrega/asignadas/5
+
+
+###GET PLANES DE ENTREGA POR PROYECTO
+GET http://localhost:5001/entrega/proyecto/2
+
+###GET ENTREGA POR PLAN
+GET http://localhost:5001/entrega/entrega-por-plan/8
+
+###GET MI PROYECTO
+GET http://localhost:5001/proyectos/5
+
+### GET FECHAS LIMITES
+GET http://localhost:5001/entrega/fechas/5
