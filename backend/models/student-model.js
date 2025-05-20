@@ -66,8 +66,8 @@ export class StudentModel{
             //     [id_usuario, 1]
             // )
             await UsersRols.create({
-                idUsersRols:user.idUsers,
-                idRol:1
+                idRols:1,
+                idUsersRol:user.idUsers
             })
 
             return { id_estudiante, nombre: usuario.nombre, carrera, semestre };
