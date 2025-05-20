@@ -1,5 +1,6 @@
 import { db } from "../db.js";
 
+
 export class TeacherModel{
     static async createTeacher({id_docente, profesion, disponibilidad, usuario}){
         const connection = await db.getConnection();
@@ -33,6 +34,7 @@ export class TeacherModel{
                 [id_docente, profesion, disponibilidad, id_usuario]
             )
 
+
             await connection.query(
                 'INSERT INTO Usuario_Rol(id_usuario, id_rol) VALUES (?, ?)',
                 [id_usuario, 2]
@@ -42,6 +44,8 @@ export class TeacherModel{
             return {id_usuario, id_docente, nombre: usuario.nombre, profesion, disponibilidad}
         } catch(error){
             await connection.rollback();
+            console.log(error);
+            
             throw error
         } finally {
             connection.release();

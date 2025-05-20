@@ -15,7 +15,7 @@ import proyectRouter from './routes/proyect-router.js';
 import entregaRouter from './routes/entrega-router.js';
 
 import { PORT } from './config.js';
-import { connect } from './db.js';
+
 
 const app = express();
 
@@ -38,8 +38,6 @@ app.use('/proyectos', proyectRouter);
 app.use('/entrega', entregaRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-console.log(process.env.HOSTDB);
-connect()
 
 app.listen(PORT, ()=>{
     console.log(`escuchando puerto en http://localhost:${PORT}`);

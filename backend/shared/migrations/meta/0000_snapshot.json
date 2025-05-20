@@ -1,0 +1,468 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "ae44a75d-f756-4843-ba97-8f30605927f5",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "jurys": {
+      "name": "jurys",
+      "columns": {
+        "idJurado": {
+          "name": "idJurado",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idDocente": {
+          "name": "idDocente",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idUserJury": {
+          "name": "idUserJury",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "jurys_idDocente_teachers_idDocente_fk": {
+          "name": "jurys_idDocente_teachers_idDocente_fk",
+          "tableFrom": "jurys",
+          "tableTo": "teachers",
+          "columnsFrom": [
+            "idDocente"
+          ],
+          "columnsTo": [
+            "idDocente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "jurys_idUserJury_users_idUsers_fk": {
+          "name": "jurys_idUserJury_users_idUsers_fk",
+          "tableFrom": "jurys",
+          "tableTo": "users",
+          "columnsFrom": [
+            "idUserJury"
+          ],
+          "columnsTo": [
+            "idUsers"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "jurys_idJurado": {
+          "name": "jurys_idJurado",
+          "columns": [
+            "idJurado"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "projects": {
+      "name": "projects",
+      "columns": {
+        "idProject": {
+          "name": "idProject",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(60)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "varchar(40)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "enum('APROBADO','EN REVISIÓN')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rutaDocumento": {
+          "name": "rutaDocumento",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "idUserProjec": {
+          "name": "idUserProjec",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "idDocente": {
+          "name": "idDocente",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "projects_idUserProjec_students_idEstudiante_fk": {
+          "name": "projects_idUserProjec_students_idEstudiante_fk",
+          "tableFrom": "projects",
+          "tableTo": "students",
+          "columnsFrom": [
+            "idUserProjec"
+          ],
+          "columnsTo": [
+            "idEstudiante"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "projects_idDocente_teachers_idDocente_fk": {
+          "name": "projects_idDocente_teachers_idDocente_fk",
+          "tableFrom": "projects",
+          "tableTo": "teachers",
+          "columnsFrom": [
+            "idDocente"
+          ],
+          "columnsTo": [
+            "idDocente"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "projects_idProject": {
+          "name": "projects_idProject",
+          "columns": [
+            "idProject"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "rols": {
+      "name": "rols",
+      "columns": {
+        "idRol": {
+          "name": "idRol",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nombreRol": {
+          "name": "nombreRol",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "rols_idRol": {
+          "name": "rols_idRol",
+          "columns": [
+            "idRol"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "students": {
+      "name": "students",
+      "columns": {
+        "idEstudiante": {
+          "name": "idEstudiante",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "carrera": {
+          "name": "carrera",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "semestre": {
+          "name": "semestre",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "idUser": {
+          "name": "idUser",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "students_idUser_users_idUsers_fk": {
+          "name": "students_idUser_users_idUsers_fk",
+          "tableFrom": "students",
+          "tableTo": "users",
+          "columnsFrom": [
+            "idUser"
+          ],
+          "columnsTo": [
+            "idUsers"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "students_idEstudiante": {
+          "name": "students_idEstudiante",
+          "columns": [
+            "idEstudiante"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "teachers": {
+      "name": "teachers",
+      "columns": {
+        "idDocente": {
+          "name": "idDocente",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "profesion": {
+          "name": "profesion",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "disponibilidad": {
+          "name": "disponibilidad",
+          "type": "enum('DISPONIBLE','NO DISPONIBLE')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idUserDocente": {
+          "name": "idUserDocente",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "teachers_idUserDocente_users_idUsers_fk": {
+          "name": "teachers_idUserDocente_users_idUsers_fk",
+          "tableFrom": "teachers",
+          "tableTo": "users",
+          "columnsFrom": [
+            "idUserDocente"
+          ],
+          "columnsTo": [
+            "idUsers"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "teachers_idDocente": {
+          "name": "teachers_idDocente",
+          "columns": [
+            "idDocente"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "usersRols": {
+      "name": "usersRols",
+      "columns": {
+        "idUsersRols": {
+          "name": "idUsersRols",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idRol": {
+          "name": "idRol",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "usersRols_idUsersRols_rols_idRol_fk": {
+          "name": "usersRols_idUsersRols_rols_idRol_fk",
+          "tableFrom": "usersRols",
+          "tableTo": "rols",
+          "columnsFrom": [
+            "idUsersRols"
+          ],
+          "columnsTo": [
+            "idRol"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "usersRols_idRol_users_idUsers_fk": {
+          "name": "usersRols_idRol_users_idUsers_fk",
+          "tableFrom": "usersRols",
+          "tableTo": "users",
+          "columnsFrom": [
+            "idRol"
+          ],
+          "columnsTo": [
+            "idUsers"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "usersRols_idUsersRols": {
+          "name": "usersRols_idUsersRols",
+          "columns": [
+            "idUsersRols"
+          ]
+        },
+        "usersRols_idRol": {
+          "name": "usersRols_idRol",
+          "columns": [
+            "idRol"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "idUsers": {
+          "name": "idUsers",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "correo": {
+          "name": "correo",
+          "type": "varchar(150)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contraseña": {
+          "name": "contraseña",
+          "type": "varchar(250)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "idRol": {
+          "name": "idRol",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "users_idRol_rols_idRol_fk": {
+          "name": "users_idRol_rols_idRol_fk",
+          "tableFrom": "users",
+          "tableTo": "rols",
+          "columnsFrom": [
+            "idRol"
+          ],
+          "columnsTo": [
+            "idRol"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "users_idUsers": {
+          "name": "users_idUsers",
+          "columns": [
+            "idUsers"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "users_nombre_unique": {
+          "name": "users_nombre_unique",
+          "columns": [
+            "nombre"
+          ]
+        },
+        "users_correo_unique": {
+          "name": "users_correo_unique",
+          "columns": [
+            "correo"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
