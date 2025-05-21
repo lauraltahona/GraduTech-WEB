@@ -7,6 +7,7 @@ const teacherSchema = z.object({
         .max(10, {invalid_type_error: 'la cedula solo debe contener 10 numeros'}),
     profesion: z.string().max(50, {invalid_type_error: 'el titulo no puede exceder 50 caracteres'}),
     disponibilidad: z.enum(['DISPONIBLE', 'NO DISPONIBLE'], {invalid_type_error: 'La disponibilidad debe ser "DISPONIBLE" o "NO DISPONIBLE"'}),
+    carrera: z.string(50),
     usuario: userSchema
 })
 

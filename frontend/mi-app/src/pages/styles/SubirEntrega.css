@@ -1,0 +1,199 @@
+.tarjeta-entrega-verde {
+  background-color: #ffffff;
+  border: 2px solid #bae2b6;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 15px rgba(32, 120, 68, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-entrega-verde:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(32, 120, 68, 0.2);
+}
+
+/* Líneas decorativas en la parte superior */
+.tarjeta-entrega-verde::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, #a7f3d0, #34d351);
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+/* Bordes internos sutiles */
+.tarjeta-entrega-verde::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), transparent);
+  box-shadow:
+    inset 0 0 0 2px rgba(46, 204, 113, 0.2), /* borde interior */
+    0 6px 15px rgba(32, 120, 68, 0.1);  
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+ pointer-events: none;
+}
+
+/* Enlaces más decorativos */
+.enlace-documento-verde {
+  color: #1a936f;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.enlace-documento-verde:hover {
+  border-color: #1a936f;
+  cursor: pointer;
+}
+
+/* Mejor detalle al botón editar */
+.boton-editar-verde {
+  margin-top: 1.5rem;
+  display: inline-block;
+  background-color: #2b9348;
+  color: white;
+  padding: 0.6rem 1.25rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(43, 147, 72, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton-editar-verde:hover {
+  background-color: #207844;
+  transform: scale(1.03);
+}
+
+.titulo-subida-verde {
+  font-size: 2rem;
+  color: #207844;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.formulario-subida-verde {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 15px rgba(32, 120, 68, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.campo-formulario-verde {
+  margin-bottom: 1.5rem;
+}
+
+.label-verde {
+  display: block;
+  font-weight: bold;
+  color: #207844;
+  margin-bottom: 0.5rem;
+}
+
+.input-verde {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #b6e2c5;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-verde:focus {
+  border-color: #2b9348;
+}
+
+/* Zona de arrastre */
+.zona-drop-verde {
+  border: 2px dashed #b6e2c5;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.zona-drop-verde:hover {
+  border-color: #2b9348;
+  background-color: #f0fdf4;
+}
+
+.drop-titulo-verde {
+  font-weight: bold;
+  color: #1a936f;
+  font-size: 1.1rem;
+}
+
+.drop-subtitulo-verde {
+  color: #4b8d73;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* Vista previa de archivos */
+.preview-verde {
+  margin-bottom: 1.5rem;
+  background-color: #f7fdf9;
+  border: 1px solid #c3eecd;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.archivo-verde {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e0f3e7;
+}
+
+.archivo-verde:last-child {
+  border-bottom: none;
+}
+
+.archivo-nombre-verde {
+  color: #2b9348;
+  font-weight: 500;
+}
+
+.archivo-estado-verde {
+  font-size: 0.9rem;
+  color: #4b8d73;
+}
+
+/* Botón */
+.boton-subida-verde {
+  background-color: #2b9348;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton-subida-verde:hover {
+  background-color: #207844;
+  transform: scale(1.02);
+}

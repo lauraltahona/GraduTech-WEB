@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import '../styles/SubirEntrega.css'
 
 export default function EntregaEstudiante() {
   const { id_plan_entrega } = useParams(); 
@@ -7,8 +8,27 @@ export default function EntregaEstudiante() {
   const idUsuario = localStorage.getItem('userId');
   const [preview, setPreview] = useState([]);
   const [rutaDocumento, setRutaDocumento] = useState('');
+  const [entregasAnteriores, setEntregasAnteriores] = useState([]);
+  const [errorEntregas, setErrorEntregas] = useState('');
   const inputRef = useRef(null);
+  useEffect(() => {
+    const obtenerEntregasEstudiante = async () => {
+      try {
+        const res = await fetch(`http://localhost:5001/entrega/entrega-por-plan/${id_plan_entrega}`); 
+        if (!res.ok) throw new Error('Error al obtener entregas anteriores');
+        const data = await res.json();
+        setEntregasAnteriores(data);
+      } catch (error) {
+        console.error('Error al traer entregas anteriores:', error);
+        setErrorEntregas('No se pudieron cargar las entregas previas.');
+      }
+    };
 
+    if (idUsuario) {
+      obtenerEntregasEstudiante();
+    }
+  }, [id_plan_entrega, idUsuario]);
+   
   const handleFileInput = (e) => {
     const files = e.target.files;
     handleFiles(files);
@@ -102,7 +122,7 @@ export default function EntregaEstudiante() {
       descripcion,
       ruta_documento: rutaDocumento,
     };
-    console.log(data);
+
     
     try {
       const res = await fetch('http://localhost:5001/entrega/subir', {
@@ -151,57 +171,102 @@ export default function EntregaEstudiante() {
   };
 
   return (
-    <div className="min-h-screen bg-green-100 p-8 font-sans">
-      <h1 className="text-3xl font-bold text-green-800 mb-6">Subir Entrega</h1>
+  <div className="contenedor-entregas-verdes">
+    {entregasAnteriores.length > 0 ? (
+      <>
+        <h2 className="titulo-entregas-verdes">Entregas para este plan</h2>
+        {errorEntregas && <p className="error-entregas-verdes">{errorEntregas}</p>}
 
-      <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-6">
-        <div>
-          <label className="block text-green-700 font-semibold mb-1">Descripción</label>
-          <input
-            type="text"
-            placeholder="Escribe una descripción"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            className="w-full border border-green-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
+        <div className="lista-tarjetas-verdes">
+          {entregasAnteriores.map((entrega) => (
+            <div key={entrega.id_entrega} className="tarjeta-entrega-verde">
+              <p><span className="etiqueta-verde">ID:</span> {entrega.id_entrega}</p>
+              <p><span className="etiqueta-verde">Fecha Envío:</span> {new Date(entrega.fecha_envio).toLocaleDateString()}</p>
+              <p><span className="etiqueta-verde">Descripción:</span> {entrega.descripcion}</p>
+              <p>
+                <a
+                  href={`http://localhost:5001${entrega.ruta_documento}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="enlace-documento-verde"
+                >
+                  📄Ver documento
+                </a>
+              </p>
+
+              {entrega.retroalimentacion && (
+                <p><span className="etiqueta-verde">Retroalimentación:</span> {entrega.retroalimentacion}</p>
+              )}
+
+              {entrega.ruta_retroalimentacion && (
+                <p>
+                  <a
+                    href={`http://localhost:5001${entrega.ruta_retroalimentacion}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="enlace-documento-verde"
+                  >
+                    📄Ver documento de retroalimentación
+                  </a>
+                </p>
+              )}
+            </div>
+          ))}
         </div>
 
-
-        <div
-          className="border-2 border-dashed border-green-400 rounded-xl p-6 text-center cursor-pointer hover:bg-green-50"
-          onClick={() => inputRef.current.click()}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-        >
-          <p className="text-green-700 text-lg font-semibold mb-2">Arrastra y suelta tu archivo aquí</p>
-          <p className="text-sm text-green-600">O haz clic para seleccionar</p>
-          <input
-            type="file"
-            hidden
-            ref={inputRef}
-            onChange={handleFileInput}
-            accept=".pdf,.doc,.docx"
-          />
-        </div>
-
-        {preview.length > 0 && (
-          <div className="bg-green-50 rounded p-4 space-y-4 border border-green-200">
-            {preview.map((file) => (
-              <div key={file.id} className="flex flex-col text-green-800">
-                <span className="font-semibold">{file.name}</span>
-                <span className="text-sm">{renderStatus(file)}</span>
-              </div>
-            ))}
+        <button className="boton-editar-verde">Editar entregas</button>
+      </>
+    ) : (
+      <>
+        <h1 className="titulo-subida-verde">Subir Entrega</h1>
+        <div className="formulario-subida-verde">
+          <div className="campo-formulario-verde">
+            <label className="label-verde">Descripción</label>
+            <input
+              type="text"
+              placeholder="Escribe una descripción"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+              className="input-verde"
+            />
           </div>
-        )}
 
-        <button
-          onClick={handleGuardar}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded"
-        >
-          Subir Entrega
-        </button>
-      </div>
-    </div>
-  );
+          <div
+            className="zona-drop-verde"
+            onClick={() => inputRef.current.click()}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <p className="drop-titulo-verde">Arrastra y suelta tu archivo aquí</p>
+            <p className="drop-subtitulo-verde">O haz clic para seleccionar</p>
+            <input
+              type="file"
+              hidden
+              ref={inputRef}
+              onChange={handleFileInput}
+              accept=".pdf,.doc,.docx"
+            />
+          </div>
+
+          {preview.length > 0 && (
+            <div className="preview-verde">
+              {preview.map((file) => (
+                <div key={file.id} className="archivo-verde">
+                  <span className="archivo-nombre-verde">{file.name}</span>
+                  <span className="archivo-estado-verde">{renderStatus(file)}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button onClick={handleGuardar} className="boton-subida-verde">
+            Subir Entrega
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+
+
+);
 }

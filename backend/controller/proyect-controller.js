@@ -4,16 +4,17 @@ import { ProyectModel } from "../models/proyect-model.js";
 export class ProyectController{
     static async createProyect(req,res){
         const result = validateProyect(req.body);
-
+        console.log(req.body);
+        
         if(!result.success){
-            return res.status(401).json({error: 'error con los datos del docente'});
+            return res.status(401).json({error: 'error con los datos del proyecto'});
         }
 
-        const {titulo, tipo, ruta_documento, id_estudiante} = result.data;
+        const {title, tipo, rutaDocumento, idEstudiante} = result.data;
 
         try{
-            const proyecto = await ProyectModel.createProyect({titulo, tipo, ruta_documento, id_estudiante});
-            return res.status(200).json({message: 'Proyecto registrado con exito'})
+            const proyecto = await ProyectModel.createProyect({title, tipo, rutaDocumento, idEstudiante});
+            return res.status(200).json({message: 'Proyecto registrado con exito', proyecto})
         } catch(error){
             console.log(error);
             res.status(500).json({message: 'Error al registrar proyecto'})
@@ -21,13 +22,10 @@ export class ProyectController{
     }
 
     static async getProyectosAsignados(req, res) {
-
         const {id_usuario} = req.params;
-        console.log(id_usuario);
-        
+
         try{
             const proyectos = await ProyectModel.obtenerProyectosAsignados(id_usuario);
-            console.log(proyectos);
             
             if(proyectos.length === 0){
                 return res.status(400).json({message: 'No tienes proyectos todavía'});
@@ -42,7 +40,6 @@ export class ProyectController{
 
     static async obtenerProyectos(req, res){
         const {id_usuario} = req.params;
-        console.log(id_usuario);
         
         try{
             const proyecto = await ProyectModel.obtenerProyecto(id_usuario);

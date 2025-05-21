@@ -1,85 +1,76 @@
-import { db } from "../db.js";
+import { Teacher, User, Project, Student } from '../shared/schemas.js';
+import { db } from '../db.js';
 
-export class ProyectModel{
-    static async createProyect({titulo, tipo, ruta_documento, id_estudiante }){
-        const connection = await db.getConnection();
+export class ProyectModel {
+  // Crear proyecto
+  static async createProyect({ title, tipo, rutaDocumento, idEstudiante }) {
+    try {
+      const existingProyect = await Project.findOne({ where: { title } });
+      if (existingProyect) throw new Error("El título ya existe");
 
-        try{
-            await connection.beginTransaction();
+      const studentProject = await Project.findOne({ where: { idEstudiante } });
+      if (studentProject) throw new Error("El estudiante ya tiene un proyecto registrado");
 
-            const [existingProyect] = await connection.query(
-                'SELECT titulo FROM Proyecto WHERE titulo = ?', [titulo]
-            );
-
-            const [existingStudent] = await connection.query(
-                'SELECT id_estudiante FROM Proyecto WHERE id_estudiante = ?', [id_estudiante]
-            );
-
-            if(existingProyect.length > 0) { throw new Error('El titulo ya existe');}
-            if(existingStudent.length > 0) { throw new Error('El estudiante ya tiene un proyecto registrado') }
-
-            await connection.query(
-                'INSERT INTO Proyecto(titulo, tipo, estado, ruta_documento, id_estudiante) VALUES (?, ?, ?, ?, ?)',
-                [titulo, tipo, 'EN REVISIÓN', ruta_documento, id_estudiante]
-            );
-            await connection.commit();
-            return {titulo, tipo, id_estudiante, ruta_documento}
-        }catch(error){
-            await connection.rollback();
-            throw new Error('Error al registrar proyecto' + error)
-        } finally {
-            connection.release();
-        }
+      const nuevoProyecto = await Project.create({
+        title,
+        tipo,
+        estado: "EN REVISIÓN",
+        rutaDocumento,
+        idEstudiante
+      });
+      console.log(nuevoProyecto);
+ 
+      return nuevoProyecto;
+    } catch (error) {
+      throw new Error("Error al registrar proyecto: " + error.message);
     }
+  }
 
-    static async obtenerProyecto(id_usuario) {
-      const connection = await db.getConnection();
-      const [studentResult] = await connection.query(
-            `SELECT id_estudiante FROM Estudiante WHERE id_usuario = ?`,
-            [id_usuario]
-        );
+  // Obtener proyecto por id_usuario
+  static async obtenerProyecto(idUser) {
+    console.log("Model - idUser recibido:", idUser);
+    
+    try {
+      const student = await Student.findOne({ where: { idUser } });
 
-        if (studentResult.length === 0) {
-            throw new Error("No se encontró un estudiante con ese usuario.");
-        }
+      if (!student) throw new Error("No se encontró un estudiante con ese usuario.");
+      console.log(student);
+      
+      const proyecto = await Project.findOne({
+        where: { idEstudiante: student.idEstudiante },
+        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante"]
+      });
 
-      const id_estudiante = studentResult[0].id_estudiante;
-      try{
-        const [proyecto] =  await connection.query(`
-          SELECT id_proyecto, titulo,estado, ruta_documento, id_estudiante FROM Proyecto WHERE id_estudiante = ?`,
-          [id_estudiante]
-        );
-        await connection.commit();
-        return proyecto;
-      }catch (error){
-        console.log('error con consulta del proyecto', error);
-        
-      }
+      return proyecto;
+    } catch (error) {
+      throw new Error("Error al obtener proyecto: " + error.message);
     }
-    static async obtenerProyectosAsignados(id_usuario) {
+  }
+  
+  static async obtenerProyectosAsignados(id_usuario) {
 
       const connection = await db.getConnection();
       try {
         
         const [docenteResult] = await connection.query(
-        `SELECT id_docente FROM Docente WHERE id_usuario = ?`, 
-        [id_usuario]
+          "SELECT idDocente FROM teachers WHERE idUser = ?", 
+          [id_usuario]
         );
 
         if (docenteResult.length === 0) {
           throw new Error("No se encontró un docente con ese usuario.");
         }
-        const id_docente = docenteResult[0].id_docente;
+        const id_docente = docenteResult[0].idDocente;
         const [rows] = await connection.query(`
           SELECT 
-            p.id_proyecto,
-            p.titulo,
-            p.estado,
-            u.nombre AS estudiante
-          FROM Proyecto p
-          JOIN Estudiante e ON e.id_estudiante = p.id_estudiante
-          JOIN Usuario u ON u.id_usuario = e.id_usuario
-          WHERE p.id_docente = ?
+              p.idProyecto, 
+              p.title AS titulo, 
+              p.estado, 
+              u.nombre AS estudiante
+          FROM projects p
+          JOIN students s ON s.idEstudiante = p.idEstudiante
+          JOIN users u ON u.idUsers = s.idUser
+          WHERE p.idDocente = ?
         `, [id_docente]);
         await connection.commit();
         return rows;
@@ -87,7 +78,8 @@ export class ProyectModel{
         throw new Error("Error al obtener proyectos asignados: " + error.message);
       } finally {
         connection.release();
-      }
-    }
+      }
+    }
+
 
 }

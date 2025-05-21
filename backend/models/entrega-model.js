@@ -1,107 +1,115 @@
 import { db } from "../db.js";
+import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
 
 export class EntregaModel{
-    static async crearPlanEntrega(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite ) {
-        console.log(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite);
-        
-        const connection = await db.getConnection();
-        try{
-            await connection.beginTransaction();
-            await connection.query(
-            `INSERT INTO PlanEntrega (id_proyecto, nro_entrega, titulo, descripcion, fecha_limite) VALUES (?, ?, ?, ?, ?)`,
-            [id_proyecto, nro_entrega, titulo, descripcion, fecha_limite]);
+    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite) {
+        try {
+        const nuevoPlan = await PlanEntrega.create({
+            idProyecto,
+            nro_entrega,
+            titulo,
+            descripcion,
+            fecha_limite
+        });
 
-            await connection.commit();
-            return {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite}
-        } catch(error){
-            await connection.rollback();
-            throw new Error('Error al registrar plan de entrega' + error)
-        } finally {
-            connection.release();
+        return nuevoPlan;
+        } catch (error) {
+        throw new Error('Error al registrar plan de entrega: ' + error.message);
         }
     }
 
-    static async obtenerPlanesPorProyecto(id_proyecto) {
-        const sql = `SELECT * FROM PlanEntrega WHERE id_proyecto = ?`;
-        const [result] = await db.execute(sql, [id_proyecto]);
-        return result;
-    }
-
-    static async obtenerEntregasPorEstudiante(id_usuario) {
-        const connection = await db.getConnection();
-
-        const [studentResult] = await connection.query(
-        `SELECT id_estudiante FROM Estudiante WHERE id_usuario = ?`, 
-        [id_usuario]
-        );
-
-        if (studentResult.length === 0) {
-            throw new Error("No se encontró un estudiante con ese usuario.");
-        }
-        const id_estudiante = studentResult[0].id_estudiante;
-        
-        const [rows] = await connection.query(`
-            SELECT 
-            pe.id_plan_entrega, 
-            pe.nro_entrega, 
-            pe.titulo, 
-            pe.descripcion, 
-            pe.fecha_limite
-            FROM PlanEntrega pe
-            JOIN Proyecto p ON pe.id_proyecto = p.id_proyecto
-            WHERE p.id_estudiante = ?`, [id_estudiante]
-        );
-        await connection.commit();
-        console.log(rows);
-        
-        return rows;
-    }
-
-    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion ) {
-
-        const connection = await db.getConnection();
-
-        const [studentResult] = await connection.query(
-            `SELECT id_estudiante FROM Estudiante WHERE id_usuario = ?`,
-            [id_usuario]
-        );
-
-        if (studentResult.length === 0) {
-            throw new Error("No se encontró un estudiante con ese usuario.");
-        }
-
-        const id_estudiante = studentResult[0].id_estudiante;
+    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion) {
 
         try {
-            await connection.beginTransaction();
+            const estudiante = await Student.findOne({
+                where: { idUser: id_usuario }
+            });
+            console.log(estudiante);
             
-            const [planResult] = await connection.query(
-                `SELECT fecha_limite FROM PlanEntrega WHERE id_plan_entrega = ?`,
-                [id_plan_entrega]
-            );
+            if (!estudiante) {
+                throw new Error("No se encontró un estudiante con ese usuario.");
+            }
 
-            if (planResult.length === 0) {
+            const id_estudiante = estudiante.idEstudiante;
+
+            const plan = await PlanEntrega.findByPk(id_plan_entrega);
+
+            if (!plan) {
                 throw new Error("No se encontró el plan de entrega.");
             }
 
-            const fecha_limite = new Date(planResult[0].fecha_limite);
+            const fecha_limite = new Date(plan.fecha_limite);
+            const ahora = new Date();
 
-            // 3. Validar fecha límite
-            const dateNow = new Date();
-            if (dateNow > fecha_limite) {
-                throw new Error('La fecha límite expiró.');
+            if (ahora > fecha_limite) {
+                throw new Error("La fecha límite expiró.");
             }
 
-            // 5. Insertar entrega
-            await connection.query(
-                `INSERT INTO Entrega(id_plan_entrega, id_estudiante, fecha_envio, ruta_documento, descripcion) 
-                VALUES (?, ?, NOW(), ?, ?)`,
-                [id_plan_entrega, id_estudiante, ruta_documento, descripcion]
-            );
-
-            await connection.commit();
-            return { success: true };
+            const entrega = await Entrega.create({
+                id_plan_entrega,
+                id_estudiante,
+                fecha_envio: ahora,
+                ruta_documento,
+                descripcion
+            });
+            return entrega;
         } catch (error) {
+        await t.rollback();
+        throw new Error("Error al registrar entrega: " + error.message);
+        }
+    }
+
+    static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion){
+        try {
+        const entrega = await Entrega.findByPk(id_entrega);
+        
+        if (!entrega) {
+        throw new Error('Entrega no encontrada.');
+        }
+
+        entrega.retroalimentacion = retroalimentacion;
+        entrega.ruta_retroalimentacion = ruta_retroalimentacion;
+
+        await entrega.save();
+
+        return { success: true, message: 'Retroalimentación guardada correctamente.' };
+        } catch (error) {
+            console.error('Error al agregar retroalimentación:', error);
+            return { success: false, message: error.message };
+        }
+    }
+
+
+    static async obtenerEntregasPorEstudiante(id_usuario) {
+        const connection = await db.getConnection();
+        
+        try{
+            const [studentResult] = await connection.query(
+            `SELECT idEstudiante FROM students WHERE idUser = ?`, 
+            [id_usuario]
+            );
+            console.log(studentResult);
+            
+            if (studentResult.length === 0) {
+                throw new Error("No se encontró un estudiante con ese usuario.");
+            }
+            const id_estudiante = studentResult[0].idEstudiante;
+            
+            const [rows] = await connection.query(`
+                SELECT 
+                pe.id_plan_entrega, 
+                pe.nro_entrega, 
+                pe.titulo, 
+                pe.descripcion, 
+                pe.fecha_limite
+                FROM plan_entregas pe
+                JOIN projects p ON pe.idProyecto = p.idProyecto
+                WHERE p.idEstudiante = ?`, [id_estudiante]
+            );
+            console.log(rows);
+            
+            return rows;
+        } catch(error){
             await connection.rollback();
             throw new Error("Error al registrar entrega: " + error.message);
         } finally {
@@ -109,18 +117,18 @@ export class EntregaModel{
         }
     }
 
-
     static async obtenerPlanesEntrega(id_proyecto){
         const connection = await db.getConnection();
         try {
         const [rows] = await connection.query(
-            "SELECT * FROM PlanEntrega WHERE id_proyecto = ?",
+            "SELECT * FROM plan_entregas WHERE idProyecto = ?",
             [id_proyecto]
         );
-        await connection.commit();
         return rows;
         } catch (error) {
             console.error("Error al obtener entregas por proyecto:", error);
+        } finally {
+            connection.release();
         }
     }
 
@@ -128,16 +136,17 @@ export class EntregaModel{
         const connection = await db.getConnection();
         try{
             const [rows] = await connection.query(`
-                SELECT E.id_entrega, E.fecha_envio, E.ruta_documento, E.descripcion, E.id_estudiante
-                FROM Entrega E
-                JOIN PlanEntrega PE ON E.id_plan_entrega = PE.id_plan_entrega
+                SELECT E.idEntrega, E.fecha_envio, E.ruta_documento, E.descripcion, E.id_estudiante, E.retroalimentacion, E.ruta_retroalimentacion
+                FROM entregas E
+                JOIN plan_entregas PE ON E.id_plan_entrega = PE.id_plan_entrega
                 WHERE PE.id_plan_entrega = ?`, [id_plan_entrega]
             );
 
-            await connection.commit();
             return rows;
         } catch(error){
             console.log('Error al obtener consulta de entregas', error);
+        } finally{
+            connection.release();
         }
         
     }
@@ -145,26 +154,26 @@ export class EntregaModel{
         const connection = await db.getConnection();
 
         const [studentResult] = await connection.query(
-            `SELECT id_estudiante FROM Estudiante WHERE id_usuario = ?`,
+            `SELECT idEstudiante FROM students WHERE idUser = ?`,
             [id_usuario]
         );
         if (studentResult.length === 0) {
             throw new Error("No se encontró un estudiante con ese usuario.");
         }
-        const id_estudiante = studentResult[0].id_estudiante;
+        const id_estudiante = studentResult[0].idEstudiante;
 
         try{
             const [fechas] = await connection.query(`
                 SELECT pe.fecha_limite, pe.titulo 
-                FROM PlanEntrega pe
-                INNER JOIN Proyecto p ON pe.id_proyecto = p.id_proyecto
-                WHERE p.id_estudiante = ?`, [id_estudiante]
+                FROM plan_entregas pe
+                INNER JOIN projects p ON pe.idProyecto = p.idProyecto
+                WHERE p.idEstudiante = ?`, [id_estudiante]
             );
-            await connection.commit();
             return fechas;
         } catch(error){
-            console.log('Error en conslta de fecha', error);
-            
+            console.log('Error en consulta de fecha', error);
+        } finally{
+            connection.release();
         }
     } 
 }

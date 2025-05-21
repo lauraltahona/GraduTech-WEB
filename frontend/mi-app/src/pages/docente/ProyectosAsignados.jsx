@@ -28,9 +28,9 @@ export default function ProyectosAsignados() {
     }
   }, [idUsuario]);
 
-  const irAPlanEntrega = (id_proyecto) => {
-    localStorage.setItem("id_proyecto", id_proyecto);
-    navigate("/planEntrega"); // Asegúrate que esta ruta existe
+  const irAPlanEntrega = (idProyecto) => {
+    localStorage.setItem("id_proyecto", idProyecto);
+    navigate("/planEntrega"); 
   };
 
   return (
@@ -51,13 +51,13 @@ export default function ProyectosAsignados() {
           </thead>
           <tbody>
             {proyectos.map((proyecto) => (
-              <tr key={proyecto.id_proyecto}>
-                <td>{proyecto.id_proyecto}</td>
-                <td>{proyecto.titulo}</td>
+              <tr key={proyecto.idProyecto}>
+                <td>{proyecto.idProyecto}</td>
+                <td>{proyecto.title}</td>
                 <td>{proyecto.estado}</td>
                 <td>{proyecto.estudiante}</td>
                 <td>
-                  <button onClick={() => irAPlanEntrega(proyecto.id_proyecto)}>Planear entrega</button>
+                  <button onClick={() => irAPlanEntrega(proyecto.idProyecto)}>Planear entrega</button>
                 </td>
               </tr>
             ))}
