@@ -13,7 +13,7 @@ export default function MiProyecto() {
         return res.json();
       })
       .then((data) => {
-        setProyecto(data[0]);
+        setProyecto(data);
       })
       .catch((error) => {
         console.error("Error al obtener el proyecto:", error);
@@ -35,7 +35,7 @@ export default function MiProyecto() {
       <div className="tarjeta">
         <div className="seccion">
           <h2>Título</h2>
-          <p>{proyecto.titulo}</p>
+          <p>{proyecto.title}</p>
         </div>
 
         <div className="seccion">
@@ -46,7 +46,7 @@ export default function MiProyecto() {
         <div className="seccion">
           <h2>Documento</h2>
           <a
-            href={`http://localhost:5001${proyecto.ruta_documento}`}
+            href={`http://localhost:5001${proyecto.rutaDocumento}`}
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -41,23 +41,23 @@ export const Teacher = sequelize.define('teachers', {
     type: DataTypes.ENUM('DISPONIBLE', 'NO DISPONIBLE'),
     allowNull: false
   },
-  idUserDocente: { type: DataTypes.INTEGER, references: { model: User, key: 'idUsers' } },
+  idUser: { type: DataTypes.INTEGER, references: { model: User, key: 'idUsers' } },
   carrera: { type: DataTypes.STRING(50) }
 });
 
 export const Jury = sequelize.define('jurys', {
   idJurado: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  idUserJury: { type: DataTypes.INTEGER, references: { model: User, key: 'idUsers' } },
+  idUser: { type: DataTypes.INTEGER, references: { model: User, key: 'idUsers' } },
   carrera: { type: DataTypes.STRING(50) }
 });
 
 export const Project = sequelize.define('projects', {
-  idProject: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  idProyecto: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING(60) },
   tipo: { type: DataTypes.STRING(40) },
   estado: { type: DataTypes.ENUM('APROBADO', 'EN REVISIÓN') },
-  rutaDocumento: { type: DataTypes.STRING(20) },
-  idUserProjec: {
+  rutaDocumento: { type: DataTypes.STRING(250) },
+  idEstudiante: {
     type: DataTypes.STRING(20),
     references: { model: Student, key: 'idEstudiante' }
   },
@@ -69,12 +69,12 @@ export const Project = sequelize.define('projects', {
 
 export const PlanEntrega = sequelize.define('plan_entrega', {
   id_plan_entrega: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  id_proyecto: {
+  idProyecto: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: Project,
-      key: 'idProject'
+      key: 'idProyecto'
     }
   },
   nro_entrega: { type: DataTypes.INTEGER },
@@ -84,7 +84,7 @@ export const PlanEntrega = sequelize.define('plan_entrega', {
 });
 
 export const Entrega = sequelize.define('entrega', {
-  id_entrega: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  idEntrega: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   id_plan_entrega: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -114,3 +114,40 @@ export async function syncModels() {
     console.error('❌ Error sincronizando modelos:', err);
   }
 }
+
+// Definir relaciones entre modelos
+User.belongsTo(Rol, { foreignKey: 'idRol' });
+Rol.hasMany(User, { foreignKey: 'idRol' });
+
+User.belongsToMany(Rol, { through: UsersRols, foreignKey: 'idUsersRol' });
+Rol.belongsToMany(User, { through: UsersRols, foreignKey: 'idRols' });
+
+UsersRols.belongsTo(Rol, { foreignKey: 'idRols' });
+UsersRols.belongsTo(User, { foreignKey: 'idUsersRol' });
+
+Rol.hasMany(UsersRols, { foreignKey: 'idRols' });
+User.hasMany(UsersRols, { foreignKey: 'idUsersRol' });
+
+Student.belongsTo(User, { foreignKey: 'idUser' });
+User.hasOne(Student, { foreignKey: 'idUser' });
+
+Teacher.belongsTo(User, { foreignKey: 'idUser' });
+User.hasOne(Teacher, { foreignKey: 'idUser' });
+
+Jury.belongsTo(User, { foreignKey: 'idUser' });
+User.hasOne(Jury, { foreignKey: 'idUser' });
+
+Project.belongsTo(Student, { foreignKey: 'idEstudiante' });
+Student.hasMany(Project, { foreignKey: 'idEstudiante' });
+
+Project.belongsTo(Teacher, { foreignKey: 'idDocente' });
+Teacher.hasMany(Project, { foreignKey: 'idDocente' });
+
+PlanEntrega.belongsTo(Project, { foreignKey: 'idProyecto' });
+Project.hasMany(PlanEntrega, { foreignKey: 'idProyecto' });
+
+Entrega.belongsTo(PlanEntrega, { foreignKey: 'id_plan_entrega' });
+PlanEntrega.hasMany(Entrega, { foreignKey: 'id_plan_entrega' });
+
+Entrega.belongsTo(Student, { foreignKey: 'id_estudiante' });
+Student.hasMany(Entrega, { foreignKey: 'id_estudiante' });

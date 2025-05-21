@@ -5,10 +5,10 @@ Content-Type: application/json
 {
     "id_estudiante": "12345678",
     "carrera": "Ingeniería de Sistemas",
-    "semestre": 9,
+    "semestre": 5,
     "usuario": {
-    "nombre": "Juan Peralta",
-    "correo": "jperalta@unicesar.edu.co",
+    "nombre": "Laura Victoria Altahona",
+    "correo": "lau@unicesar.edu.co",
     "contraseña": "hola1234"
     }
 }
@@ -18,13 +18,13 @@ POST http://localhost:5001/docente
 Content-Type: application/json
 
 {
-    "id_docente": "1234564490",
+    "id_docente": "01236547",
     "profesion": "Docente",
     "disponibilidad": "DISPONIBLE",
     "usuario": {
-    "nombre": "Pablo Guerra",
-    "correo": "pablo@unicesar.edu.co",
-    "contraseña": "hola123"
+    "nombre": "Pedro Sanchez",
+    "correo": "pedro@unicesar.edu.co",
+    "contraseña": "hola1235"
     }
 
 }
