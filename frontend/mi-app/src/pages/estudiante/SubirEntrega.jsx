@@ -193,6 +193,23 @@ export default function EntregaEstudiante() {
                   📄Ver documento
                 </a>
               </p>
+
+              {entrega.retroalimentacion && (
+                <p><span className="etiqueta-verde">Retroalimentación:</span> {entrega.retroalimentacion}</p>
+              )}
+
+              {entrega.ruta_retroalimentacion && (
+                <p>
+                  <a
+                    href={`http://localhost:5001${entrega.ruta_retroalimentacion}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="enlace-documento-verde"
+                  >
+                    📄Ver documento de retroalimentación
+                  </a>
+                </p>
+              )}
             </div>
           ))}
         </div>

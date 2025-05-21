@@ -103,6 +103,14 @@ export const Entrega = sequelize.define('entrega', {
       model: Student,
       key: 'idEstudiante'
     }
+  }, 
+  retroalimentacion: {
+  type: DataTypes.TEXT,
+  allowNull: true,
+  },
+  ruta_retroalimentacion: {
+  type: DataTypes.STRING(250),
+  allowNull: true,
   }
 });
 

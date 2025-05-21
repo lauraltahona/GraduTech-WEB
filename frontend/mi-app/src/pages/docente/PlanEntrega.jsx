@@ -74,7 +74,7 @@ export default function PlanEntrega() {
         </div>
         <div>
           <label>Título</label>
-          <input name="titulo" value={formData.titulo} onChange={handleChange} />
+          <input name="titulo" value={formData.title} onChange={handleChange} />
         </div>
         <div style={{ gridColumn: '1 / -1' }}>
           <label>Descripción</label>
@@ -93,8 +93,8 @@ export default function PlanEntrega() {
       <div style={{ marginTop: '2rem' }}>
         <h3 style={{ fontWeight: 'bold', marginBottom: '1rem' }}>Planes de entrega ya creados:</h3>
         <ul>
-          {planesExistentes.map((plan) => (
-            <li key={plan.id}>
+          {planesExistentes.map((plan, index) => (
+            <li key={index}>
               <a
                 href={`/entrega-por-plan/${plan.id_plan_entrega}`} // Asegúrate de tener esta ruta configurada en tu app
                 style={{ color: 'blue', textDecoration: 'underline' }}

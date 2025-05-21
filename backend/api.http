@@ -3,7 +3,7 @@ POST http://localhost:5001/estudiante
 Content-Type: application/json
 
 {
-    "id_estudiante": "12345678",
+    "id_estudiante": "012345678",
     "carrera": "Ingeniería de Sistemas",
     "semestre": 5,
     "usuario": {
@@ -18,13 +18,14 @@ POST http://localhost:5001/docente
 Content-Type: application/json
 
 {
-    "id_docente": "01236547",
+    "id_docente": "456987231",
     "profesion": "Docente",
     "disponibilidad": "DISPONIBLE",
+    "carrera": "Ingenieria de sistemas",
     "usuario": {
-    "nombre": "Pedro Sanchez",
-    "correo": "pedro@unicesar.edu.co",
-    "contraseña": "hola1235"
+    "nombre": "Pablo Sanchez",
+    "correo": "pablo@unicesar.edu.co",
+    "contraseña": "hola1234"
     }
 
 }
@@ -34,25 +35,34 @@ POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "jperalta@unicesar.edu.co",
+  "correo": "lau@unicesar.edu.co",
   "contraseña": "hola1234"
 }
 
 ### GET
-GET http://localhost:5001/proyectos/asignados/4
+GET http://localhost:5001/proyectos/asignados/2
 
 ###GET ENTREGAS ASIGNADAS
-GET http://localhost:5001/entrega/asignadas/5
+GET http://localhost:5001/entrega/asignadas/1
 
 
 ###GET PLANES DE ENTREGA POR PROYECTO
-GET http://localhost:5001/entrega/proyecto/2
+GET http://localhost:5001/entrega/proyecto/1
 
 ###GET ENTREGA POR PLAN
-GET http://localhost:5001/entrega/entrega-por-plan/8
+GET http://localhost:5001/entrega/entrega-por-plan/1
 
 ###GET MI PROYECTO
-GET http://localhost:5001/proyectos/5
+GET http://localhost:5001/proyectos/1
 
 ### GET FECHAS LIMITES
 GET http://localhost:5001/entrega/fechas/5
+
+### PATCH RETRO
+PATCH http://localhost:5001/entrega/1/retroalimentacion
+Content-Type: application/json
+
+{
+  "retroalimentacion": "cambiar objetivos",
+  "ruta_retroalimentacion": "'/files/proyectodeinvestigacian.pdf'"
+}

@@ -28,11 +28,9 @@ export class EntregaController{
     static async subirEntrega(req, res){
 
         const {id_plan_entrega, id_usuario, ruta_documento, descripcion } = req.body;
+        
         try{
             const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion);
-            if(!result.success){
-                return res.status(500).json({message: 'no se puedo guardar entrega'});
-            }
             return res.status(200).json({message: 'Entrega subida con exito'});
         } catch(error){
             console.log('error al registrar entrega', error);
@@ -40,6 +38,22 @@ export class EntregaController{
         }
     }
 
+    static async comentarRetroalimentación(req, res){
+        const {idEntrega} = req.params;
+
+        const { retroalimentacion, ruta_retroalimentacion} = req.body;
+
+        try{
+            const result = await EntregaModel.comentarRetroalimentación(idEntrega, retroalimentacion, ruta_retroalimentacion);
+            if(!result.success){
+                return res.status(500).json({message: 'No se pudo comentar retroalimentación'});
+            }
+            return res.status(200).json({message: 'Retroalimentación guardada correctamente'});
+        } catch(error){
+            console.log(error);
+            res.status(500).json({error: error.message});
+        }
+    }
     static async obtenerPlanesEntrega(req, res){
         const {id_proyecto} = req.params;
 

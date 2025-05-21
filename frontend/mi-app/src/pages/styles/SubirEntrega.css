@@ -1,6 +1,6 @@
 .tarjeta-entrega-verde {
   background-color: #ffffff;
-  border: 2px solid #b6e2c5;
+  border: 2px solid #bae2b6;
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 6px 15px rgba(32, 120, 68, 0.1);
@@ -22,7 +22,7 @@
   left: 0;
   height: 6px;
   width: 100%;
-  background: linear-gradient(to right, #a7f3d0, #34d399);
+  background: linear-gradient(to right, #a7f3d0, #34d351);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }

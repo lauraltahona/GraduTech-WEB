@@ -16,5 +16,6 @@ entregaRouter.post('/subir', EntregaController.subirEntrega);
 entregaRouter.get('/proyecto/:id_proyecto', EntregaController.obtenerPlanesEntrega);
 entregaRouter.get('/entrega-por-plan/:id_plan_entrega', EntregaController.obtenerEntregasPorPlan);
 entregaRouter.get('/fechas/:id_usuario', EntregaController.obtenerFechaLimite);
+entregaRouter.patch('/:idEntrega/retroalimentacion', EntregaController.comentarRetroalimentación);
 
 export default entregaRouter;

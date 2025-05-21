@@ -46,11 +46,7 @@ export class ProyectModel {
       throw new Error("Error al obtener proyecto: " + error.message);
     }
   }
-
-  // Obtener proyectos asignados a un docente por id_usuario
-  // Definir asociaciones con alias (esto en la definición de modelos)
-
-  // Función corregida
+  
   static async obtenerProyectosAsignados(id_usuario) {
 
       const connection = await db.getConnection();
