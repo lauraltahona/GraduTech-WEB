@@ -36,6 +36,9 @@ function Login() {
       if(user.rol === 'Docente'){
         navigate('/proyectosAsignados');
       }
+      if(user.rol === 'Administrador'){
+        navigate('/menuAdmin');
+      }
     } else {
       alert('Credenciales incorrectas');
       throw new Error(`Error ${response.status}: ${await response.text()}`);
