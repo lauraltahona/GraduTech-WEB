@@ -12,12 +12,17 @@ import ProyectosAsignados from './pages/docente/ProyectosAsignados.jsx';
 import EntregasEstudiante from './pages/estudiante/EntregasEstudiante.jsx';
 import SubirEntrega from './pages/estudiante/SubirEntrega.jsx';
 import EntregasPorPlan from './pages/docente/EntregaPorPlan.jsx';
+import MenuAdmin from './pages/admin/MenuAdmin.jsx';
+import RegistrarEstudiante from './pages/admin/RegistrarEstudiante.jsx';
+
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/homeEstudiante" element={<HomeEstudiante />} />
+
         <Route path="/menuEstudiante" element={<MenuEstudiante />}>
           <Route path="registrarProyecto" element={<ProyectoEstudiante />} />
           <Route path= "miProyecto" element={<MiProyecto />}/>
@@ -26,9 +31,19 @@ function App() {
           <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
           <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />
         </Route>
+
         <Route path="/proyectosAsignados" element={<ProyectosAsignados />} />
         <Route path="/planEntrega" element={<PlanEntrega />} />
         <Route path="/entrega-por-plan/:id_plan_entrega" element={<EntregasPorPlan />} />
+
+        <Route path="/menuAdmin" element={<MenuAdmin />}>
+          <Route path="registrarEstudiante" element={<RegistrarEstudiante />} />
+          <Route path= "miProyecto" element={<MiProyecto />}/>
+          <Route path= "revisionJurados" element={<RevisionJurados />}/>
+          <Route path= "calendario" element={<Calendario />}/>
+          <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
+          <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />
+        </Route>
       </Routes>
     </Router>
   );
