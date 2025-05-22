@@ -43,8 +43,8 @@ export class TeacherModel {
           idDocente: id_docente,
           profesion,
           disponibilidad,
-          idUser: user.idUsers,
           carrera,
+          idUser: user.idUsers,
         },
         { transaction: t }
       );
@@ -67,6 +67,7 @@ export class TeacherModel {
         nombre: usuario.nombre,
         profesion,
         disponibilidad,
+        carrera,
       };
     } catch (error) {
       await t.rollback();

@@ -14,7 +14,8 @@ import SubirEntrega from './pages/estudiante/SubirEntrega.jsx';
 import EntregasPorPlan from './pages/docente/EntregaPorPlan.jsx';
 import MenuAdmin from './pages/admin/MenuAdmin.jsx';
 import RegistrarEstudiante from './pages/admin/RegistrarEstudiante.jsx';
-
+import RegistrarDocente from './pages/admin/RegistrarDocente.jsx';
+import AsignarDocente from './pages/admin/AsignarDocente.jsx';
 
 function App() {
   return (
@@ -38,8 +39,8 @@ function App() {
 
         <Route path="/menuAdmin" element={<MenuAdmin />}>
           <Route path="registrarEstudiante" element={<RegistrarEstudiante />} />
-          <Route path= "miProyecto" element={<MiProyecto />}/>
-          <Route path= "revisionJurados" element={<RevisionJurados />}/>
+          <Route path= "registrarDocente" element={<RegistrarDocente />}/>
+          <Route path= "asignarDocente" element={<AsignarDocente />}/>
           <Route path= "calendario" element={<Calendario />}/>
           <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
           <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />

@@ -53,7 +53,7 @@ export const Jury = sequelize.define('jurys', {
 
 export const Project = sequelize.define('projects', {
   idProyecto: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  title: { type: DataTypes.STRING(60) },
+  title: { type: DataTypes.STRING(60), unique: true },
   tipo: { type: DataTypes.STRING(40) },
   estado: { type: DataTypes.ENUM('APROBADO', 'EN REVISIÓN') },
   rutaDocumento: { type: DataTypes.STRING(250) },
