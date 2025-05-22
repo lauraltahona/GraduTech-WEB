@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login.jsx';
+import Login from './pages/login.jsx';
 import HomeEstudiante from './pages/estudiante/HomeEstudiante.jsx';
 import MenuEstudiante from './pages/estudiante/MenuEstudiante.jsx';
 import ProyectoEstudiante from './pages/estudiante/RegistrarProyecto.jsx';
