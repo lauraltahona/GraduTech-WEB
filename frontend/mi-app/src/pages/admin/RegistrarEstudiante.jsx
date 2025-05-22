@@ -15,25 +15,30 @@ const RegistrarEstudiante = () => {
   const [mensaje, setMensaje] = useState('');
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (['nombre', 'correo', 'contraseña'].includes(name)) {
-      setForm({ ...form, usuario: { ...form.usuario, [name]: value } });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
+  const { name, value } = e.target;
+
+  if (['nombre', 'correo', 'contraseña'].includes(name)) {
+    setForm({ ...form, usuario: { ...form.usuario, [name]: value } });
+  } else {
+    setForm({
+      ...form,
+      [name]: name === 'semestre' ? parseInt(value, 10) : value
+    });
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3000/estudiante', {
+      const res = await fetch('http://localhost:5001/estudiante', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
       });
 
       const data = await res.json();
-
+      
       if (res.ok) {
         setMensaje(`✅ ${data.message || 'Registrado correctamente'}`);
       } else {
@@ -75,6 +80,7 @@ const RegistrarEstudiante = () => {
           name="semestre"
           placeholder="Semestre"
           type="number"
+          min="1"
           value={form.semestre}
           onChange={handleChange}
           className="w-full border p-2 rounded"

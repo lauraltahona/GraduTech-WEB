@@ -1,6 +1,7 @@
 import { TeacherModel } from "../models/teacher-model.js";
 import { validateTeacher } from "../schemas/docente.js";
 import bcrypt, { hashSync } from "bcryptjs";
+import { TeacherService } from "../service/teacher-service.js";
 
 export class TeacherController{
     static async createTeacher(req, res){
@@ -31,5 +32,16 @@ export class TeacherController{
             res.status(500).json({message: 'Error al registrar docente'})
         }
 
+    }
+
+    static async obtenerDocentesDisponibles(req, res) {
+        try {
+            const lista = await TeacherService.listarDocentesDisponibles();
+            console.log(lista);
+            
+            res.status(200).json(lista);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
 }

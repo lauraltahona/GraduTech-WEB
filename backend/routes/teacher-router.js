@@ -3,5 +3,6 @@ import { TeacherController } from '../controller/teacher-controller.js';
 const teacherRouter = Router();
 
 teacherRouter.post('/', TeacherController.createTeacher);
+teacherRouter.get('/docentes-disponibles', TeacherController.obtenerDocentesDisponibles);
 
 export default teacherRouter;
