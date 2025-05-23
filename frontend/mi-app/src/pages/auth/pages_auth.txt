@@ -1,0 +1,2 @@
+Este directorio dentro de Pages es para almacenar todos los componentes relacionados a la autentificacion de usuario, como por ejemplo:
+Inicio de sesion, registrar, Recuperar contraseña, etc.
