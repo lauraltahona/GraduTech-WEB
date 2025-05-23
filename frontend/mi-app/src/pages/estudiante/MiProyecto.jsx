@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../styles/MiProyecto.css"; // Importamos los estilos
+import "../../styles/MiProyecto.css"; // Importamos los estilos
 
 export default function MiProyecto() {
   const [proyecto, setProyecto] = useState(null);

@@ -1,0 +1,2 @@
+El objetivo del directorio Shared es guardar todos los componentes reutilizables del proyecto, es decir, esos que se van a usar
+en mas de un componente a la vez, sea por ejemplo: Boton, Cuadro de texto, Nav, etc.
