@@ -53,7 +53,7 @@ export class TeacherModel {
       await UsersRols.create(
         {
           idUsersRol: user.idUsers,
-          idRols: 2,
+          idRols: 3,
         },
         { transaction: t }
       );

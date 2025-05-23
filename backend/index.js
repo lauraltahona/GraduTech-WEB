@@ -42,6 +42,7 @@ app.use('/entrega', entregaRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 
+
 app.listen(PORT, ()=>{
     console.log(`escuchando puerto en http://localhost:${PORT}`);
 })

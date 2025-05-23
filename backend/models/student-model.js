@@ -1,5 +1,4 @@
-import { db } from '../db.js'
-import { Rol, Student, User, UsersRols } from '../shared/schemas.js';
+import { Student, User, UsersRols } from '../shared/schemas.js';
 import { UserModel } from './user-model.js';
 
 
@@ -8,7 +7,6 @@ export class StudentModel{
     static async createStudent({id_estudiante, carrera, semestre, usuario}){
         const t = await User.sequelize.transaction();
         try{
-            
             const resultFindByEmail = await UserModel.findbyEmail(usuario.correo) //--> busca el usuario por correo
 
             if(resultFindByEmail) throw new Error('EMAIL_ALREADY_REGISTERED');
