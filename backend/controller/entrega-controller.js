@@ -91,14 +91,14 @@ export class EntregaController{
             console.log('error al obtener fechas', error.message);
         }
     }
-
+// funcion de prueba emails
     static async EmailsSend(req,res){
         try {
             const infoEmail = req.body
             console.log(infoEmail);
             
-            const result = await EmailService.SendEMailPlanEntregaCreado(infoEmail.email,infoEmail.nombre,infoEmail.titulo)
-            console.log(result);
+            const result = await EmailService.SendEmailRetroalimentacionCreada(infoEmail.email,infoEmail.nombre,infoEmail.titulo)
+            
         
             res.status(200).json({message:"correo mandado correctamente"})
         } catch (error) {

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Confirmación de Plan de Entrega</title>
+  <title>Notificación de Entrega del Estudiante</title>
   <style>
     body {
       background-color: #f4f4f4;
@@ -19,14 +19,10 @@
       overflow: hidden;
     }
     .header {
-      background-color: #2e6b3b; /* verde oscuro */
+      background-color: #2e6b3b;
       color: white;
       padding: 20px;
       text-align: center;
-    }
-    .header img {
-      max-width: 50px;
-      margin-bottom: 10px;
     }
     .content {
       padding: 30px;
@@ -44,7 +40,7 @@
       display: inline-block;
       margin-top: 20px;
       padding: 10px 20px;
-      background-color: #a29e00; /* dorado verdoso */
+      background-color: #a29e00;
       color: white;
       text-decoration: none;
       border-radius: 4px;
@@ -58,16 +54,16 @@
       <h1>Gradutech University</h1>
     </div>
     <div class="content">
-      <h2>Confirmación de creación del plan de entrega</h2>
-      <p>Estimado/a estudiante, {{nombre}}</p>
-      <p>Le informamos que su <strong>plan de entrega de su proyecto {{titulo}} </strong> ha sido creado exitosamente en nuestro sistema.</p>
-      <p>Por favor, revise los detalles y asegúrese de cumplir con las fechas establecidas para garantizar el correcto desarrollo de sus compromisos académicos.</p>
-      <a href="#" class="btn">Ver Plan de Entrega</a>
-      <p>Si tiene alguna duda o necesita asistencia, no dude en contactar a su tutor académico.</p>
-      <p>Atentamente,<br> Coordinación Académica</p>
+      <h2>Entrega registrada por el estudiante</h2>
+      <p>Estimado/a tutor/a académico/a,</p>
+      <p>El estudiante <strong>{{nombre}}</strong> ha subido su archivo correspondiente al proyecto <strong>{{titulo}}</strong>.</p>
+      <p>Ya puede revisar el documento desde la plataforma y realizar la retroalimentación correspondiente.</p>
+      {{!-- <a href="#" class="btn">Ver Entrega</a> --}}
+      <p>Gracias por su acompañamiento en el proceso académico.</p>
+      <p>Atentamente,<br> Sistema de Gestión Académica</p>
     </div>
     <div class="footer">
-      © 2025 Universidad Nacional - Todos los derechos reservados<br>
+      © 2025 Universidad Popular del Cesar - Todos los derechos reservados<br>
       Este correo es generado automáticamente. Por favor, no responda a este mensaje.
     </div>
   </div>
