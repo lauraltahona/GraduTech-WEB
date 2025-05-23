@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../../styles/loginStyles.css";
 import { useNavigate } from "react-router-dom";
 import {
@@ -35,11 +35,10 @@ function Login() {
       console.log(user);
 
       alert("Ingresado como " + user.rol);
-      localStorage.setItem("token", result.token); // si tienes token
+      localStorage.setItem("token", result.token);
       localStorage.setItem("userId", user.id_usuario);
       localStorage.setItem("userRol", user.rol);
 
-      // redireccionar según el rol
       if (user.rol === "Estudiante") {
         navigate("/homeEstudiante");
       }
@@ -56,10 +55,10 @@ function Login() {
   };
 
   return (
-  <Card className="card">
+    <form onSubmit={handleSubmit}>
+      <Card className="card">
         <CardHeader className="cardHeader">
           <div className="div3">
-            {/* Espacio para el logo */}
             <div className="div4">Espacio para el logo de tu proyecto</div>
           </div>
           <div className="div5">
@@ -79,6 +78,8 @@ function Login() {
               type="email"
               placeholder="tu@ejemplo.com"
               className="input"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
             />
           </div>
           <div className="div8">
@@ -93,23 +94,23 @@ function Login() {
             <div className="div10">
               <Input
                 id="password"
-                // type={showPassword ? "text" : "password"}
+                type="password"
                 placeholder="••••••••"
                 className="input"
+                value={contraseña}
+                onChange={(e) => setContraseña(e.target.value)}
               />
               <button
                 type="button"
-                // onClick={() => setShowPassword(!showPassword)}
                 className="button1"
-                // aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
-                {/* {showPassword ? <EyeOff size={18} /> : <Eye size={18} />} */}
+                {/* Aquí podrías agregar la lógica de mostrar/ocultar contraseña si lo deseas */}
               </button>
             </div>
           </div>
         </CardContent>
         <div className="div11">
-          <Button className="button2">Iniciar sesión</Button>
+          <Button className="button2" type="submit">Iniciar sesión</Button>
           <p className="p2">
             ¿No tienes una cuenta?{" "}
             <p href="#" className="p3">
@@ -118,25 +119,7 @@ function Login() {
           </p>
         </div>
       </Card>
-
-    // <div>
-    //   <h2>Iniciar sesión</h2>
-    //   <form onSubmit={handleSubmit}>
-    //     <input
-    //       type="email"
-    //       placeholder="Correo"
-    //       value={correo}
-    //       onChange={(e) => setCorreo(e.target.value)}
-    //     />
-    //     <input
-    //       type="password"
-    //       placeholder="Contraseña"
-    //       value={contraseña}
-    //       onChange={(e) => setContraseña(e.target.value)}
-    //     />
-    //     <button type="submit">Ingresar</button>
-    //   </form>
-    // </div>
+    </form>
   );
 }
 

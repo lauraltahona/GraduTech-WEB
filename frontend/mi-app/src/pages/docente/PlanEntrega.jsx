@@ -11,6 +11,8 @@ export default function PlanEntrega() {
   });
 
   const id_proyecto = localStorage.getItem("id_proyecto");
+  const correo_estudiante = localStorage.getItem("correo");
+
 
   useEffect(() => {
     const fetchPlanes = async () => {
@@ -35,6 +37,7 @@ export default function PlanEntrega() {
     const nuevaEntrega = {
       id_proyecto: Number(id_proyecto),
       ...formData,
+      correo: correo_estudiante,
     };
 
     try {

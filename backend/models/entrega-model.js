@@ -1,9 +1,10 @@
 import { db } from "../db.js";
+import { EmailService } from "../service/emailSevice.js";
 import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
 
 export class EntregaModel{
     
-    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite) {
+    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite, correo) {
         try {
         const nuevoPlan = await PlanEntrega.create({
             idProyecto,
@@ -13,6 +14,9 @@ export class EntregaModel{
             fecha_limite
         });
 
+        const email = await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion)
+        console.log(email);
+        
         return nuevoPlan;
         } catch (error) {
         throw new Error('Error al registrar plan de entrega: ' + error.message);

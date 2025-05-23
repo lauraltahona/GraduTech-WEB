@@ -1,7 +1,7 @@
 import {transporter} from '../shared/configEmail.js'
 
 export class EmailService{
-    static async SendEMailPlanEntregaCreado (email,nombre,titulo){
+    static async SendEMailPlanEntregaCreado (email,titulo,descripcion){
         try {
             const emailOptions = {
                 from: process.env.USER_EMAIL,
@@ -9,8 +9,8 @@ export class EmailService{
                 subject:'Se ha creado un plan de entrega. Por favor no responder este correo',
                 template:'EmailPlanEntrega',
                 context:{
-                    nombre,
-                    titulo
+                    titulo,
+                    descripcion
                 }
             }
             await transporter.sendMail(emailOptions)
