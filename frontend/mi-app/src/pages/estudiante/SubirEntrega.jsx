@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import '../styles/SubirEntrega.css'
+import '../../styles/SubirEntrega.css'
 
 export default function EntregaEstudiante() {
   const { id_plan_entrega } = useParams(); 

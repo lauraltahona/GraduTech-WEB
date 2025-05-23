@@ -1,0 +1,2 @@
+El objetivo del directorio Assets es almacenar todas las imagenes utilizadas dentro del proyecto.
+Esto con el objetivo de mantenerlas todas en una misma ubicacion dando mejor organizacion de los archivos.

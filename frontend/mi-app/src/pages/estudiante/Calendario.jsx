@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import '../styles/Calendario.css'; // Asegúrate de tener este archivo
+import '../../styles/Calendario.css'; // Asegúrate de tener este archivo
 
 export default function Calendario({ idEstudiante }) {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);

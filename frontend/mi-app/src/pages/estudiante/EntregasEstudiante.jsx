@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/EntregasEstudiante.css";
+import "../../styles/EntregasEstudiante.css";
 
 function EntregasEstudiante() {
   const [entregas, setEntregas] = useState([]);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import '../styles/Menu.css';
+import '../../styles/Menu.css';
 
 const MenuAdmin = () => {
   return (
