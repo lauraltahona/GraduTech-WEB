@@ -1,15 +1,29 @@
 import nodemailer from 'nodemailer'
+import hbs from 'nodemailer-express-handlebars'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
-const transporter = nodemailer.createTransport({
-    host:'smtp.office362.com',
-    port:387,
-    secure:false,
+// Reemplazo de __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const transporter = nodemailer.createTransport({
+    service:process.env.SERVICE_EMAIL,
+    secure:true,
     auth:{
         user:process.env.USER_EMAIL,
         pass:process.env.PASSWORD_EMAIL
-    },
-    tls:{
-        ciphers:'SSLv3'
     }
-
 })
+
+transporter.use(
+    "compile",
+    hbs({
+    viewEngine: {
+      extname: ".hbs",
+      layoutsDir: "views/",
+      defaultLayout: "",
+    },
+    viewPath: path.join(__dirname, '..', 'views'),
+    })
+)

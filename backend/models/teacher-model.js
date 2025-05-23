@@ -25,7 +25,8 @@ export class TeacherModel {
       if (existingTeacher) {
         throw new Error('TEACHER_ALREADY_REGISTERED');
       }
-
+      console.log();
+      
       // Crear usuario
       const user = await User.create(
         {
@@ -38,6 +39,7 @@ export class TeacherModel {
       );
       console.log('Usuario creado:', user?.toJSON?.());
       // Crear docente
+      
       const teacher = await Teacher.create(
         {
           idDocente: id_docente,
