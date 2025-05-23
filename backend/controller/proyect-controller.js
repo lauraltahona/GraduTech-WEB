@@ -1,5 +1,6 @@
 import { validateProyect } from "../schemas/proyecto.js";
 import { ProyectModel } from "../models/proyect-model.js";
+import { ProjectService } from "../service/proyect-service.js";
 
 export class ProyectController{
     static async createProyect(req,res){
@@ -47,6 +48,33 @@ export class ProyectController{
         } catch (error){
             console.log(error);
             res.status(400).json({message: `Error con la petición de obtener proyecto ${error.message}`});
+        }
+    }
+
+    static async asignarDocente(req, res) {
+        const { title, idDocente } = req.body;
+
+        try {
+            const proyectoActualizado = await ProjectService.asignarDocenteAProyecto(title, idDocente);
+            res.status(200).json({
+            mensaje: "Docente asignado correctamente",
+            proyecto: proyectoActualizado
+            });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    static async obtenerProyectosSinDocente(req, res) {
+        console.log('estoy en controller');
+        
+        try {
+            const lista = await ProjectService.listarProyectosSinDocente();
+            console.log(lista);
+            
+            res.status(200).json(lista);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
         }
     }
 }

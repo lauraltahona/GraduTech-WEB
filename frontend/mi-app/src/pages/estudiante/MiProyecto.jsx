@@ -7,7 +7,7 @@ export default function MiProyecto() {
 
   useEffect(() => {
     if (!id_usuario) return;
-    fetch(`http://localhost:5001/proyectos/${id_usuario}`)
+    fetch(`http://localhost:5001/proyectos/obtener/${id_usuario}`)
       .then((res) => {
         if (!res.ok) throw new Error("Error en la petición");
         return res.json();

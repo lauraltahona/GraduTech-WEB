@@ -2,6 +2,7 @@ import { db } from "../db.js";
 import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
 
 export class EntregaModel{
+    
     static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite) {
         try {
         const nuevoPlan = await PlanEntrega.create({
@@ -71,7 +72,7 @@ export class EntregaModel{
         entrega.ruta_retroalimentacion = ruta_retroalimentacion;
 
         await entrega.save();
-
+        
         return { success: true, message: 'Retroalimentación guardada correctamente.' };
         } catch (error) {
             console.error('Error al agregar retroalimentación:', error);

@@ -5,6 +5,7 @@ import { UserModel } from './user-model.js';
 export class StudentModel{
     
     static async createStudent({id_estudiante, carrera, semestre, usuario}){
+
         const t = await User.sequelize.transaction();
         try{
             const resultFindByEmail = await UserModel.findbyEmail(usuario.correo) //--> busca el usuario por correo
@@ -34,6 +35,8 @@ export class StudentModel{
                 idRols: 1,
                 idUsersRol:user.idUsers
             })
+            console.log('hola estoy en model, este es student:',student);
+            
             await t.commit();
             return { id_estudiante, nombre: usuario.nombre, carrera, semestre };
         } catch(error){
