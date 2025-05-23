@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Notificación de Entrega del Estudiante</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      margin: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      max-width: 600px;
+      margin: 30px auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .header {
+      background-color: #2e6b3b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .content {
+      padding: 30px;
+      color: #333333;
+      line-height: 1.6;
+    }
+    .footer {
+      background-color: #e6e6e6;
+      color: #666666;
+      font-size: 12px;
+      text-align: center;
+      padding: 15px;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #a29e00;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Gradutech University</h1>
+    </div>
+    <div class="content">
+      <h2>Entrega registrada por el estudiante</h2>
+      <p>Estimado/a tutor/a académico/a,</p>
+      <p>El estudiante <strong>{{nombre}}</strong> ha subido su archivo correspondiente al proyecto <strong>{{titulo}}</strong>.</p>
+      <p>Ya puede revisar el documento desde la plataforma y realizar la retroalimentación correspondiente.</p>
+      {{!-- <a href="#" class="btn">Ver Entrega</a> --}}
+      <p>Gracias por su acompañamiento en el proceso académico.</p>
+      <p>Atentamente,<br> Sistema de Gestión Académica</p>
+    </div>
+    <div class="footer">
+      © 2025 Universidad Popular del Cesar - Todos los derechos reservados<br>
+      Este correo es generado automáticamente. Por favor, no responda a este mensaje.
+    </div>
+  </div>
+</body>
+</html>

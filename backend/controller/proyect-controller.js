@@ -66,8 +66,6 @@ export class ProyectController{
     }
 
     static async obtenerProyectosSinDocente(req, res) {
-        console.log('estoy en controller');
-        
         try {
             const lista = await ProjectService.listarProyectosSinDocente();
             console.log(lista);
