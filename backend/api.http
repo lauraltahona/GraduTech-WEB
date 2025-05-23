@@ -35,7 +35,7 @@ POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "lau@unicesar.edu.co",
+  "correo": "cami@unicesar.edu.co",
   "contraseña": "hola1234"
 }
 
@@ -66,3 +66,9 @@ Content-Type: application/json
   "retroalimentacion": "cambiar objetivos",
   "ruta_retroalimentacion": "'/files/proyectodeinvestigacian.pdf'"
 }
+
+###PROYECTOS SIN DOCENTE
+GET http://localhost:5001/proyectos/sin-docente
+
+###DOCENTE DISPONIBLES
+GET http://localhost:5001/docente/docentes-disponibles
