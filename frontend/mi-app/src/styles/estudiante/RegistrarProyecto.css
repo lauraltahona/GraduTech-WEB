@@ -1,104 +1,268 @@
-/* Fondo general con gradiente suave */
-.bg-green-gradient {
-  background: linear-gradient(135deg, #e6f4ea, #ccf3dd);
-}
-
-/* Card contenedor del formulario */
-.form-card {
-  background-color: #ffffff;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 25px rgba(0, 128, 96, 0.15);
-  padding: 2rem;
-  transition: box-shadow 0.3s ease;
-}
-
-.form-card:hover {
-  box-shadow: 0 12px 30px rgba(0, 128, 96, 0.25);
-}
-
-/* Títulos */
-.title {
-  color: #1b5e20;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-/* Inputs y selects */
-.input-field,
-.select-field {
+.register-form-container {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #a7f3d0;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-.input-field:focus,
-.select-field:focus {
-  border-color: #10b981;
-  outline: none;
-}
-
-/* Zona de arrastrar */
-.drop-zone {
-  border: 2px dashed #34d399;
-  border-radius: 1rem;
-  text-align: center;
-  padding: 2rem;
-  background-color: #f0fdf4;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.drop-zone:hover {
-  background-color: #d1fae5;
-}
-
-/* Vista previa */
-.preview-box {
-  background-color: #ecfdf5;
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 1px solid #bbf7d0;
-  margin-top: 1rem;
-}
-
-/* Botón guardar */
-.save-button {
-  background-color: #1b5e20;
-  color: white;
-  font-weight: 600;
-  padding: 0.75rem 2rem;
-  border-radius: 0.75rem;
-  transition: background-color 0.3s ease;
-  width: 100%;
-}
-
-.save-button:hover {
-  background-color: #1b5e20;
-}
-
-/* Contenedor del formulario con ancho centrado */
-.form-container {
-  max-width: 600px; /* Ajusta a tu gusto: 500px, 600px, etc. */
+  max-width: 500px;
   margin: 0 auto;
 }
 
-/* Inputs y selects más compactos y centrados */
-.input-field,
-.select-field,
-.drop-zone,
-.save-button {
-  max-width: 100%;
+.register-form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(46, 134, 46, 0.1);
+  border: 1px solid #dbf5db;
+  overflow: hidden;
+}
+
+.form-header {
+  background: linear-gradient(135deg, #8cd68c 0%, #56c256 100%);
+  padding: 32px 24px;
+  text-align: center;
+  color: white;
+}
+
+.form-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-subtitle {
+  font-size: 16px;
+  margin: 0;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+.form-content {
+  padding: 32px 24px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #276c27;
+  margin-bottom: 8px;
+}
+
+.form-input {
   width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #dbf5db;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #1e481e;
+  background: white;
+  transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
-/* Campo individual dentro de contenedor más pequeño */
-.field-group {
-  margin-bottom: 1.25rem;
+.form-input:focus {
+  outline: none;
+  border-color: #56c256;
+  box-shadow: 0 0 0 3px rgba(86, 194, 86, 0.1);
 }
 
+.form-input::placeholder {
+  color: #8cd68c;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #dbf5db;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #1e481e;
+  background: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #56c256;
+  box-shadow: 0 0 0 3px rgba(86, 194, 86, 0.1);
+}
+
+.file-upload-area {
+  border: 2px dashed #b8e5b8;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f0faf0;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-upload-area:hover {
+  border-color: #8cd68c;
+  background: #dbf5db;
+}
+
+.file-upload-area.drag-over {
+  border-color: #56c256;
+  background: #dbf5db;
+  transform: scale(1.02);
+}
+
+.file-upload-area.has-file {
+  border-color: #fbbf24;
+  background: #fffbeb;
+}
+
+.file-upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #8cd68c;
+}
+
+.upload-text {
+  text-align: center;
+}
+
+.upload-primary {
+  font-size: 16px;
+  font-weight: 600;
+  color: #276c27;
+  margin: 0 0 4px 0;
+}
+
+.upload-secondary {
+  font-size: 14px;
+  color: #56c256;
+  margin: 0;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #8cd68c;
+  margin: 0;
+}
+
+.file-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #fde68a;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.file-icon {
+  width: 24px;
+  height: 24px;
+  color: #f59e0b;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #d97706;
+}
+
+.remove-file-btn {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  color: #d97706;
+  transition: all 0.2s ease;
+}
+
+.remove-file-btn:hover {
+  background: #fde68a;
+  color: #92400e;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #3ba53b 0%, #2e862e 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 165, 59, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 165, 59, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 14px 24px;
+  background: white;
+  color: #276c27;
+  border: 2px solid #dbf5db;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #f0faf0;
+  border-color: #b8e5b8;
+}

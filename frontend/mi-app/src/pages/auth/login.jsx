@@ -50,70 +50,72 @@ function Login() {
 
   return (
     <main className="main-content">
-      <header className="header-content">
-        <div className="header-content-img">{Logo}</div>
-        <div className="content-title">
-          <h1 className="header-title">Iniciar sesión</h1>
-          <h3 className="header-description">
-            Ingresa tus credenciales para acceder
-          </h3>
-        </div>
-      </header>
-      <form onSubmit={handleSubmit} className="form-content">
-        <div className="form-content-email">
-          <label htmlFor="email" className="label">
-            Correo electrónico
-          </label>
-          <input
-            id="email"
-            type="email"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            placeholder="usuario@unicesar.edu.co"
-            className="input inputEmail"
-            required
-          />
-        </div>
-        <div className="form-content-password">
-          <div className="content-labelPassword">
-            <label htmlFor="password" className="label">
-              Contraseña
-            </label>
-            <p href="#" className="label-rememberPassword">
-              ¿Olvidaste tu contraseña?
-            </p>
+      <div className="test">
+        <header className="header-content">
+          <div className="header-content-img">{Logo}</div>
+          <div className="content-title">
+            <h1 className="header-title">Iniciar sesión</h1>
+            <h3 className="header-description">
+              Ingresa tus credenciales para acceder
+            </h3>
           </div>
-          <div className="content-input-password">
+        </header>
+        <form onSubmit={handleSubmit} className="form-content-login">
+          <div className="form-content-email">
+            <label htmlFor="email" className="label">
+              Correo electrónico
+            </label>
             <input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              value={contraseña}
-              onChange={(e) => setContraseña(e.target.value)}
-              placeholder="••••••••"
-              className="input"
+              id="email"
+              type="email"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              placeholder="usuario@unicesar.edu.co"
+              className="input inputEmail"
               required
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="button-showPass"
-              aria-label={
-                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
-              }
-            >
-              {showPassword ? (
-                <EyeOff size={18} className="password-icon" />
-              ) : (
-                <Eye size={18} className="password-icon" />
-              )}
-            </button>
           </div>
+          <div className="form-content-password">
+            <div className="content-labelPassword">
+              <label htmlFor="password" className="label">
+                Contraseña
+              </label>
+              <p href="#" className="label-rememberPassword">
+                ¿Olvidaste tu contraseña?
+              </p>
+            </div>
+            <div className="content-input-password">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={contraseña}
+                onChange={(e) => setContraseña(e.target.value)}
+                placeholder="••••••••"
+                className="input"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="button-showPass"
+                aria-label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
+              >
+                {showPassword ? (
+                  <EyeOff size={18} className="password-icon" />
+                ) : (
+                  <Eye size={18} className="password-icon" />
+                )}
+              </button>
+            </div>
+          </div>
+        </form>
+        <div className="content-button-login">
+          <button type="submit" className="button-login">
+            Iniciar sesión
+          </button>
         </div>
-      </form>
-      <div className="content-button-login">
-        <button type="submit" className="button-login">
-          Iniciar sesión
-        </button>
       </div>
     </main>
   );
