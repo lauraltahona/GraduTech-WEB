@@ -8,7 +8,7 @@ export class StudentModel{
 
         const t = await User.sequelize.transaction();
         try{
-            const resultFindByEmail = await UserModel.findbyEmail(usuario.correo) //--> busca el usuario por correo
+            const resultFindByEmail = await UserModel.findbyEmail(usuario.correo) 
 
             if(resultFindByEmail) throw new Error('EMAIL_ALREADY_REGISTERED');
 
@@ -19,10 +19,8 @@ export class StudentModel{
                 idRol:1
             })
 
-            const resultFindById = await this.findbyId(id_estudiante) // --> busca el estudiante
+            const resultFindById = await this.findbyId(id_estudiante) 
             if(resultFindById) throw new Error('STUDENT_ALREADY_REGISTERED');
-
-            console.log(user.idUsers);// --> aqui se recupera el id de las cosas
 
             const student = await Student.create({
                   idEstudiante:id_estudiante,
@@ -35,7 +33,6 @@ export class StudentModel{
                 idRols: 1,
                 idUsersRol:user.idUsers
             })
-            console.log('hola estoy en model, este es student:',student);
             
             await t.commit();
             return { id_estudiante, nombre: usuario.nombre, carrera, semestre };
@@ -44,11 +41,13 @@ export class StudentModel{
             throw error;
         } 
     } 
-
+    
     static async findbyId (id){
         const find = await Student.findOne({
             where:{idEstudiante:id}
         })
         return find
     }
+
+    
 }

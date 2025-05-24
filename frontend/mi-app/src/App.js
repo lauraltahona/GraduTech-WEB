@@ -16,6 +16,9 @@ import MenuAdmin from "./pages/admin/MenuAdmin.jsx";
 import RegistrarEstudiante from "./pages/admin/RegistrarEstudiante.jsx";
 import RegistrarDocente from "./pages/admin/RegistrarDocente.jsx";
 import AsignarDocente from "./pages/admin/AsignarDocente.jsx";
+import MenuConsultas from "./pages/admin/MenuConsultas.jsx";
+import ConsultaEstudiante from "./pages/admin/ConsultaEstudiante.jsx";
+import ConsultaDocente from "./pages/admin/ConsultaDocente.jsx";
 
 function App() {
   return (
@@ -49,10 +52,11 @@ function App() {
           <Route path="asignarDocente" element={<AsignarDocente />} />
           <Route path="calendario" element={<Calendario />} />
           <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
-          <Route
-            path="subir-entrega/:id_plan_entrega"
-            element={<SubirEntrega />}
-          />
+          <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />
+          <Route path="menuConsultas" element={<MenuConsultas />}>
+            <Route path="consultarEstudiante" element={<ConsultaEstudiante />} />
+            <Route path="consultarDocente" element={<ConsultaDocente />} />
+          </Route>
         </Route>
       </Routes>
     </Router>

@@ -1,0 +1,87 @@
+.consulta-est-container {
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #e6ffe6;
+  border-radius: 10px;
+  max-width: 95%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.consulta-est-container h2 {
+  color: #15803d;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.consulta-est-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.consulta-est-form input {
+  padding: 8px;
+  border: 2px solid #16a34a;
+  border-radius: 8px;
+  width: 250px;
+}
+
+.consulta-est-form button {
+  padding: 8px 14px;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.consulta-est-form button:hover {
+  background-color: #15803d;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.consulta-est-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 128, 0, 0.1);
+}
+
+.consulta-est-tabla th,
+.consulta-est-tabla td {
+  border: 1px solid #c2f0c2;
+  padding: 10px;
+  text-align: center;
+}
+
+.consulta-est-tabla th {
+  background-color: #16a34a;
+  color: whitesmoke;
+}
+
+.acciones button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+.editar {
+  color: #059669;
+}
+
+.eliminar {
+  color: #dc2626;
+}
+
+.acciones button:hover {
+  transform: scale(1.2);
+}

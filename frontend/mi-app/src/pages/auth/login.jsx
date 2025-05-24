@@ -110,12 +110,13 @@ function Login() {
               </button>
             </div>
           </div>
-        </form>
-        <div className="content-button-login">
+          <div className="content-button-login">
           <button type="submit" className="button-login">
             Iniciar sesión
           </button>
         </div>
+        </form>
+
       </div>
     </main>
   );
