@@ -51,8 +51,10 @@ function Login() {
   return (
     <main className="main-content">
       <div className="test">
-        <header className="header-content">
-          <div className="header-content-img">{Logo}</div>
+        <header className="header-content-login">
+          <div className="header-content-img">
+            <img src={Logo} alt="Logo" />
+          </div>
           <div className="content-title">
             <h1 className="header-title">Iniciar sesión</h1>
             <h3 className="header-description">
@@ -111,12 +113,11 @@ function Login() {
             </div>
           </div>
           <div className="content-button-login">
-          <button type="submit" className="button-login">
-            Iniciar sesión
-          </button>
-        </div>
+            <button type="submit" className="button-login">
+              Iniciar sesión
+            </button>
+          </div>
         </form>
-
       </div>
     </main>
   );
