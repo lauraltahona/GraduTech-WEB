@@ -12,7 +12,7 @@ const MenuAdmin = () => {
             <li><Link to="registrarEstudiante" className="menu-link">Registrar Estudiante</Link></li>
             <li><Link to="registrarDocente" className="menu-link">Registrar Docente</Link></li>
             <li><Link to="registrarJurados" className="menu-link">Registrar Jurados</Link></li>
-            <li><Link to="consultar" className="menu-link">Consultar</Link></li>
+            <li><Link to="menuConsultas" className="menu-link">Consultar</Link></li>
             <li><Link to="asignarDocente" className="menu-link">Asignar docente</Link></li>
             <li><Link to="asignarJurado" className="menu-link">Asignar Jurado</Link></li>
           </ul>

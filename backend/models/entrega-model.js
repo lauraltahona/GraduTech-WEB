@@ -14,8 +14,7 @@ export class EntregaModel{
             fecha_limite
         });
 
-        const email = await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion)
-        console.log(email);
+        await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion);
         
         return nuevoPlan;
         } catch (error) {

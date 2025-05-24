@@ -4,6 +4,8 @@ import { db } from '../db.js';
 export class ProyectModel {
   // Crear proyecto 
   static async createProyect({ title, tipo, rutaDocumento, idEstudiante }) {
+    console.log('Hola estoy en model',title, tipo, rutaDocumento, idEstudiante);
+    
     try {
       const existingProyect = await Project.findOne({ where: { title } });
       if (existingProyect) throw new Error("El título ya existe");
