@@ -9,7 +9,7 @@ import {
   Clock,
   BookOpen,
 } from "lucide-react";
-import "../../styles/MiProyecto.css";
+import "../../styles/estudiante/MiProyecto.css";
 
 //Laura, esto lo quitas, es solo por probar
 const projectData = {
