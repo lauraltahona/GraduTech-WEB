@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../../styles/loginStyles.css";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/ui/button.jsx";
 import Logo from "../../assets/login/Logo.png";
 
 function Login() {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -58,7 +59,7 @@ function Login() {
           </h3>
         </div>
       </header>
-      <form className="form-content">
+      <form onSubmit={handleSubmit} className="form-content">
         <div className="form-content-email">
           <label htmlFor="email" className="label">
             Correo electrónico
@@ -66,8 +67,11 @@ function Login() {
           <input
             id="email"
             type="email"
-            placeholder="tu@ejemplo.com"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+            placeholder="usuario@unicesar.edu.co"
             className="input inputEmail"
+            required
           />
         </div>
         <div className="form-content-password">
@@ -82,44 +86,36 @@ function Login() {
           <div className="content-input-password">
             <input
               id="password"
-              // type={showPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
               placeholder="••••••••"
               className="input"
+              required
             />
             <button
               type="button"
-              // onClick={() => setShowPassword(!showPassword)}
+              onClick={() => setShowPassword(!showPassword)}
               className="button-showPass"
-              // aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              aria-label={
+                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+              }
             >
-              {/* {showPassword ? <EyeOff size={18} /> : <Eye size={18} />} */}
+              {showPassword ? (
+                <EyeOff size={18} className="password-icon" />
+              ) : (
+                <Eye size={18} className="password-icon" />
+              )}
             </button>
           </div>
         </div>
       </form>
       <div className="content-button-login">
-        <button className="button-login">Iniciar sesión</button>
+        <button type="submit" className="button-login">
+          Iniciar sesión
+        </button>
       </div>
     </main>
-
-    // <div>
-    //   <h2>Iniciar sesión</h2>
-    //   <form onSubmit={handleSubmit}>
-    //     <input
-    //       type="email"
-    //       placeholder="Correo"
-    //       value={correo}
-    //       onChange={(e) => setCorreo(e.target.value)}
-    //     />
-    //     <input
-    //       type="password"
-    //       placeholder="Contraseña"
-    //       value={contraseña}
-    //       onChange={(e) => setContraseña(e.target.value)}
-    //     />
-    //     <button type="submit">Ingresar</button>
-    //   </form>
-    // </div>
   );
 }
 

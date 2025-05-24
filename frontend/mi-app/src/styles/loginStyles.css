@@ -123,6 +123,19 @@
     top: 50%;
     transform: translateY(-50%);
     color: #22c55e;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.password-icon {
+    color: green;
+    transition: color 0.2s;
+}
+
+.password-icon:focus{
+    outline: none;
 }
 
 .button-showPass:hover {
@@ -148,6 +161,7 @@
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+    cursor: pointer;
 }
 
 .button-login:hover {
