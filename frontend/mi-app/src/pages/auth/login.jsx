@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/loginStyles.css";
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../../components/ui/Card.jsx";
-import { Label } from "../../components/ui/Label.jsx";
-import { Input } from "../../components/ui/Input.jsx";
 import { Button } from "../../components/ui/button.jsx";
+import Logo from "../../assets/login/Logo.png";
 
 function Login() {
   const [correo, setCorreo] = useState("");
@@ -56,68 +48,59 @@ function Login() {
   };
 
   return (
-  <Card className="card">
-        <CardHeader className="cardHeader">
-          <div className="div3">
-            {/* Espacio para el logo */}
-            <div className="div4">Espacio para el logo de tu proyecto</div>
+    <main className="main-content">
+      <header className="header-content">
+        <div className="header-content-img">{Logo}</div>
+        <div className="content-title">
+          <h1 className="header-title">Iniciar sesión</h1>
+          <h3 className="header-description">
+            Ingresa tus credenciales para acceder
+          </h3>
+        </div>
+      </header>
+      <form className="form-content">
+        <div className="form-content-email">
+          <label htmlFor="email" className="label">
+            Correo electrónico
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="tu@ejemplo.com"
+            className="input inputEmail"
+          />
+        </div>
+        <div className="form-content-password">
+          <div className="content-labelPassword">
+            <label htmlFor="password" className="label">
+              Contraseña
+            </label>
+            <p href="#" className="label-rememberPassword">
+              ¿Olvidaste tu contraseña?
+            </p>
           </div>
-          <div className="div5">
-            <CardTitle className="cardTitle">Iniciar sesión</CardTitle>
-            <CardDescription className="cardDescription">
-              Ingresa tus credenciales para acceder
-            </CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent className="cardContent">
-          <div className="div7">
-            <Label htmlFor="email" className="label labelEmail">
-              Correo electrónico
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="tu@ejemplo.com"
+          <div className="content-input-password">
+            <input
+              id="password"
+              // type={showPassword ? "text" : "password"}
+              placeholder="••••••••"
               className="input"
             />
+            <button
+              type="button"
+              // onClick={() => setShowPassword(!showPassword)}
+              className="button-showPass"
+              // aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+            >
+              {/* {showPassword ? <EyeOff size={18} /> : <Eye size={18} />} */}
+            </button>
           </div>
-          <div className="div8">
-            <div className="div9">
-              <Label htmlFor="password" className="label">
-                Contraseña
-              </Label>
-              <p href="#" className="p1">
-                ¿Olvidaste tu contraseña?
-              </p>
-            </div>
-            <div className="div10">
-              <Input
-                id="password"
-                // type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
-                className="input"
-              />
-              <button
-                type="button"
-                // onClick={() => setShowPassword(!showPassword)}
-                className="button1"
-                // aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-              >
-                {/* {showPassword ? <EyeOff size={18} /> : <Eye size={18} />} */}
-              </button>
-            </div>
-          </div>
-        </CardContent>
-        <div className="div11">
-          <Button className="button2">Iniciar sesión</Button>
-          <p className="p2">
-            ¿No tienes una cuenta?{" "}
-            <p href="#" className="p3">
-              Regístrate
-            </p>
-          </p>
         </div>
-      </Card>
+      </form>
+      <div className="content-button-login">
+        <button className="button-login">Iniciar sesión</button>
+      </div>
+    </main>
 
     // <div>
     //   <h2>Iniciar sesión</h2>
