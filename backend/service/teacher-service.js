@@ -1,4 +1,4 @@
-import { Teacher } from '../shared/schemas.js';
+import { Teacher, User } from '../shared/schemas.js';
 
 export class TeacherService{
     static async getAllTeachers() {

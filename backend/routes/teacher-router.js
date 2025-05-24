@@ -4,8 +4,8 @@ const teacherRouter = Router();
 
 teacherRouter.post('/', TeacherController.createTeacher);
 teacherRouter.get('/docentes-disponibles', TeacherController.obtenerDocentesDisponibles);
-teacherRouter.get('/obtener', TeacherController.getAllTeacher);
+teacherRouter.get('/getAll', TeacherController.getAllTeacher);
 teacherRouter.get('/id=/:idDocente', TeacherController.getTeacherById);
-teacherRouter.delete('/eliminar', TeacherController.deleteTeacher);
+teacherRouter.delete('/eliminar/:idDocente', TeacherController.deleteTeacher);
 
 export default teacherRouter;
