@@ -13,6 +13,7 @@ import userRouter from './routes/user-router.js';
 import fileRouter from './routes/file-router.js';
 import proyectRouter from './routes/proyect-router.js';
 import entregaRouter from './routes/entrega-router.js';
+import juryRouter from './routes/jury-router.js';
 import { syncModels } from './shared/schemas.js';
 
 import { PORT } from './config.js';
@@ -39,6 +40,7 @@ app.use('/upload', fileRouter);
 app.use('/files', express.static(path.join(__dirname, 'uploads')));
 app.use('/proyectos', proyectRouter);
 app.use('/entrega', entregaRouter);
+app.use('/jurado', juryRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 

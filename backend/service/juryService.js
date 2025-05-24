@@ -1,11 +1,11 @@
-import { Teacher, User, UsersRols } from '../shared/schemas.js';
-import { UserModel } from './user-model.js';
+import { Jury, User, UsersRols } from '../shared/schemas.js';
 
-export class TeacherModel {
-  static async createTeacher({ id_docente, profesion, carrera, usuario }) {
+export class JuryService {
+  static async createJury({idJurado, carrera, usuario}) {
+    console.log('estoy en modelo', idJurado, carrera, usuario);
+    
     const t = await User.sequelize.transaction();
     try {
-      // Verificar si el correo ya está registrado
       const existingUser = await User.findOne({
         where: { correo: usuario.correo },
         transaction: t,
@@ -15,59 +15,44 @@ export class TeacherModel {
         throw new Error('EMAIL_ALREADY_REGISTERED');
       }
 
-      // Verificar si el docente ya existe
-      const existingTeacher = await Teacher.findOne({
-        where: { idDocente: id_docente },
-        transaction: t,
-      });
-
-      if (existingTeacher) {
-        throw new Error('TEACHER_ALREADY_REGISTERED');
-      }
-      console.log();
-      
       // Crear usuario
       const user = await User.create(
         {
           nombre: usuario.nombre,
           correo: usuario.correo,
           contraseña: usuario.contraseña,
-          idRol: 2,
-        },
-        { transaction: t }
-      );
-      console.log('Usuario creado:', user?.toJSON?.());
-      // Crear docente
-      const disponibilidad = 'DISPONIBLE';
-      const teacher = await Teacher.create(
-        {
-          idDocente: id_docente,
-          profesion,
-          disponibilidad,
-          carrera,
-          idUser: user.idUsers,
+          idRol: 3, // Rol base, por ejemplo 'Usuario'
         },
         { transaction: t }
       );
 
-      // Asociar rol
+      console.log('Usuario creado:', user?.toJSON?.());
+
+      // Crear jurado
+      const jury = await Jury.create(
+        {
+          idUser: user.idUsers,
+          idJurado,
+          carrera,
+        },
+        { transaction: t }
+      );
+
+      // Asociar rol de jurado
       await UsersRols.create(
         {
           idUsersRol: user.idUsers,
-          idRols: 3,
+          idRols: 3, 
         },
         { transaction: t }
       );
 
       await t.commit();
-      console.log(teacher);
-      
+
       return {
         id_usuario: user.idUsers,
-        id_docente: id_docente,
+        id_jurado: jury.idJurado,
         nombre: usuario.nombre,
-        profesion,
-        disponibilidad,
         carrera,
       };
     } catch (error) {

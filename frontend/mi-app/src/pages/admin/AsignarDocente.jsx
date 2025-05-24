@@ -61,7 +61,7 @@ const AsignarDocente = () => {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          tituloProyecto: proyectoSeleccionado.title,
+          title: proyectoSeleccionado.title,
           idDocente: docenteSeleccionado,
         }),
       });

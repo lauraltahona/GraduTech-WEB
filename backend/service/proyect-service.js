@@ -1,7 +1,7 @@
 import { Project, Student } from "../shared/schemas.js";
 
  export class ProjectService{
-    async asignarDocenteAProyecto(title, idDocente) {
+    static async asignarDocenteAProyecto(title, idDocente) {
         console.log('ESTOY EN MODEL:', title, idDocente);
         
         // Validar que el proyecto existe
@@ -18,7 +18,7 @@ import { Project, Student } from "../shared/schemas.js";
 
         return proyecto;
     }
-
+    
     static async listarProyectosSinDocente() {
         const proyectos = await Project.findAll({
             where: { idDocente: null },

@@ -5,8 +5,7 @@ import { ProjectService } from "../service/proyect-service.js";
 export class ProyectController{
     static async createProyect(req,res){
         const result = validateProyect(req.body);
-        console.log(req.body);
-        
+        console.log('Hola estoy en controller', req.body);
         if(!result.success){
             return res.status(401).json({error: 'error con los datos del proyecto'});
         }
@@ -57,6 +56,8 @@ export class ProyectController{
         console.log('ESTOY EN CONTROLLER:', title, idDocente);
         try {
             const proyectoActualizado = await ProjectService.asignarDocenteAProyecto(title, idDocente);
+            console.log(proyectoActualizado);
+            
             res.status(200).json({
             mensaje: "Docente asignado correctamente",
             proyecto: proyectoActualizado
