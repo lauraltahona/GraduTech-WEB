@@ -1,22 +1,80 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import '../../styles/Menu.css';
+import React from "react";
+import { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import {
+  FolderOpen,
+  Calendar,
+  FileText,
+  Package,
+  Users,
+  Archive,
+  ChevronRight,
+  GraduationCap,
+} from "lucide-react";
+import "../../styles/Menu.css";
+
+const menuItems = [
+  {
+    id: "registrarEstudiante",
+    label: "Registrar Estudiante",
+    icon: FolderOpen,
+  },
+  { id: "registrarDocente", label: "Registrar Docente", icon: Calendar },
+  { id: "registrarJurados", label: "Registrar Jurados", icon: FileText },
+  { id: "consultar", label: "Consultar", icon: Package },
+  { id: "asignarDocente", label: "Asignar docente", icon: Users },
+  { id: "asignarJurado", label: "Asignar Jurado", icon: Archive },
+];
 
 const MenuAdmin = () => {
+  const [activeItem, setActiveItem] = useState("registrarEstudiante");
+
   return (
-    <div className="menu-container">
+    <div className="layout">
       <aside className="sidebar">
-        <h2 className="logo">GRADUTECH</h2>
-        <nav>
-          <ul className="menu">
-            <li><Link to="registrarEstudiante" className="menu-link">Registrar Estudiante</Link></li>
-            <li><Link to="registrarDocente" className="menu-link">Registrar Docente</Link></li>
-            <li><Link to="registrarJurados" className="menu-link">Registrar Jurados</Link></li>
-            <li><Link to="menuConsultas" className="menu-link">Consultar</Link></li>
-            <li><Link to="asignarDocente" className="menu-link">Asignar docente</Link></li>
-            <li><Link to="asignarJurado" className="menu-link">Asignar Jurado</Link></li>
+        <div className="sidebar-header">
+          <div className="logo-container">
+            <GraduationCap className="logo-icon" />
+            <h1 className="logo-text">GRADUTECH</h1>
+          </div>
+        </div>
+
+        <nav className="sidebar-nav">
+          <ul className="nav-list">
+            {menuItems.map((item) => {
+              const IconComponent = item.icon;
+              return (
+                <li key={item.id} className="nav-item">
+                  <Link
+                    to={item.id}
+                    className={`nav-link ${
+                      activeItem === item.id ? "active" : ""
+                    }`}
+                    onClick={() => setActiveItem(item.id)}
+                  >
+                    <div className="nav-link-content">
+                      <IconComponent className="nav-icon" />
+                      <span className="nav-text">{item.label}</span>
+                    </div>
+                    <ChevronRight className="nav-arrow" />
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
+
+        <div className="sidebar-footer">
+          <div className="user-info">
+            <div className="user-avatar">
+              <span>U</span>
+            </div>
+            <div className="user-details">
+              <p className="user-name">Usuario</p>
+              <p className="user-role">Administrador</p>
+            </div>
+          </div>
+        </div>
       </aside>
       <main className="main-content">
         <Outlet />
