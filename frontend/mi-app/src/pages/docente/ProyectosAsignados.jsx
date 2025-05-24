@@ -28,8 +28,9 @@ export default function ProyectosAsignados() {
     }
   }, [idUsuario]);
 
-  const irAPlanEntrega = (idProyecto) => {
+  const irAPlanEntrega = (idProyecto, correo) => {
     localStorage.setItem("id_proyecto", idProyecto);
+    localStorage.setItem ('correo', correo)
     navigate("/planEntrega"); 
   };
 
@@ -57,7 +58,7 @@ export default function ProyectosAsignados() {
                 <td>{proyecto.estado}</td>
                 <td>{proyecto.estudiante}</td>
                 <td>
-                  <button onClick={() => irAPlanEntrega(proyecto.idProyecto)}>Planear entrega</button>
+                  <button onClick={() => irAPlanEntrega(proyecto.idProyecto, proyecto.correo)}>Planear entrega</button>
                 </td>
               </tr>
             ))}

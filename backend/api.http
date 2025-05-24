@@ -64,7 +64,7 @@ Content-Type: application/json
 
 {
   "retroalimentacion": "cambiar objetivos",
-  "ruta_retroalimentacion": "'/files/proyectodeinvestigacian.pdf'"
+  "ruta_retroalimentacion": "/files/proyectodeinvestigacian.pdf"
 }
 
 ###PROYECTOS SIN DOCENTE
@@ -72,3 +72,14 @@ GET http://localhost:5001/proyectos/sin-docente
 
 ###DOCENTE DISPONIBLES
 GET http://localhost:5001/docente/docentes-disponibles
+
+###Registrar proyecto title, tipo, rutaDocumento, idEstudiante
+POST http://localhost:5001/proyectos
+Content-Type: application/json
+
+{
+  "title": "Sistema de verificacion de identidad",
+  "tipo": "Proyecto de grado",
+  "rutaDocumento": "/files/proyectodeinvestigacian.pdf",
+  "idEstudiante": "98765432"
+}

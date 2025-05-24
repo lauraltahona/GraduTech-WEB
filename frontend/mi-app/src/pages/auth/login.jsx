@@ -44,7 +44,7 @@ function Login() {
       }
     } else {
       alert("Credenciales incorrectas");
-      throw new Error(`Error ${response.status}: ${await response.text()}`);
+      // throw new Error(Error ${response.status}: ${await response.text()});
     }
   };
 

@@ -1,12 +1,13 @@
 import { EntregaModel } from "../models/entrega-model.js";
+import { EmailService } from "../service/emailSevice.js";
 
 export class EntregaController{
     static async crearPlanEntrega(req, res){
         const result = req.body;
         
-        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite} = result.data;
+        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result.data;
         try{
-            const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite);
+            const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite, correo);
             return res.status(200).json({message: 'Plan de entrega creado con exito'});
         } catch(error){
             console.log(error);
@@ -80,7 +81,7 @@ export class EntregaController{
         }
     }
 
-    static async obtenerFechaLimite(req, res){
+    static async obtenerFechaLimite(req, res){ 
         const {id_usuario} = req.params;
         try{
             const fechas = await EntregaModel.obtenerFechaLimite(id_usuario);
@@ -88,6 +89,20 @@ export class EntregaController{
         } catch(error){
             res.status(400).json({error: 'Error al obtener las fechas limites'});
             console.log('error al obtener fechas', error.message);
+        }
+    }
+// funcion de prueba emails
+    static async EmailsSend(req,res){
+        try {
+            const infoEmail = req.body
+            console.log(infoEmail);
+            
+            const result = await EmailService.SendEmailRetroalimentacionCreada(infoEmail.email,infoEmail.nombre,infoEmail.titulo)
+            
+        
+            res.status(200).json({message:"correo mandado correctamente"})
+        } catch (error) {
+            res.status(400).json({error:"No se pudo mandar el correo"})
         }
     }
 }

@@ -54,6 +54,7 @@ export class ProyectController{
     static async asignarDocente(req, res) {
         const { title, idDocente } = req.body;
 
+        console.log('ESTOY EN CONTROLLER:', title, idDocente);
         try {
             const proyectoActualizado = await ProjectService.asignarDocenteAProyecto(title, idDocente);
             res.status(200).json({
@@ -66,8 +67,6 @@ export class ProyectController{
     }
 
     static async obtenerProyectosSinDocente(req, res) {
-        console.log('estoy en controller');
-        
         try {
             const lista = await ProjectService.listarProyectosSinDocente();
             console.log(lista);
