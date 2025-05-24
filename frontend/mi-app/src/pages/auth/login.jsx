@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from "react"; 
 import "../../styles/loginStyles.css";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +28,10 @@ function Login() {
       console.log(user);
 
       alert("Ingresado como " + user.rol);
-      localStorage.setItem("token", result.token); // si tienes token
+      localStorage.setItem("token", result.token);
       localStorage.setItem("userId", user.id_usuario);
       localStorage.setItem("userRol", user.rol);
 
-      // redireccionar según el rol
       if (user.rol === "Estudiante") {
         navigate("/homeEstudiante");
       }
@@ -78,7 +77,7 @@ function Login() {
           <div className="content-labelPassword">
             <label htmlFor="password" className="label">
               Contraseña
-            </label>
+            </label>.l,
             <p href="#" className="label-rememberPassword">
               ¿Olvidaste tu contraseña?
             </p>

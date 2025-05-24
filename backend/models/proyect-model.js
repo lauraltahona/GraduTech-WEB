@@ -2,7 +2,7 @@ import { Teacher, User, Project, Student } from '../shared/schemas.js';
 import { db } from '../db.js';
 
 export class ProyectModel {
-  // Crear proyecto
+  // Crear proyecto 
   static async createProyect({ title, tipo, rutaDocumento, idEstudiante }) {
     try {
       const existingProyect = await Project.findOne({ where: { title } });
@@ -66,13 +66,16 @@ export class ProyectModel {
               p.idProyecto, 
               p.title AS titulo, 
               p.estado, 
-              u.nombre AS estudiante
+              u.nombre AS estudiante,
+              u.correo AS correo
           FROM projects p
           JOIN students s ON s.idEstudiante = p.idEstudiante
           JOIN users u ON u.idUsers = s.idUser
           WHERE p.idDocente = ?
         `, [id_docente]);
         await connection.commit();
+        console.log(rows);
+        
         return rows;
       } catch (error) {
         throw new Error("Error al obtener proyectos asignados: " + error.message);
