@@ -1,5 +1,5 @@
   import { useState, useRef } from 'react';
-  import '../../styles/RegistrarProyecto.css';
+  import '../../styles/estudiante/RegistrarProyecto.css';
   export default function ProyectoEstudiante() {
     const [title, setTitle] = useState('');
     const [tipo, setTipo] = useState('Pasantía');
