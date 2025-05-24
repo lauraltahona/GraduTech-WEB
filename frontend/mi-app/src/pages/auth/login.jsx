@@ -1,20 +1,13 @@
 import React, { useState } from "react"; 
 import "../../styles/loginStyles.css";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "../../components/ui/Card.jsx";
-import { Label } from "../../components/ui/Label.jsx";
-import { Input } from "../../components/ui/Input.jsx";
-import { Button } from "../../components/ui/button.jsx";
+import Logo from "../../assets/login/Logo.png";
 
 function Login() {
   const [correo, setCorreo] = useState("");
   const [contraseña, setContraseña] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -55,71 +48,73 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Card className="card">
-        <CardHeader className="cardHeader">
-          <div className="div3">
-            <div className="div4">Espacio para el logo de tu proyecto</div>
-          </div>
-          <div className="div5">
-            <CardTitle className="cardTitle">Iniciar sesión</CardTitle>
-            <CardDescription className="cardDescription">
-              Ingresa tus credenciales para acceder
-            </CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent className="cardContent">
-          <div className="div7">
-            <Label htmlFor="email" className="label labelEmail">
-              Correo electrónico
-            </Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="tu@ejemplo.com"
-              className="input"
-              value={correo}
-              onChange={(e) => setCorreo(e.target.value)}
-            />
-          </div>
-          <div className="div8">
-            <div className="div9">
-              <Label htmlFor="password" className="label">
-                Contraseña
-              </Label>
-              <p href="#" className="p1">
-                ¿Olvidaste tu contraseña?
-              </p>
-            </div>
-            <div className="div10">
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className="input"
-                value={contraseña}
-                onChange={(e) => setContraseña(e.target.value)}
-              />
-              <button
-                type="button"
-                className="button1"
-              >
-                {/* Aquí podrías agregar la lógica de mostrar/ocultar contraseña si lo deseas */}
-              </button>
-            </div>
-          </div>
-        </CardContent>
-        <div className="div11">
-          <Button className="button2" type="submit">Iniciar sesión</Button>
-          <p className="p2">
-            ¿No tienes una cuenta?{" "}
-            <p href="#" className="p3">
-              Regístrate
-            </p>
-          </p>
+    <main className="main-content">
+      <header className="header-content">
+        <div className="header-content-img">{Logo}</div>
+        <div className="content-title">
+          <h1 className="header-title">Iniciar sesión</h1>
+          <h3 className="header-description">
+            Ingresa tus credenciales para acceder
+          </h3>
         </div>
-      </Card>
-    </form>
+      </header>
+      <form onSubmit={handleSubmit} className="form-content">
+        <div className="form-content-email">
+          <label htmlFor="email" className="label">
+            Correo electrónico
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+            placeholder="usuario@unicesar.edu.co"
+            className="input inputEmail"
+            required
+          />
+        </div>
+        <div className="form-content-password">
+          <div className="content-labelPassword">
+            <label htmlFor="password" className="label">
+              Contraseña
+            </label>.l,
+            <p href="#" className="label-rememberPassword">
+              ¿Olvidaste tu contraseña?
+            </p>
+          </div>
+          <div className="content-input-password">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
+              placeholder="••••••••"
+              className="input"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="button-showPass"
+              aria-label={
+                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+              }
+            >
+              {showPassword ? (
+                <EyeOff size={18} className="password-icon" />
+              ) : (
+                <Eye size={18} className="password-icon" />
+              )}
+            </button>
+          </div>
+        </div>
+      </form>
+      <div className="content-button-login">
+        <button type="submit" className="button-login">
+          Iniciar sesión
+        </button>
+      </div>
+    </main>
   );
 }
 
