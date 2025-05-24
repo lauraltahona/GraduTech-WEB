@@ -13,7 +13,8 @@ export class EmailService{
                     descripcion
                 }
             }
-            await transporter.sendMail(emailOptions)
+            const correo = await transporter.sendMail(emailOptions)
+            console.log(correo);
             
         } catch (error) {
             throw new error

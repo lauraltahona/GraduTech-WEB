@@ -3,31 +3,51 @@ POST http://localhost:5001/estudiante
 Content-Type: application/json
 
 {
-    "id_estudiante": "012345678",
+    "id_estudiante": "258963147",
     "carrera": "Ingeniería de Sistemas",
-    "semestre": 5,
+    "semestre": 10,
     "usuario": {
-    "nombre": "Laura Victoria Altahona",
-    "correo": "lau@unicesar.edu.co",
+    "nombre": " Victoria ",
+    "correo": "nlaurra@unicesar.edu.co",
     "contraseña": "hola1234"
     }
 }
+###GET ESTUDIANTE
+GET http://localhost:5001/estudiante/getAll
+
+### GET BY ID
+GET http://localhost:5001/estudiante/id=/01235678
+
+###delete
+DELETE http://localhost:5001/estudiante/eliminar/258963147
 
 ###POST DOCENTE
 POST http://localhost:5001/docente
 Content-Type: application/json
 
 {
-    "id_docente": "456987231",
+    "id_docente": "123456789",
     "profesion": "Docente",
-    "disponibilidad": "DISPONIBLE",
     "carrera": "Ingenieria de sistemas",
     "usuario": {
-    "nombre": "Pablo Sanchez",
-    "correo": "pablo@unicesar.edu.co",
+    "nombre": "Roberto Fernandez",
+    "correo": "roberto@unicesar.edu.co",
     "contraseña": "hola1234"
     }
+}
 
+###POST JURADO
+POST http://localhost:5001/jurado
+Content-Type: application/json
+
+{
+    "idJurado": "123456789",
+    "carrera": "Ingenieria de sistemas",
+    "usuario": {
+    "nombre": "Kadir Daza",
+    "correo": "kadir@unicesar.edu.co",
+    "contraseña": "hola1234"
+    }
 }
 
 ### POST LOGIN
