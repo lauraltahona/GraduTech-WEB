@@ -111,7 +111,7 @@ const RegistrarDocente = () => {
           <div className="form-grid-teacher">
             {/* ID Docente */}
             <div className="form-group">
-              <label htmlFor="teacherId" className="form-label">
+              <label htmlFor="teacherId" className="form-label-teacher">
                 <IdCard size={16} />
                 ID Docente
               </label>
@@ -129,7 +129,7 @@ const RegistrarDocente = () => {
 
             {/* Profesión */}
             <div className="form-group">
-              <label htmlFor="profession" className="form-label">
+              <label htmlFor="profession" className="form-label-teacher">
                 <Briefcase size={16} />
                 Profesión
               </label>
@@ -146,7 +146,7 @@ const RegistrarDocente = () => {
 
             {/* Carrera */}
             <div className="form-group">
-              <label htmlFor="career" className="form-label">
+              <label htmlFor="career" className="form-label-teacher">
                 <GraduationCap size={16} />
                 Carrera
               </label>
@@ -169,7 +169,7 @@ const RegistrarDocente = () => {
 
             {/* Nombre */}
             <div className="form-group">
-              <label htmlFor="name" className="form-label">
+              <label htmlFor="name" className="form-label-teacher">
                 <User size={16} />
                 Nombre Completo
               </label>
@@ -187,7 +187,7 @@ const RegistrarDocente = () => {
 
             {/* Correo */}
             <div className="form-group">
-              <label htmlFor="email" className="form-label">
+              <label htmlFor="email" className="form-label-teacher">
                 <Mail size={16} />
                 Correo Electrónico
               </label>
@@ -205,7 +205,7 @@ const RegistrarDocente = () => {
 
             {/* Contraseña */}
             <div className="form-group">
-              <label htmlFor="password" className="form-label">
+              <label htmlFor="password" className="form-label-teacher">
                 <Lock size={16} />
                 Contraseña
               </label>
@@ -236,7 +236,7 @@ const RegistrarDocente = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="form-actions">
+          <div className="form-actions-teacher">
             <button type="submit" className="submit-button-teacher">
               <UserPlus size={20} />
               <span>Registrar Docente</span>

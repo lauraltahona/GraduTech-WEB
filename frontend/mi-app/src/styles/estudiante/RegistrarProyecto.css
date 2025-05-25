@@ -12,21 +12,21 @@
   overflow: hidden;
 }
 
-.form-header {
+.form-header-register-project {
   background: linear-gradient(135deg, #8cd68c 0%, #56c256 100%);
   padding: 32px 24px;
   text-align: center;
   color: white;
 }
 
-.form-title {
+.form-title-register-project {
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 8px 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-subtitle {
+.form-subtitle-register-project {
   font-size: 16px;
   margin: 0;
   opacity: 0.9;

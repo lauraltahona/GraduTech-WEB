@@ -248,13 +248,13 @@ body {
   border: 2px solid var(--verde-muy-claro);
 }
 
-.form-header {
+.form-header-deliveryForPlan {
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--verde-muy-claro);
 }
 
-.form-header h4 {
+.form-header-deliveryForPlan h4 {
   color: var(--verde-principal);
   margin: 0;
   font-size: 1.3rem;
@@ -346,7 +346,7 @@ body {
 }
 
 /* Acciones del formulario */
-.form-actions {
+.form-actions-deliveryForPlan {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
@@ -405,7 +405,7 @@ body {
     margin: 0.5rem;
   }
 
-  .form-actions {
+  .form-actions-deliveryForPlan {
     flex-direction: column;
   }
 

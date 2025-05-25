@@ -283,8 +283,7 @@
   animation-delay: 0.35s;
 }
 
-.main-content-student-menu {
-  flex: 1;
+.main-content {
   padding: 24px;
   background-color: #f0fdf4; /* o el color que desees para el fondo */
   overflow-y: auto;

@@ -10,6 +10,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import "../../styles/estudiante/MiProyecto.css";
+import "../../shared/shared.css";
 
 export default function MiProyecto() {
   const [proyecto, setProyecto] = useState(null);
@@ -35,11 +36,14 @@ export default function MiProyecto() {
   }
 
   // Formateo de fecha
-  const fechaFormateada = new Date(proyecto.createdAt).toLocaleDateString("es-ES", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
+  const fechaFormateada = new Date(proyecto.createdAt).toLocaleDateString(
+    "es-ES",
+    {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }
+  );
 
   return (
     <div className="my-project-container">
