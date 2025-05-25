@@ -9,30 +9,37 @@ const AsignarJurado = () => {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        const [resProyectos, resJurados] = await Promise.all([
-          fetch("http://localhost:5001/proyectos/sin-jurado"),
-          fetch("http://localhost:5001/jurado/getAll"),
-        ]);
+  const cargarDatos = async () => {
+    try {
+      const [resProyectos, resJurados] = await Promise.all([
+        fetch("http://localhost:5001/proyectos/sin-jurado"),
+        fetch("http://localhost:5001/jurado/getAll"),
+      ]);
 
-        const [dataProyectos, dataJurados] = await Promise.all([
-          resProyectos.json(),
-          resJurados.json(),
-        ]);
+      const [dataProyectos, dataJurados] = await Promise.all([
+        resProyectos.json(),
+        resJurados.json(),
+      ]);
 
-        setProyectos(dataProyectos);
-        setJurados(dataJurados);
-      } catch (error) {
-        console.error("Error cargando datos:", error);
-        alert("Error al cargar los datos del servidor");
-      } finally {
-        setCargando(false);
-      }
-    };
+      // Filtrar proyectos con estado "Aprobado por Docente" (ignorando mayúsculas/minúsculas)
+      const proyectosAprobados = dataProyectos.filter(
+        (p) => p.estado?.toLowerCase() === "aprobado por docente".toLowerCase()
+      );
 
-    cargarDatos();
-  }, []);
+      setProyectos(proyectosAprobados);
+      setJurados(dataJurados);
+    } catch (error) {
+      console.error("Error cargando datos:", error);
+      alert("Error al cargar los datos del servidor");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  cargarDatos();
+}, []);
+
+
 
   const handleProyectoChange = (e) => {
     const title = e.target.value;
@@ -101,8 +108,8 @@ const AsignarJurado = () => {
           >
             <option value="">-- Selecciona --</option>
             {juradosFiltrados.map((j) => (
-              <option key={j.idJurado} value={j.idJurado}>
-                {j.idJurado}
+              <option key={j.id_jurado} value={j.id_jurado}>
+                {j.usuario.nombre} ({j.id_jurado})
               </option>
             ))}
           </select>

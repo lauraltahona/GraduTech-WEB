@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/docente/Asignados.css";
 
-export default function ProyectosAsignados() {
+export default function Proyectos() {
   const [proyectos, setProyectos] = useState([]);
   const idUsuario = localStorage.getItem('userId');
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function ProyectosAsignados() {
   useEffect(() => {
     const fetchProyectos = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/proyectos/asignados/${idUsuario}`);
+        const response = await fetch(`http://localhost:5001/proyectos/asignados/jurado/${idUsuario}`);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Error HTTP ${response.status}: ${errorText}`);
@@ -27,10 +27,8 @@ export default function ProyectosAsignados() {
     }
   }, [idUsuario]);
 
-  const irAPlanEntrega = (idProyecto, correo) => {
-    localStorage.setItem('id_proyecto', idProyecto);
-    localStorage.setItem('correo', correo);
-    navigate('/planEntrega');
+  const irAProyectoFinal = (proyecto) => {
+    navigate('/proyectoFinal', { state: { proyecto } });
   };
 
   const cambiarEstado = async (idProyecto, nuevoEstado) => {
@@ -49,7 +47,7 @@ export default function ProyectosAsignados() {
       }
 
       const data = await response.json();
-      console.log('Proyecto actualizado:', data);
+      console.log('Estado actualizado:', data);
       setProyectos((prev) =>
         prev.map((proy) =>
           proy.idProyecto === idProyecto ? { ...proy, estado: nuevoEstado } : proy
@@ -62,25 +60,30 @@ export default function ProyectosAsignados() {
 
   return (
     <div className="contenedor-proyectos">
-      <h2>✅Proyectos Asignados</h2>
+      <h2>📂 Proyectos Asignados al Jurado</h2>
       {proyectos.length === 0 ? (
-        <p>No hay proyectos asignados.</p>
+        <p>No tienes proyectos asignados.</p>
       ) : (
         proyectos.map((proyecto) => (
-          <div className="card-proyecto" key={proyecto.idProyecto}>
-            <h3>{proyecto.titulo}</h3>
+          <div
+            className="card-proyecto"
+            key={proyecto.idProyecto}
+          >
+            <h3 onClick={() => irAProyectoFinal(proyecto)} style={{ cursor: 'pointer' }}>
+              {proyecto.titulo}
+            </h3>
             <p><strong>Estudiante:</strong> {proyecto.estudiante}</p>
+            <p><strong>Tipo:</strong> {proyecto.tipo}</p>
             <p><strong>Estado:</strong> {proyecto.estado}</p>
+
             <div className="acciones-plan-entrega">
-              <button onClick={() => irAPlanEntrega(proyecto.idProyecto, proyecto.correo)}>
-                Planear entrega
-              </button>
               <select
                 value={proyecto.estado}
                 onChange={(e) => cambiarEstado(proyecto.idProyecto, e.target.value)}
               >
                 <option value="En revisión">EN REVISIÓN</option>
-                <option value="Aprobado por docente">APROBADO POR DOCENTE</option>
+                <option value="Aprobado">APROBADO</option>
+                <option value="Rechazado">RECHAZADO</option>
               </select>
             </div>
           </div>
