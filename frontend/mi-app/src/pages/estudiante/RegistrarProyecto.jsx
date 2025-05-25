@@ -154,9 +154,9 @@ export default function ProyectoEstudiante() {
   return (
     <div className="register-form-container">
       <div className="register-form-card">
-        <div className="form-header">
-          <h1 className="form-title">Registrar Proyecto</h1>
-          <p className="form-subtitle">
+        <div className="form-header-register-project">
+          <h1 className="form-title-register-project">Registrar Proyecto</h1>
+          <p className="form-subtitle-register-project">
             Completa la información de tu proyecto académico
           </p>
         </div>

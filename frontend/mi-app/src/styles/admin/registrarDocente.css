@@ -102,11 +102,10 @@
 }
 
 /* Grid del formulario */
-.form-grid-teacher{
+.form-grid-teacher {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
-    margin-bottom: 32px;
 }
 
 /* Grupos de campos */
@@ -116,7 +115,15 @@
     gap: 8px;
 }
 
-/* Etiquetas */
+.form-label-teacher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #276c27;
+    margin-bottom: 4px;
+}
 
 /* Inputs */
 
@@ -172,6 +179,12 @@
 }
 
 /* Acciones del formulario */
+.form-actions-teacher {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+    border-top: 2px solid #f0faf0;
+}
 
 .submit-button-teacher {
     display: flex;

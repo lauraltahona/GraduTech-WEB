@@ -76,7 +76,7 @@ const MenuAdmin = () => {
           </div>
         </div>
       </aside>
-      <main className="main-content-student-menu">
+      <main className="main-content">
         <Outlet />
       </main>
     </div>

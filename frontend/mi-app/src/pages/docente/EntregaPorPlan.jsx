@@ -187,7 +187,7 @@ const EntregasPorPlan = () => {
                     <tr className="fila-retro">
                       <td colSpan="6">
                         <div className="retro-form">
-                          <div className="form-header">
+                          <div className="form-header-deliveryForPlan">
                             <h4>Agregar Retroalimentación</h4>
                           </div>
 
@@ -226,7 +226,7 @@ const EntregasPorPlan = () => {
                             </div>
                           )}
 
-                          <div className="form-actions">
+                          <div className="form-actions-deliveryForPlan">
                             <button
                               onClick={() => handleUploadRetroalimentacion(entrega.idEntrega)}
                               className="btn-guardar-retro"

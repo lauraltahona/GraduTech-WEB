@@ -69,7 +69,7 @@ export default function PlanEntrega() {
     <div className="plan-entrega-container">
       <h2>📌Planificación de entregas</h2>
 
-      <div className="form-grid">
+      <div className="form-grid-deliveryPlan">
         <div>
           <label>N° Entrega</label>
           <input name="nro_entrega" value={formData.nro_entrega} onChange={handleChange} />

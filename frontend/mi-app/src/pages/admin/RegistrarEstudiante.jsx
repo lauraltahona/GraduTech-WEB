@@ -89,10 +89,10 @@ const RegistrarEstudiante = () => {
 
       <div className="form-card">
         <form onSubmit={handleSubmit} className="student-form">
-          <div className="form-grid">
+          <div className="form-grid-student">
             {/* ID Estudiante */}
             <div className="form-group">
-              <label htmlFor="studentId" className="form-label">
+              <label htmlFor="studentId" className="form-label-student">
                 <IdCard size={16} />
                 ID Estudiante
               </label>
@@ -110,7 +110,7 @@ const RegistrarEstudiante = () => {
 
             {/* Carrera */}
             <div className="form-group">
-              <label htmlFor="career" className="form-label">
+              <label htmlFor="career" className="form-label-student">
                 <GraduationCap size={16} />
                 Carrera
               </label>
@@ -133,7 +133,7 @@ const RegistrarEstudiante = () => {
 
             {/* Semestre */}
             <div className="form-group">
-              <label htmlFor="semester" className="form-label">
+              <label htmlFor="semester" className="form-label-student">
                 <Calendar size={16} />
                 Semestre
               </label>
@@ -152,7 +152,7 @@ const RegistrarEstudiante = () => {
 
             {/* Nombre */}
             <div className="form-group">
-              <label htmlFor="name" className="form-label">
+              <label htmlFor="name" className="form-label-student">
                 <User size={16} />
                 Nombre Completo
               </label>
@@ -170,7 +170,7 @@ const RegistrarEstudiante = () => {
 
             {/* Correo */}
             <div className="form-group">
-              <label htmlFor="email" className="form-label">
+              <label htmlFor="email" className="form-label-student">
                 <Mail size={16} />
                 Correo Electrónico
               </label>
@@ -188,7 +188,7 @@ const RegistrarEstudiante = () => {
 
             {/* Contraseña */}
             <div className="form-group">
-              <label htmlFor="password" className="form-label">
+              <label htmlFor="password" className="form-label-student">
                 <Lock size={16} />
                 Contraseña
               </label>
