@@ -28,4 +28,14 @@ export class JuryController{
         
 
     }
+
+    static async getAllJurys(req, res){
+        try{
+            const jurys = await JuryService.getAllJurys();
+            return res.status(200).json(jurys);
+        } catch(error){
+            console.log(error);
+            res.status(500).json({error: 'Error al obtener docentes'});
+        }
+    }
 }

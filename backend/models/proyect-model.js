@@ -37,10 +37,11 @@ export class ProyectModel {
 
       if (!student) throw new Error("No se encontró un estudiante con ese usuario.");
       console.log(student);
+      const nombre = student.nombre;
       
       const proyecto = await Project.findOne({
         where: { idEstudiante: student.idEstudiante },
-        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante"]
+        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "createdAt", "descripcion", "idDocente"]
       });
 
       return proyecto;
