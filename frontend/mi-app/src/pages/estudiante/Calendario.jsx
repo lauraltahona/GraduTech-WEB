@@ -44,7 +44,7 @@ export default function Calendario({ idEstudiante }) {
     <div className="calendar-container">
       {/* Header */}
       <div className="calendar-header">
-        <div className="header-content">
+        <div className="header-content-calendar">
           <div className="header-icon">
             <CalendarDays />
           </div>

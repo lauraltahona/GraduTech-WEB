@@ -10,7 +10,7 @@
     margin-bottom: 32px;
 }
 
-.header-content {
+.header-content-juryReview {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -347,7 +347,7 @@
         gap: 20px;
     }
 
-    .header-content {
+    .header-content-juryReview {
         flex-direction: column;
         text-align: center;
         padding: 24px;

@@ -46,7 +46,7 @@ abbr[title] {
   margin-bottom: 32px;
 }
 
-.header-content {
+.header-content-calendar {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -295,7 +295,7 @@ abbr[title] {
     padding: 0 16px;
   }
 
-  .header-content {
+  .header-content-calendar {
     flex-direction: column;
     text-align: center;
     padding: 24px;

@@ -45,7 +45,7 @@ export default function RevisionJurados() {
     <div className="jury-review-container">
       {/* Header */}
       <div className="page-header">
-        <div className="header-content">
+        <div className="header-content-juryReview">
           <div className="header-icon">
             <Users />
           </div>

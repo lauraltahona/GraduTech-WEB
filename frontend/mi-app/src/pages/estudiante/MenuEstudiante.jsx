@@ -72,7 +72,7 @@ const MenuEstudiante = () => {
           </div>
         </div>
       </aside>
-      <main className="main-content">
+      <main className="main-content-student-menu">
         <Outlet />
       </main>
     </div>

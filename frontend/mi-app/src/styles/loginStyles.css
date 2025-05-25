@@ -1,7 +1,8 @@
-.main-content {
+.main-content-login {
     width: 100%;
     display: flex;
     justify-content: center;
+    background-color: #f0fdf4;
 }
 
 .test {
