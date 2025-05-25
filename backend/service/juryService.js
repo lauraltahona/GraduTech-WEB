@@ -61,4 +61,25 @@ export class JuryService {
       throw error;
     }
   }
+
+  static async getAllJurys() {
+    const jurys = await Jury.findAll({
+      include: {
+      model: User,
+      attributes: ['idUsers', 'nombre', 'correo'],
+      },
+    });
+  
+    return jurys.map(t => ({
+      id_jurado: t.idJurado,
+      carrera: t.carrera,
+      usuario: {
+        id_usuario: t.user.idUsers,
+        nombre: t.user.nombre,
+        correo: t.user.correo,
+      },
+    }));
+  }
+  
+
 }

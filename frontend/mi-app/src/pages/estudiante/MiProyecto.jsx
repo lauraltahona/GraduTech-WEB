@@ -11,24 +11,6 @@ import {
 } from "lucide-react";
 import "../../styles/estudiante/MiProyecto.css";
 
-//Laura, esto lo quitas, es solo por probar
-const projectData = {
-  title: "Proyecto de graduación",
-  type: "Tesis de Grado",
-  status: "Aprobado",
-  studentId: "2020-1234",
-  studentName: "Juan Carlos Pérez",
-  advisor: "Dr. María González",
-  startDate: "Enero 2023",
-  endDate: "Diciembre 2023",
-  description:
-    "Sistema de gestión académica para optimizar los procesos administrativos y mejorar la experiencia estudiantil en instituciones educativas.",
-  progress: 100,
-  grade: "Excelente",
-  documentSize: "2.4 MB",
-  lastModified: "15 de Enero, 2024",
-};
-
 export default function MiProyecto() {
   const [proyecto, setProyecto] = useState(null);
   const id_usuario = localStorage.getItem("userId");
@@ -52,6 +34,13 @@ export default function MiProyecto() {
     return <div className="loading">Cargando proyecto...</div>;
   }
 
+  // Formateo de fecha
+  const fechaFormateada = new Date(proyecto.createdAt).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <div className="my-project-container">
       {/* Header */}
@@ -74,8 +63,7 @@ export default function MiProyecto() {
           </div>
           <div className="project-basic-info">
             <h2 className="project-title">{proyecto.title}</h2>
-            {/* Tipo de proyecto: {proyecto.type} */}
-            <p className="project-type">{projectData.type}</p>
+            <p className="project-type">Proyecto de Grado</p>
           </div>
           <div className="project-status">
             <div className="status-badge approved">
@@ -89,8 +77,9 @@ export default function MiProyecto() {
           {/* Description */}
           <div className="project-section">
             <h3 className="section-title-project">Descripción del Proyecto</h3>
-            {/* Descripcion del proyecto: {proyecto.description} */}
-            <p className="project-description">{projectData.description}</p>
+            <p className="project-description">
+              {proyecto.descripcion || "Sin descripción disponible."}
+            </p>
           </div>
 
           {/* Project Details Grid */}
@@ -101,8 +90,7 @@ export default function MiProyecto() {
               </div>
               <div className="detail-content">
                 <h4 className="detail-title">Estudiante</h4>
-                <p className="detail-value">{projectData.studentName}</p>
-                <p className="detail-subtitle">ID: {projectData.studentId}</p>
+                <p className="detail-value">ID: {proyecto.idEstudiante}</p>
               </div>
             </div>
 
@@ -112,8 +100,7 @@ export default function MiProyecto() {
               </div>
               <div className="detail-content">
                 <h4 className="detail-title">Asesor</h4>
-                <p className="detail-value">{projectData.advisor}</p>
-                <p className="detail-subtitle">Director de tesis</p>
+                <p className="detail-value">ID: {proyecto.idDocente}</p>
               </div>
             </div>
           </div>
@@ -126,15 +113,13 @@ export default function MiProyecto() {
                 <FileText />
               </div>
               <div className="document-info">
-                <h4 className="document-title">Documento de Tesis</h4>
+                <h4 className="document-title">Documento del Proyecto</h4>
                 <div className="document-meta">
-                  <span className="document-size">
-                    {projectData.documentSize}
-                  </span>
+                  <span className="document-size">Desconocido</span>
                   <span className="document-separator">•</span>
                   <span className="document-date">
                     <Clock size={14} />
-                    Modificado: {projectData.lastModified}
+                    Modificado: {fechaFormateada}
                   </span>
                 </div>
               </div>

@@ -20,8 +20,8 @@ const menuItems = [
     icon: FolderOpen,
   },
   { id: "registrarDocente", label: "Registrar Docente", icon: Calendar },
-  { id: "registrarJurados", label: "Registrar Jurados", icon: FileText },
-  { id: "consultar", label: "Consultar", icon: Package },
+  { id: "registrarJurado", label: "Registrar Jurados", icon: FileText },
+  { id: "menuConsultas", label: "Consultar", icon: Package },
   { id: "asignarDocente", label: "Asignar docente", icon: Users },
   { id: "asignarJurado", label: "Asignar Jurado", icon: Archive },
 ];

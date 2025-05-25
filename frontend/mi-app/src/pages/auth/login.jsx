@@ -39,6 +39,9 @@ function Login() {
       if (user.rol === "Docente") {
         navigate("/proyectosAsignados");
       }
+      if(user.rol === "Jurado"){
+        navigate("/proyectosJurado");
+      }
       if (user.rol === "Administrador") {
         navigate("/menuAdmin");
       }

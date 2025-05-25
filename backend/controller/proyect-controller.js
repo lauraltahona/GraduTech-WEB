@@ -38,6 +38,24 @@ export class ProyectController{
         }
     }
 
+    static async getProyectosAsignadosJurado(req, res) {
+        const {id_usuario} = req.params;
+        console.log(id_usuario);
+        
+        try{
+            const proyectos = await ProjectService.obtenerProyectosAsignadosJurados(id_usuario);
+            
+            if(proyectos.length === 0){
+                return res.status(200).json([]);
+            }
+            return res.status(200).json(proyectos);
+            
+        } catch(error){
+            console.log(error);
+            res.status(400).json({message: `Error con la petición de obtener proyectos asignados ${error.message}`});
+        }
+    }
+
     static async obtenerProyectos(req, res){
         const {id_usuario} = req.params;
         
@@ -74,6 +92,44 @@ export class ProyectController{
             
             res.status(200).json(lista);
         } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async asignarJurado(req, res) {
+        const { title, idJurado } = req.body;
+
+        console.log('ESTOY EN CONTROLLER:', title, idJurado);
+        try {
+            const proyectoActualizado = await ProjectService.asignarJuradoAProyecto(title, idJurado);
+            console.log(proyectoActualizado);
+            
+            res.status(200).json({
+            mensaje: "Jurado asignado correctamente",
+            proyecto: proyectoActualizado
+            });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    static async obtenerProyectosSinJurado(req, res) {
+        try {
+            const lista = await ProjectService.listarProyectosSinJurado();
+            console.log(lista);
+            
+            res.status(200).json(lista);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async cambiarEstado(req, res){
+        const {idProyecto, estado} = req.body
+        try{
+            const proyecto = await ProjectService.cambiarEstado(idProyecto, estado);
+            res.status(200).json({message: 'Proyecto actualizado con exito', proyecto});
+        } catch(error){
             res.status(500).json({ error: error.message });
         }
     }
