@@ -1,225 +1,258 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-
+"use client"
+import React, { useEffect, useState, useRef } from "react"
+import { useParams } from "react-router-dom"
+import "../../styles/docente/EntregaPorPlan.css";
 const EntregasPorPlan = () => {
-  const { id_plan_entrega } = useParams();
-  const [entregas, setEntregas] = useState([]);
-  const [error, setError] = useState('');
-  const [retroData, setRetroData] = useState({});
-  const fileInputRef = useRef(null);
+  const { id_plan_entrega } = useParams()
+  const [entregas, setEntregas] = useState([])
+  const [error, setError] = useState("")
+  const [retroData, setRetroData] = useState({})
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     const obtenerEntregas = async () => {
-      setError('');
-      setEntregas([]);
+      setError("")
+      setEntregas([])
 
       try {
-        const response = await fetch(`http://localhost:5001/entrega/entrega-por-plan/${id_plan_entrega}`);
-        if (!response.ok) throw new Error('Error en la respuesta del servidor');
-        const data = await response.json();
+        const response = await fetch(`http://localhost:5001/entrega/entrega-por-plan/${id_plan_entrega}`)
+        if (!response.ok) throw new Error("Error en la respuesta del servidor")
+        const data = await response.json()
 
-        if (data.length === 0) setError('No se encontraron entregas para este plan.');
-        else setEntregas(data);
+        if (data.length === 0) setError("No se encontraron entregas para este plan.")
+        else setEntregas(data)
       } catch (err) {
-        console.error('Error al obtener entregas:', err);
-        setError('Hubo un error al consultar las entregas.');
+        console.error("Error al obtener entregas:", err)
+        setError("Hubo un error al consultar las entregas.")
       }
-    };
+    }
 
-    obtenerEntregas();
-  }, [id_plan_entrega]);
+    obtenerEntregas()
+  }, [id_plan_entrega])
 
   const toggleRetroForm = (idEntrega) => {
-    setRetroData(prev => ({
+    setRetroData((prev) => ({
       ...prev,
       [idEntrega]: {
         show: !prev[idEntrega]?.show,
-        comentario: '',
+        comentario: "",
         archivo: null,
-        filePreview: '',
-        status: ''
-      }
-    }));
-  };
+        filePreview: "",
+        status: "",
+      },
+    }))
+  }
 
   const handleComentarioChange = (idEntrega, value) => {
-    setRetroData(prev => ({
+    setRetroData((prev) => ({
       ...prev,
       [idEntrega]: {
         ...prev[idEntrega],
-        comentario: value
-      }
-    }));
-  };
+        comentario: value,
+      },
+    }))
+  }
 
   const handleFileChange = (idEntrega, file) => {
-    if (!file) return;
+    if (!file) return
 
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = () => {
-      setRetroData(prev => ({
+      setRetroData((prev) => ({
         ...prev,
         [idEntrega]: {
           ...prev[idEntrega],
           archivo: file,
           filePreview: reader.result,
-          status: 'Cargando...'
-        }
-      }));
-    };
-    reader.readAsDataURL(file);
-  };
+          status: "Cargando...",
+        },
+      }))
+    }
+    reader.readAsDataURL(file)
+  }
 
   const handleUploadRetroalimentacion = async (idEntrega) => {
-    const data = retroData[idEntrega];
-    if (!data || !data.comentario ) {
-      alert('Faltan campos por completar');
-      return;
+    const data = retroData[idEntrega]
+    if (!data || !data.comentario) {
+      alert("Faltan campos por completar")
+      return
     }
 
-    const formData = new FormData();
-    formData.append('file', data.archivo);
+    const formData = new FormData()
+    formData.append("file", data.archivo)
 
     try {
-      // Subir archivo
-      const res = await fetch('http://localhost:5001/upload', {
-        method: 'POST',
-        body: formData
-      });
+      const res = await fetch("http://localhost:5001/upload", {
+        method: "POST",
+        body: formData,
+      })
 
       if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`Upload falló: ${res.status} - ${text}`);
+        const text = await res.text()
+        throw new Error(`Upload falló: ${res.status} - ${text}`)
       }
-      const result = await res.json();
-      const rutaDocumento = result.fileUrl;
+      const result = await res.json()
+      const rutaDocumento = result.fileUrl
 
-      // Guardar retroalimentación
       const retro = {
         comentario: data.comentario,
         ruta_documento: rutaDocumento,
-        id_entrega: idEntrega
-      };
+        id_entrega: idEntrega,
+      }
 
       const retroRes = await fetch(`http://localhost:5001/entrega/${idEntrega}/retroalimentacion`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(retro)
-      });
+        body: JSON.stringify(retro),
+      })
 
       if (!retroRes.ok) {
-        const text = await retroRes.text();
-        throw new Error(`Retroalimentación falló: ${retroRes.status} - ${text}`);
+        const text = await retroRes.text()
+        throw new Error(`Retroalimentación falló: ${retroRes.status} - ${text}`)
       }
-      const retroResult = await retroRes.json();
+      const retroResult = await retroRes.json()
 
-      alert('Retroalimentación guardada', retroResult);
+      alert("Retroalimentación guardada", retroResult)
 
-      // Limpia el estado para ese id
-      setRetroData(prev => ({
+      setRetroData((prev) => ({
         ...prev,
         [idEntrega]: {
           show: false,
-          comentario: '',
+          comentario: "",
           archivo: null,
-          filePreview: '',
-          status: 'Retroalimentación guardada'
-        }
-      }));
+          filePreview: "",
+          status: "Retroalimentación guardada",
+        },
+      }))
     } catch (error) {
-      console.error('Error al subir retroalimentación:', error);
-      alert('Error al guardar retroalimentación');
+      console.error("Error al subir retroalimentación:", error)
+      alert("Error al guardar retroalimentación")
     }
-  };
+  }
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h2>Entregas para el plan #{id_plan_entrega}</h2>
+    <div className="contenedor-entregas">
+      <div className="header-section">
+        <h2 className="titulo-principal">Entregas para el plan #{id_plan_entrega}</h2>
+      </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && (
+        <div className="mensaje-error">
+          <span className="error-icon">⚠️</span>
+          {error}
+        </div>
+      )}
 
       {entregas.length > 0 ? (
-        <table border="1" cellPadding="8" style={{ marginTop: '1rem', width: '100%' }}>
-          <thead>
-            <tr>
-              <th>ID Entrega</th>
-              <th>Fecha Envío</th>
-              <th>Ruta Documento</th>
-              <th>Descripción</th>
-              <th>ID Estudiante</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entregas.map((entrega) => (
-              <React.Fragment key={entrega.idEntrega}>
-                <tr>
-                  <td>{entrega.idEntrega}</td>
-                  <td>{new Date(entrega.fecha_envio).toLocaleDateString()}</td>
-                  <td>
-                    <a href={`http://localhost:5001${entrega.ruta_documento}`} target="_blank" rel="noopener noreferrer">
-                      Ver documento
-                    </a>
-                  </td>
-                  <td>{entrega.descripcion}</td>
-                  <td>{entrega.id_estudiante}</td>
-                  <td>
-                    <button onClick={() => toggleRetroForm(entrega.idEntrega)}>
-                      {retroData[entrega.idEntrega]?.show ? 'Cancelar' : 'Agregar retroalimentación'}
-                    </button>
-                  </td>
-                </tr>
-
-                {retroData[entrega.idEntrega]?.show && (
-                  <tr>
-                    <td colSpan="6">
-                      <div style={{ padding: '1rem', backgroundColor: '#f0f0f0' }}>
-                        <label>
-                          Comentario:
-                          <textarea
-                            rows="3"
-                            value={retroData[entrega.idEntrega]?.comentario || ''}
-                            onChange={(e) => handleComentarioChange(entrega.idEntrega, e.target.value)}
-                            style={{ width: '100%', marginTop: '0.5rem' }}
-                          />
-                        </label>
-
-                        <div style={{ marginTop: '0.5rem' }}>
-                          <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={(e) => handleFileChange(entrega.idEntrega, e.target.files[0])}
-                            accept=".pdf,.doc,.docx"
-                          />
-                        </div>
-
-                        {retroData[entrega.idEntrega]?.status && (
-                          <p style={{ color: 'green', marginTop: '0.5rem' }}>
-                            {retroData[entrega.idEntrega]?.status}
-                          </p>
-                        )}
-
-                        <button
-                          onClick={() => handleUploadRetroalimentacion(entrega.idEntrega)}
-                          style={{ marginTop: '0.5rem' }}
-                        >
-                          Guardar retroalimentación
-                        </button>
-                      </div>
+        <div className="tabla-container">
+          <table className="tabla-entregas">
+            <thead>
+              <tr>
+                <th>Fecha Envío</th>
+                <th>Documento</th>
+                <th>Descripción</th>
+                <th>ID Estudiante</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {entregas.map((entrega) => (
+                <React.Fragment key={entrega.idEntrega}>
+                  <tr className="fila-entrega">
+                    <td>{new Date(entrega.fecha_envio).toLocaleDateString()}</td>
+                    <td>
+                      <a
+                        href={`http://localhost:5001${entrega.ruta_documento}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="enlace-documento"
+                      >
+                        📄 Ver documento
+                      </a>
+                    </td>
+                    <td className="celda-descripcion">{entrega.descripcion}</td>
+                    <td>
+                      <span className="badge-estudiante">{entrega.id_estudiante}</span>
+                    </td>
+                    <td>
+                      <button className="btn-retro" onClick={() => toggleRetroForm(entrega.idEntrega)}>
+                        {retroData[entrega.idEntrega]?.show ? "✕ Cancelar" : "💬 Agregar retroalimentación"}
+                      </button>
                     </td>
                   </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
+
+                  {retroData[entrega.idEntrega]?.show && (
+                    <tr className="fila-retro">
+                      <td colSpan="6">
+                        <div className="retro-form">
+                          <div className="form-header">
+                            <h4>Agregar Retroalimentación</h4>
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Comentario:</label>
+                            <textarea
+                              rows="4"
+                              value={retroData[entrega.idEntrega]?.comentario || ""}
+                              onChange={(e) => handleComentarioChange(entrega.idEntrega, e.target.value)}
+                              className="textarea-retro"
+                              placeholder="Escribe tu retroalimentación aquí..."
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label className="form-label">Archivo adjunto (opcional):</label>
+                            <div className="input-file-container">
+                              <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={(e) => handleFileChange(entrega.idEntrega, e.target.files[0])}
+                                accept=".pdf,.doc,.docx"
+                                className="input-file"
+                                id={`file-${entrega.idEntrega}`}
+                              />
+                              <label htmlFor={`file-${entrega.idEntrega}`} className="file-label">
+                                📎 Seleccionar archivo
+                              </label>
+                            </div>
+                          </div>
+
+                          {retroData[entrega.idEntrega]?.status && (
+                            <div className="estado-retro">
+                              <span className="status-icon">ℹ️</span>
+                              {retroData[entrega.idEntrega]?.status}
+                            </div>
+                          )}
+
+                          <div className="form-actions">
+                            <button
+                              onClick={() => handleUploadRetroalimentacion(entrega.idEntrega)}
+                              className="btn-guardar-retro"
+                            >
+                              💾 Guardar retroalimentación
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
-        !error && <p>Cargando entregas...</p>
+        !error && (
+          <div className="mensaje-cargando">
+            <div className="spinner"></div>
+            <p>Cargando entregas...</p>
+          </div>
+        )
       )}
     </div>
-  );
-};
+  )
+}
 
-export default EntregasPorPlan;
+export default EntregasPorPlan
