@@ -74,23 +74,8 @@ abbr[title] {
   height: 32px;
 }
 
-.header-text {
+.header-text-calendar {
   flex: 1;
-}
-
-.page-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1e481e;
-  margin: 0 0 8px 0;
-}
-
-.page-subtitle {
-  font-size: 16px;
-  color: #56c256;
-  margin: 0;
-  line-height: 1.5;
-  font-weight: 500;
 }
 
 /* Wrapper del calendario */

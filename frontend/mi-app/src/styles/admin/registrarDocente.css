@@ -1,5 +1,5 @@
 /* Contenedor principal */
-.register-student-container {
+.register-teacher-container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
@@ -10,7 +10,7 @@
     margin-bottom: 32px;
 }
 
-.header-content-student {
+.header-content-teacher {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -38,7 +38,7 @@
     height: 32px;
 }
 
-.header-text-student {
+.header-text-teacher {
     flex: 1;
 }
 
@@ -51,13 +51,58 @@
     overflow: hidden;
 }
 
+/* Header del formulario */
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #f0faf0 0%, #dbf5db 100%);
+    border-bottom: 1px solid #b8e5b8;
+}
+
+.form-header-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #92400e;
+    box-shadow: 0 4px 12px rgba(252, 211, 77, 0.3);
+}
+
+.form-header-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.form-header-text {
+    flex: 1;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e481e;
+    margin: 0 0 4px 0;
+}
+
+.form-subtitle {
+    font-size: 14px;
+    color: #56c256;
+    margin: 0;
+    font-weight: 500;
+}
+
 /* Formulario */
-.student-form {
+.teacher-form {
     padding: 32px;
 }
 
 /* Grid del formulario */
-.form-grid {
+.form-grid-teacher{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
@@ -75,11 +120,13 @@
 
 /* Inputs */
 
+
 .form-input:focus {
     outline: none;
     border-color: #56c256;
     box-shadow: 0 0 0 3px rgba(86, 194, 86, 0.1);
     transform: translateY(-1px);
+    background: linear-gradient(135deg, #ffffff 0%, #f0faf0 100%);
 }
 
 .form-input::placeholder {
@@ -88,12 +135,12 @@
 
 /* Select */
 
-
 .form-select:focus {
     outline: none;
     border-color: #56c256;
     box-shadow: 0 0 0 3px rgba(86, 194, 86, 0.1);
     transform: translateY(-1px);
+    background: linear-gradient(135deg, #ffffff 0%, #f0faf0 100%);
 }
 
 /* Contenedor de contraseña */
@@ -126,7 +173,7 @@
 
 /* Acciones del formulario */
 
-.submit-button-student {
+.submit-button-teacher {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -143,12 +190,12 @@
     min-width: 200px;
 }
 
-.submit-button-student:hover {
+.submit-button-teacher:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(59, 165, 59, 0.4);
 }
 
-.submit-button-student:active {
+.submit-button-teacher:active {
     transform: translateY(0);
 }
 
@@ -159,27 +206,49 @@
     border-top: 1px solid #b8e5b8;
 }
 
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
 .info-card {
     display: flex;
     gap: 16px;
     align-items: flex-start;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #dbf5db;
+    box-shadow: 0 2px 8px rgba(86, 194, 86, 0.1);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(86, 194, 86, 0.15);
 }
 
 .info-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
-    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #56c256 0%, #3ba53b 100%);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #92400e;
+    color: white;
     flex-shrink: 0;
 }
 
+.info-icon.warning {
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    color: #92400e;
+}
+
 .info-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 .info-content {
@@ -187,10 +256,10 @@
 }
 
 .info-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #276c27;
-    margin: 0 0 12px 0;
+    margin: 0 0 8px 0;
 }
 
 .info-list {
@@ -199,18 +268,18 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .info-list li {
-    font-size: 14px;
+    font-size: 13px;
     color: #56c256;
     position: relative;
-    padding-left: 20px;
+    padding-left: 16px;
 }
 
 .info-list li::before {
-    content: "✓";
+    content: "•";
     position: absolute;
     left: 0;
     color: #3ba53b;
@@ -230,11 +299,11 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-    .register-student-container {
+    .register-teacher-container {
         padding: 0 16px;
     }
 
-    .header-content-student {
+    .header-content-teacher {
         flex-direction: column;
         text-align: center;
         padding: 24px;
@@ -244,11 +313,17 @@
         font-size: 24px;
     }
 
-    .student-form {
+    .form-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 24px;
+    }
+
+    .teacher-form {
         padding: 24px;
     }
 
-    .form-grid {
+    .form-grid-teacher {
         grid-template-columns: 1fr;
         gap: 20px;
     }
@@ -257,18 +332,23 @@
         padding: 20px 24px;
     }
 
+    .info-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
     .info-card {
         flex-direction: column;
         text-align: center;
     }
 
-    .submit-button-student {
+    .submit-button-teacher {
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .form-grid {
+    .form-grid-teacher {
         gap: 16px;
     }
 
@@ -278,7 +358,7 @@
         font-size: 14px;
     }
 
-    .submit-button-student {
+    .submit-button-teacher {
         padding: 14px 24px;
         font-size: 14px;
     }
@@ -341,16 +421,17 @@
     }
 }
 
-/* Efectos de focus mejorados */
-.form-input:focus,
-.form-select:focus {
-    background: linear-gradient(135deg, #ffffff 0%, #f0faf0 100%);
-}
-
 /* Hover effects */
 .form-input:hover:not(:focus),
 .form-select:hover:not(:focus) {
     border-color: #b8e5b8;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(86, 194, 86, 0.1);
+}
+
+/* Focus ring mejorado */
+.form-input:focus-visible,
+.form-select:focus-visible {
+    outline: 2px solid #56c256;
+    outline-offset: 2px;
 }

@@ -49,7 +49,7 @@ export default function RevisionJurados() {
           <div className="header-icon">
             <Users />
           </div>
-          <div className="header-text">
+          <div className="header-text-juryReview">
             <h1 className="page-title">Revisión de Jurados</h1>
             <p className="page-subtitle">
               Estado de evaluación y aprobación del proyecto

@@ -74,11 +74,11 @@ const RegistrarEstudiante = () => {
     <div className="register-student-container">
       {/* Header */}
       <div className="page-header">
-        <div className="header-content">
+        <div className="header-content-student">
           <div className="header-icon">
             <UserPlus />
           </div>
-          <div className="header-text">
+          <div className="header-text-student">
             <h1 className="page-title">Registrar Estudiante</h1>
             <p className="page-subtitle">
               Completa la información para crear una nueva cuenta de estudiante
@@ -219,7 +219,7 @@ const RegistrarEstudiante = () => {
 
           {/* Submit Button */}
           <div className="form-actions">
-            <button type="submit" className="submit-button">
+            <button type="submit" className="submit-button-student">
               <UserPlus size={20} />
               <span>Registrar Estudiante</span>
             </button>

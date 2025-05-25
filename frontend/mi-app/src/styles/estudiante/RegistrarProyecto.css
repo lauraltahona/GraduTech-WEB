@@ -53,17 +53,6 @@
   margin-bottom: 8px;
 }
 
-.form-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #dbf5db;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #1e481e;
-  background: white;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-}
 
 .form-input:focus {
   outline: none;
@@ -75,18 +64,6 @@
   color: #8cd68c;
 }
 
-.form-select {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #dbf5db;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #1e481e;
-  background: white;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  cursor: pointer;
-}
 
 .form-select:focus {
   outline: none;

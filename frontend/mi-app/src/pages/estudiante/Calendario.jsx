@@ -48,7 +48,7 @@ export default function Calendario({ idEstudiante }) {
           <div className="header-icon">
             <CalendarDays />
           </div>
-          <div className="header-text">
+          <div className="header-text-calendar">
             <h1 className="page-title">Calendario de Entregas</h1>
             <p className="page-subtitle">
               ¡Este es tu calendario! Aquí verás marcadas las fechas donde
