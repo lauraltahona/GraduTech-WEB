@@ -44,7 +44,7 @@ export default function MiProyecto() {
   return (
     <div className="my-project-container">
       {/* Header */}
-      <div className="page-header">
+      <div className="page-header-myProject">
         <div className="header-decoration">
           <div className="plant-icon">🌱</div>
           <h1 className="page-title">Mi Proyecto</h1>

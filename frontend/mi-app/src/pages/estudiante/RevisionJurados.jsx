@@ -45,11 +45,11 @@
 //     <div className="jury-review-container">
 //       {/* Header */}
 //       <div className="page-header">
-//         <div className="header-content">
+//         <div className="header-content-juryReview">
 //           <div className="header-icon">
 //             <Users />
 //           </div>
-//           <div className="header-text">
+//           <div className="header-text-juryReview">
 //             <h1 className="page-title">Revisión de Jurados</h1>
 //             <p className="page-subtitle">
 //               Estado de evaluación y aprobación del proyecto
@@ -57,7 +57,6 @@
 //           </div>
 //         </div>
 //       </div>
-
 //       <div className="content-grid">
 //         {/* Jurados Asignados */}
 //         <div className="section-card">

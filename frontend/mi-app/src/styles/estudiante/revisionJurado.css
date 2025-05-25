@@ -10,7 +10,7 @@
     margin-bottom: 32px;
 }
 
-.header-content {
+.header-content-juryReview {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -38,22 +38,8 @@
     height: 32px;
 }
 
-.header-text {
+.header-text-juryReview {
     flex: 1;
-}
-
-.page-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1e481e;
-    margin: 0 0 8px 0;
-}
-
-.page-subtitle {
-    font-size: 16px;
-    color: #56c256;
-    margin: 0;
-    font-weight: 500;
 }
 
 /* Grid de contenido */
@@ -347,7 +333,7 @@
         gap: 20px;
     }
 
-    .header-content {
+    .header-content-juryReview {
         flex-direction: column;
         text-align: center;
         padding: 24px;

@@ -17,7 +17,7 @@
 }
 
 /* Header de la página */
-.page-header {
+.page-header-myProject {
   text-align: center;
   margin-bottom: 32px;
 }
@@ -37,21 +37,6 @@
 
 .plant-icon:nth-child(3) {
   animation-delay: 1.5s;
-}
-
-.page-title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #1e481e;
-  margin: 0;
-  text-shadow: 0 2px 4px rgba(30, 72, 30, 0.1);
-}
-
-.page-subtitle {
-  font-size: 16px;
-  color: #56c256;
-  margin: 0;
-  font-weight: 500;
 }
 
 /* Tarjeta del proyecto */

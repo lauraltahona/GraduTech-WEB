@@ -52,7 +52,7 @@ function Login() {
   };
 
   return (
-    <main className="main-content">
+    <main className="main-content-login">
       <div className="test">
         <header className="header-content-login">
           <div className="header-content-img">

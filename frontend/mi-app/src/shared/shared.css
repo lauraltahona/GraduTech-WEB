@@ -1,0 +1,56 @@
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e481e;
+    margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+    font-size: 16px;
+    color: #56c256;
+    margin: 0;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+    border-top: 2px solid #f0faf0;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #276c27;
+    margin-bottom: 4px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #dbf5db;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #1e481e;
+    background: white;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #dbf5db;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #1e481e;
+    background: white;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
