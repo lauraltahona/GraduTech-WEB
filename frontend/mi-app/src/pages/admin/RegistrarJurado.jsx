@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const JuryForm = () => {
+const RegistrarJurado = () => {
   const [formData, setFormData] = useState({
     idJurado: '',
     carrera: '',
@@ -116,3 +116,5 @@ export const JuryForm = () => {
     </div>
   );
 };
+
+export default RegistrarJurado;

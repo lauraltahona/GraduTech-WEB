@@ -38,6 +38,24 @@ export class ProyectController{
         }
     }
 
+    static async getProyectosAsignadosJurado(req, res) {
+        const {id_usuario} = req.params;
+        console.log(id_usuario);
+        
+        try{
+            const proyectos = await ProjectService.obtenerProyectosAsignadosJurados(id_usuario);
+            
+            if(proyectos.length === 0){
+                return res.status(200).json([]);
+            }
+            return res.status(200).json(proyectos);
+            
+        } catch(error){
+            console.log(error);
+            res.status(400).json({message: `Error con la petición de obtener proyectos asignados ${error.message}`});
+        }
+    }
+
     static async obtenerProyectos(req, res){
         const {id_usuario} = req.params;
         

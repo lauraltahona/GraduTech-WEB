@@ -1,4 +1,5 @@
 import { Project, Student } from "../shared/schemas.js";
+import { db } from "../db.js";
 
  export class ProjectService{
     static async asignarDocenteAProyecto(title, idDocente) {
@@ -71,7 +72,49 @@ import { Project, Student } from "../shared/schemas.js";
         return proyectos.map(p => ({
             id: p.idProyecto,
             title: p.title,
+            estado: p.estado,
             carrera: p.student?.carrera,
         }));
     }
+
+    static async obtenerProyectosAsignadosJurados(id_usuario) {
+
+      const connection = await db.getConnection();
+      try {
+        
+        const [juradoResult] = await connection.query(
+          "SELECT idJurado FROM jurys WHERE idUser = ?", 
+          [id_usuario]
+        );
+
+        console.log(juradoResult);
+        
+
+        if (juradoResult.length === 0) {
+          throw new Error("No se encontró un jurado con ese usuario.");
+        }
+        const id_jurado = juradoResult[0].idJurado;
+        const [rows] = await connection.query(`
+          SELECT 
+              p.idProyecto, 
+              p.title AS titulo, 
+              p.tipo AS tipo,
+              p.estado, 
+              u.nombre AS estudiante,
+              u.correo AS correo,
+              p.rutaDocumento AS rutaDocumento
+          FROM projects p
+          JOIN students s ON s.idEstudiante = p.idEstudiante
+          JOIN users u ON u.idUsers = s.idUser
+          WHERE p.idJurado = ?
+        `, [id_jurado]);
+        await connection.commit();
+        
+        return rows;
+      } catch (error) {
+        throw new Error("Error al obtener proyectos asignados: " + error.message);
+      } finally {
+        connection.release();
+      }
+    }
  }

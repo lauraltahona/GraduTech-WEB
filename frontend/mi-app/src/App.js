@@ -19,6 +19,10 @@ import AsignarDocente from "./pages/admin/AsignarDocente.jsx";
 import MenuConsultas from "./pages/admin/MenuConsultas.jsx";
 import ConsultaEstudiante from "./pages/admin/ConsultaEstudiante.jsx";
 import ConsultaDocente from "./pages/admin/ConsultaDocente.jsx";
+import Proyectos from "./pages/jurado/Proyectos.jsx";
+import AsignarJurado from "./pages/admin/AsignarJurado.jsx";
+import RegistrarJurado from "./pages/admin/RegistrarJurado.jsx";
+import ProyectoFinal from "./pages/jurado/ProyectoFinal.jsx";
 
 function App() {
   return (
@@ -49,15 +53,17 @@ function App() {
         <Route path="/menuAdmin" element={<MenuAdmin />}>
           <Route path="registrarEstudiante" element={<RegistrarEstudiante />} />
           <Route path="registrarDocente" element={<RegistrarDocente />} />
+          <Route path="registrarJurado" element={<RegistrarJurado />} />
           <Route path="asignarDocente" element={<AsignarDocente />} />
-          <Route path="calendario" element={<Calendario />} />
-          <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
-          <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />} />
+          <Route path="asignarJurado" element={<AsignarJurado />} />
           <Route path="menuConsultas" element={<MenuConsultas />}>
             <Route path="consultarEstudiante" element={<ConsultaEstudiante />} />
             <Route path="consultarDocente" element={<ConsultaDocente />} />
           </Route>
         </Route>
+
+        <Route path="/proyectosJurado" element={<Proyectos />} />
+        <Route path="/proyectoFinal" element={<ProyectoFinal />} />
       </Routes>
     </Router>
   );
