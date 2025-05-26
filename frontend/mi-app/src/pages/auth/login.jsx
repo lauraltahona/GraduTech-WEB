@@ -34,7 +34,7 @@ function Login() {
 
       // redireccionar según el rol
       if (user.rol === "Estudiante") {
-        navigate("/homeEstudiante");
+        navigate("/menuEstudiante");
       }
       if (user.rol === "Docente") {
         navigate("/proyectosAsignados");
