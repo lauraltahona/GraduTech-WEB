@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../../styles/admin/asignarDocente.css";
 
 const AsignarJurado = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -9,37 +10,34 @@ const AsignarJurado = () => {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-  const cargarDatos = async () => {
-    try {
-      const [resProyectos, resJurados] = await Promise.all([
-        fetch("http://localhost:5001/proyectos/sin-jurado"),
-        fetch("http://localhost:5001/jurado/getAll"),
-      ]);
+    const cargarDatos = async () => {
+      try {
+        const [resProyectos, resJurados] = await Promise.all([
+          fetch("http://localhost:5001/proyectos/sin-jurado"),
+          fetch("http://localhost:5001/jurado/getAll"),
+        ]);
 
-      const [dataProyectos, dataJurados] = await Promise.all([
-        resProyectos.json(),
-        resJurados.json(),
-      ]);
+        const [dataProyectos, dataJurados] = await Promise.all([
+          resProyectos.json(),
+          resJurados.json(),
+        ]);
 
-      // Filtrar proyectos con estado "Aprobado por Docente" (ignorando mayúsculas/minúsculas)
-      const proyectosAprobados = dataProyectos.filter(
-        (p) => p.estado?.toLowerCase() === "aprobado por docente".toLowerCase()
-      );
+        const proyectosAprobados = dataProyectos.filter(
+          (p) => p.estado?.toLowerCase() === "aprobado por docente"
+        );
 
-      setProyectos(proyectosAprobados);
-      setJurados(dataJurados);
-    } catch (error) {
-      console.error("Error cargando datos:", error);
-      alert("Error al cargar los datos del servidor");
-    } finally {
-      setCargando(false);
-    }
-  };
+        setProyectos(proyectosAprobados);
+        setJurados(dataJurados);
+      } catch (error) {
+        console.error("Error cargando datos:", error);
+        alert("Error al cargar los datos del servidor");
+      } finally {
+        setCargando(false);
+      }
+    };
 
-  cargarDatos();
-}, []);
-
-
+    cargarDatos();
+  }, []);
 
   const handleProyectoChange = (e) => {
     const title = e.target.value;
@@ -57,7 +55,7 @@ const AsignarJurado = () => {
     );
 
     setJuradosFiltrados(filtrados);
-    setJuradoSeleccionado(null); // Limpiar selección anterior
+    setJuradoSeleccionado(null);
   };
 
   const handleAsignar = async () => {
@@ -74,33 +72,37 @@ const AsignarJurado = () => {
       });
 
       const data = await res.json();
-      alert(data.mensaje || "Jurado asignado correctamente");
-
-      window.location.reload(); // Recargar para ver cambios
+      alert(data.message || "Jurado asignado con éxito");
+      window.location.reload();
     } catch (error) {
       console.error("Error al asignar jurado:", error);
       alert("Hubo un error al asignar el jurado");
     }
   };
 
-  if (cargando) return <p>Cargando datos...</p>;
+  if (cargando) return <p className="loading">Cargando datos...</p>;
 
   return (
-    <div>
-      <h2>Asignar Jurado a Proyecto</h2>
+    <div className="asignar-docente-container">
+      <h2 className="titulo">Asignación de Jurado</h2>
+      <p className="descripcion">
+        Cuando elijas un proyecto, se mostrarán automáticamente los jurados disponibles para esa misma carrera.
+      </p>
 
-      <label>Selecciona un proyecto:</label>
-      <select onChange={handleProyectoChange} defaultValue="">
-        <option value="">-- Selecciona --</option>
-        {proyectos.map((p) => (
-          <option key={p.id} value={p.title}>
-            {p.title}
-          </option>
-        ))}
-      </select>
+      <div className="form-group">
+        <label>Selecciona un proyecto:</label>
+        <select onChange={handleProyectoChange} defaultValue="">
+          <option value="">-- Selecciona --</option>
+          {proyectos.map((p) => (
+            <option key={p.id} value={p.title}>
+              {p.title}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {juradosFiltrados.length > 0 ? (
-        <>
+        <div className="form-group">
           <label>Selecciona un jurado:</label>
           <select
             onChange={(e) => setJuradoSeleccionado(e.target.value)}
@@ -113,16 +115,17 @@ const AsignarJurado = () => {
               </option>
             ))}
           </select>
-        </>
+        </div>
       ) : proyectoSeleccionado ? (
-        <p>No hay jurados disponibles para la carrera de este proyecto.</p>
+        <p className="no-docentes">No hay jurados disponibles para esta carrera.</p>
       ) : null}
 
       <button
+        className="btn-asignar"
         onClick={handleAsignar}
         disabled={!proyectoSeleccionado || !juradoSeleccionado}
       >
-        Asignar
+        Asignar Jurado
       </button>
     </div>
   );

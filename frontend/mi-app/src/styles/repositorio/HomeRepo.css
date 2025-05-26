@@ -1,0 +1,140 @@
+.repo-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+.repo-header {
+  background: linear-gradient(135deg, #2e862e, #1ec75c);
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logoUpc2 {
+  height: 70px;
+  width: auto;
+}
+
+.repo-main {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.repo-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #2e862e;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+}
+
+.repo-search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-input-repo {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #15803d;
+  border-radius: 25px 0 0 25px;
+  font-size: 16px;
+  outline: none;
+  border-right: none;
+}
+
+.search-input-repo:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.search-button-repo {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  border: 2px solid #4caf50;
+  border-radius: 0 25px 25px 0;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-left: none;
+  transition: all 0.3s ease;
+}
+
+.search-button-repo:hover {
+  background: linear-gradient(135deg, #388e3c, #4caf50);
+  transform: translateY(-1px);
+}
+
+.repo-categories {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.category-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #f8f8f8, #ffffff);
+}
+
+.category-card .logoUpc {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.category-title {
+  color: #2e862e;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.category-card:hover .category-title {
+  color: #ff9800;
+}
+
+@media (max-width: 768px) {
+  .repo-title {
+    font-size: 2rem;
+  }
+
+  .repo-categories {
+    gap: 20px;
+  }
+
+  .category-card {
+    width: 150px;
+    padding: 20px 15px;
+  }
+
+  .category-card .logoUpc {
+    width: 60px;
+    height: 60px;
+  }
+
+  .category-title {
+    font-size: 1.2rem;
+  }
+}

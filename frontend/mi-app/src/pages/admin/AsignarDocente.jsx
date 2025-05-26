@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../../styles/admin/asignarDocente.css" 
 
 const AsignarDocente = () => {
   const [proyectos, setProyectos] = useState([]);
@@ -50,7 +51,7 @@ const AsignarDocente = () => {
     );
 
     setDocentesFiltrados(filtrados);
-    setDocenteSeleccionado(null); // Limpiar selección anterior
+    setDocenteSeleccionado(null);
   };
 
   const handleAsignar = async () => {
@@ -68,8 +69,6 @@ const AsignarDocente = () => {
 
       const data = await res.json();
       alert(data.message || "Docente asignado con éxito");
-
-      // Opcional: recargar proyectos y docentes para actualizar estado
       window.location.reload();
     } catch (error) {
       console.error("Error al asignar docente:", error);
@@ -77,24 +76,29 @@ const AsignarDocente = () => {
     }
   };
 
-  if (cargando) return <p>Cargando datos...</p>;
+  if (cargando) return <p className="loading">Cargando datos...</p>;
 
   return (
-    <div>
-      <h2>Asignar Docente a Proyecto</h2>
+    <div className="asignar-docente-container">
+      <h2 className="titulo">Asignación de Docente</h2>
+      <p className="descripcion">
+        Cuando elijas un proyecto, se mostrarán automáticamente los docentes disponibles para esa misma carrera.
+      </p>
 
-      <label>Selecciona un proyecto:</label>
-      <select onChange={handleProyectoChange} defaultValue="">
-        <option value="">-- Selecciona --</option>
-        {proyectos.map((p) => (
-          <option key={p.id} value={p.title}>
-            {p.title}
-          </option>
-        ))}
-      </select>
+      <div className="form-group">
+        <label>Selecciona un proyecto:</label>
+        <select onChange={handleProyectoChange} defaultValue="">
+          <option value="">-- Selecciona --</option>
+          {proyectos.map((p) => (
+            <option key={p.id} value={p.title}>
+              {p.title}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {docentesFiltrados.length > 0 ? (
-        <>
+        <div className="form-group">
           <label>Selecciona un docente:</label>
           <select
             onChange={(e) => setDocenteSeleccionado(e.target.value)}
@@ -103,20 +107,21 @@ const AsignarDocente = () => {
             <option value="">-- Selecciona --</option>
             {docentesFiltrados.map((d) => (
               <option key={d.id} value={d.id}>
-                {d.id}
+                {d.nombre} ({d.id})
               </option>
             ))}
           </select>
-        </>
+        </div>
       ) : proyectoSeleccionado ? (
-        <p>No hay docentes disponibles para la carrera de este proyecto.</p>
+        <p className="no-docentes">No hay docentes disponibles para esta carrera.</p>
       ) : null}
 
       <button
+        className="btn-asignar"
         onClick={handleAsignar}
         disabled={!proyectoSeleccionado || !docenteSeleccionado}
       >
-        Asignar
+        Asignar Docente
       </button>
     </div>
   );

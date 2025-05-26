@@ -164,3 +164,9 @@ PlanEntrega.hasMany(Entrega, { foreignKey: 'id_plan_entrega' });
 
 Entrega.belongsTo(Student, { foreignKey: 'id_estudiante' });
 Student.hasMany(Entrega, { foreignKey: 'id_estudiante' });
+
+Project.belongsTo(Jury, { foreignKey: 'idJurado' });
+Jury.hasMany(Project, { foreignKey: 'idJurado' });
+
+Entrega.belongsTo(Project, { foreignKey: 'idProyecto' });
+Project.hasMany(Entrega, { foreignKey: 'idProyecto' });

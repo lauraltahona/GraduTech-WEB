@@ -23,14 +23,21 @@ import Proyectos from "./pages/jurado/Proyectos.jsx";
 import AsignarJurado from "./pages/admin/AsignarJurado.jsx";
 import RegistrarJurado from "./pages/admin/RegistrarJurado.jsx";
 import ProyectoFinal from "./pages/jurado/ProyectoFinal.jsx";
+import Inicio from "./pages/inicio/Inicio.jsx";
+import HomeRepo from "./pages/repositorio/HomeRepo.jsx";
+import MostrarProyectos from "./pages/repositorio/MostrarProyectos.jsx";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Inicio />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/homeEstudiante" element={<HomeEstudiante />} />
 
+        <Route path="/homeRepo" element={<HomeRepo />} />
+        <Route path="/mostrarProyectosRepositorio" element={<MostrarProyectos />} />
+        
         <Route path="/menuEstudiante" element={<MenuEstudiante />}>
           <Route path="registrarProyecto" element={<ProyectoEstudiante />} />
           <Route path="miProyecto" element={<MiProyecto />} />

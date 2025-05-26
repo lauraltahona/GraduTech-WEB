@@ -67,7 +67,6 @@ import { db } from "../db.js";
             where: { idJurado: null },
             include: [{ model: Student }],
         });
-        console.log(proyectos);
         
         return proyectos.map(p => ({
             id: p.idProyecto,
@@ -75,6 +74,30 @@ import { db } from "../db.js";
             estado: p.estado,
             carrera: p.student?.carrera,
         }));
+    }
+
+    static async mostrarProyectosPorTipo(tipo){
+        console.log(tipo);
+        
+        try {
+            const projects = await Project.findAll({
+            where: {
+                tipo: tipo,
+                estado: 'APROBADO'
+            },
+            include: [
+                {
+                    model: Student,
+                    attributes: ['carrera']
+                }
+            ]
+            });
+            console.log(projects);
+            
+            return projects;
+        } catch (error) {
+            
+        }
     }
 
     static async obtenerProyectosAsignadosJurados(id_usuario) {
