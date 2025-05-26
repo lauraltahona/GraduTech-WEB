@@ -12,4 +12,6 @@ proyectRouter.patch('/asignar-docente', ProyectController.asignarDocente);
 proyectRouter.get('/sin-jurado', ProyectController.obtenerProyectosSinJurado);
 proyectRouter.patch('/asignar-jurado', ProyectController.asignarJurado);
 proyectRouter.patch('/cambiar-estado', ProyectController.cambiarEstado);
+proyectRouter.get('/mostrarProyectos', ProyectController.mostrarProyectosPorTipo);
+
 export default proyectRouter;

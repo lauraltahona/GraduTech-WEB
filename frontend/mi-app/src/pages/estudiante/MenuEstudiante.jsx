@@ -7,7 +7,6 @@ import {
   FileText,
   Package,
   Users,
-  Archive,
   ChevronRight,
   GraduationCap,
 } from "lucide-react";
@@ -19,7 +18,6 @@ const menuItems = [
   { id: "miProyecto", label: "Mi proyecto", icon: FileText },
   { id: "entregasEstudiante", label: "Entregas", icon: Package },
   { id: "revisionJurados", label: "Revisión Jurado", icon: Users },
-  { id: "repositorio", label: "Repositorio", icon: Archive },
 ];
 
 const MenuEstudiante = () => {

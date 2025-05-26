@@ -1,0 +1,95 @@
+/* Contenedor principal */
+.main-proyectos-repositorio {
+  padding: 2.5rem;
+  background-color: #f4fff4;
+}
+
+
+.main-proyectos-repositorio::before {
+  content: attr(data-tipo);
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #009300;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+
+.tabla-proyectos-repo {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 100, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+
+.tabla-proyectos-repo thead {
+  background: linear-gradient(90deg, #cada15, #65c61c, #2e862e);
+  color: #fff;
+  text-align: left;
+}
+
+.tabla-proyectos-repo th {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+
+.tabla-proyectos-repo tbody tr {
+  border-bottom: 1px solid #d4edda;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.tabla-proyectos-repo tbody tr:hover {
+  background-color: #e9ffe9;
+  transform: scale(1.01);
+}
+
+
+.tabla-proyectos-repo td {
+  padding: 1rem;
+  vertical-align: top;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+
+.portada-proyectos {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #333;
+  border: 1px solid #ccc;
+}
+
+
+.enlace-documento-repo {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  background-color: #ffd700;
+  color: #000;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.enlace-documento-repo:hover {
+  background-color: #ffcc00;
+  color: #003300;
+}
+
+
+.mensaje-repo {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #006400;
+  font-weight: 600;
+  margin-top: 3rem;
+}

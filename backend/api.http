@@ -13,7 +13,7 @@ Content-Type: application/json
     }
 }
 ###GET ESTUDIANTE
-GET http://localhost:5001/estudiante/getAll
+GET http://localhost:5001/docente/getAll
 
 ### GET BY ID
 GET http://localhost:5001/estudiante/id=/01235678
@@ -50,12 +50,18 @@ Content-Type: application/json
     }
 }
 
+###PROYECTOS SIN JURADO
+GET http://localhost:5001/proyectos/sin-jurado
+
+### GET ALL JURADO
+GET http://localhost:5001/jurado/getAll
+
 ### POST LOGIN
 POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "cami@unicesar.edu.co",
+  "correo": "kadir@unicesar.edu.co",
   "contraseña": "hola1234"
 }
 
@@ -65,7 +71,8 @@ GET http://localhost:5001/proyectos/asignados/2
 ###GET ENTREGAS ASIGNADAS
 GET http://localhost:5001/entrega/asignadas/1
 
-
+###PROYECTOS ASIGNADOS
+GET http://localhost:5001/proyectos/asignados/jurado/9
 ###GET PLANES DE ENTREGA POR PROYECTO
 GET http://localhost:5001/entrega/proyecto/1
 
@@ -73,18 +80,22 @@ GET http://localhost:5001/entrega/proyecto/1
 GET http://localhost:5001/entrega/entrega-por-plan/1
 
 ###GET MI PROYECTO
-GET http://localhost:5001/proyectos/1
+GET http://localhost:5001/proyectos/obtener/1
 
 ### GET FECHAS LIMITES
 GET http://localhost:5001/entrega/fechas/5
 
+### GET PROYECTOS POR TIPO
+GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Pasantía
+
+
 ### PATCH RETRO
-PATCH http://localhost:5001/entrega/1/retroalimentacion
+PATCH http://localhost:5001/proyectos/cambiar-estado
 Content-Type: application/json
 
 {
-  "retroalimentacion": "cambiar objetivos",
-  "ruta_retroalimentacion": "/files/proyectodeinvestigacian.pdf"
+  "idProyecto": "2",
+  "estado": "APROBADO POR DOCENTE"
 }
 
 ###PROYECTOS SIN DOCENTE

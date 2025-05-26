@@ -79,8 +79,8 @@ export default function ProyectosAsignados() {
                 value={proyecto.estado}
                 onChange={(e) => cambiarEstado(proyecto.idProyecto, e.target.value)}
               >
-                <option value="En revisión">EN REVISIÓN</option>
-                <option value="Aprobado por docente">APROBADO POR DOCENTE</option>
+                <option value="EN REVISIÓN">EN REVISIÓN</option>
+                <option value="APROBADO POR DOCENTE">APROBADO POR DOCENTE</option>
               </select>
             </div>
           </div>

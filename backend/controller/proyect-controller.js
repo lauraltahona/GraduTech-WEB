@@ -56,6 +56,17 @@ export class ProyectController{
         }
     }
 
+    static async mostrarProyectosPorTipo(req,res){
+        const tipo = req.query.tipo;
+        console.log(tipo);
+
+        try{
+            const proyectos = await ProjectService.mostrarProyectosPorTipo(tipo);
+            res.status(200).json(proyectos);
+        } catch (error){
+            res.status(401).json({error: `Error con la petición de obtener proyectos asignados ${error.message}`});
+        }
+    }
     static async obtenerProyectos(req, res){
         const {id_usuario} = req.params;
         

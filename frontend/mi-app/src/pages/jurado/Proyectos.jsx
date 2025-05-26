@@ -81,9 +81,9 @@ export default function Proyectos() {
                 value={proyecto.estado}
                 onChange={(e) => cambiarEstado(proyecto.idProyecto, e.target.value)}
               >
-                <option value="En revisión">EN REVISIÓN</option>
-                <option value="Aprobado">APROBADO</option>
-                <option value="Rechazado">RECHAZADO</option>
+                <option value="EN REVISIÓN">EN REVISIÓN</option>
+                <option value="APROBADO">APROBADO</option>
+                <option value="RECHAZADO">RECHAZADO</option>
               </select>
             </div>
           </div>
