@@ -17,6 +17,30 @@
   --radio-border-grande: 12px;
   --transicion: all 0.3s ease;
 }
+.retro-display {
+  background: #f0f9ff;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #bafdbc;
+}
+
+.retro-text {
+  margin: 0;
+  color: #07852b;
+  font-size: 0.9em;
+}
+
+.enlace-retro {
+  display: block;
+  margin-top: 8px;
+  color: #02c764;
+  font-size: 0.8em;
+  text-decoration: none;
+}
+
+.enlace-retro:hover {
+  text-decoration: underline;
+}
 
 /* Reset y estilos base */
 * {

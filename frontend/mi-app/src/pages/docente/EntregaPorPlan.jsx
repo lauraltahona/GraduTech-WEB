@@ -54,83 +54,133 @@ const EntregasPorPlan = () => {
   }
 
   const handleFileChange = (idEntrega, file) => {
-    if (!file) return
+  if (!file) return;
 
-    const reader = new FileReader()
-    reader.onload = () => {
-      setRetroData((prev) => ({
-        ...prev,
-        [idEntrega]: {
-          ...prev[idEntrega],
-          archivo: file,
-          filePreview: reader.result,
-          status: "Cargando...",
-        },
-      }))
-    }
-    reader.readAsDataURL(file)
+  const validTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  ];
+
+  if (!validTypes.includes(file.type)) {
+    setRetroData(prev => ({
+      ...prev,
+      [idEntrega]: {
+        ...prev[idEntrega],
+        status: "❌ Solo se permiten PDF o Word"
+      }
+    }));
+    return;
   }
 
-  const handleUploadRetroalimentacion = async (idEntrega) => {
-    const data = retroData[idEntrega]
-    if (!data || !data.comentario) {
-      alert("Faltan campos por completar")
-      return
-    }
+  const reader = new FileReader();
+  reader.onload = () => {
+    setRetroData(prev => ({
+      ...prev,
+      [idEntrega]: {
+        ...prev[idEntrega],
+        archivo: file,
+        filePreview: reader.result,
+        status: "Subiendo archivo... ⏳"
+      }
+    }));
+  };
+  reader.readAsDataURL(file);
 
-    const formData = new FormData()
-    formData.append("file", data.archivo)
+  // Subir el archivo inmediatamente
+  const uploadFile = async () => {
+    const formData = new FormData();
+    formData.append("file", file);
 
     try {
       const res = await fetch("http://localhost:5001/upload", {
         method: "POST",
         body: formData,
-      })
+      });
+      
+      if (!res.ok) throw new Error("Error en subida");
+      const result = await res.json();
 
-      if (!res.ok) {
-        const text = await res.text()
-        throw new Error(`Upload falló: ${res.status} - ${text}`)
-      }
-      const result = await res.json()
-      const rutaDocumento = result.fileUrl
-
-      const retro = {
-        comentario: data.comentario,
-        ruta_documento: rutaDocumento,
-        id_entrega: idEntrega,
-      }
-
-      const retroRes = await fetch(`http://localhost:5001/entrega/${idEntrega}/retroalimentacion`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(retro),
-      })
-
-      if (!retroRes.ok) {
-        const text = await retroRes.text()
-        throw new Error(`Retroalimentación falló: ${retroRes.status} - ${text}`)
-      }
-      const retroResult = await retroRes.json()
-
-      alert("Retroalimentación guardada", retroResult)
-
-      setRetroData((prev) => ({
+      setRetroData(prev => ({
         ...prev,
         [idEntrega]: {
-          show: false,
-          comentario: "",
-          archivo: null,
-          filePreview: "",
-          status: "Retroalimentación guardada",
-        },
-      }))
+          ...prev[idEntrega],
+          ruta_retro: result.fileUrl, // Guardamos la URL aquí
+          status: "✅ Archivo subido correctamente"
+        }
+      }));
+      
     } catch (error) {
-      console.error("Error al subir retroalimentación:", error)
-      alert("Error al guardar retroalimentación")
+      console.error("Error subiendo archivo:", error);
+      setRetroData(prev => ({
+        ...prev,
+        [idEntrega]: {
+          ...prev[idEntrega],
+          status: "❌ Error al subir archivo"
+        }
+      }));
     }
+  };
+
+  uploadFile();
+};
+
+const handleUploadRetroalimentacion = async (idEntrega) => {
+  const data = retroData[idEntrega];
+  
+  if (!data?.comentario || !data?.ruta_retro) {
+    alert("Debes subir un archivo y escribir un comentario");
+    return;
   }
+
+  try {
+    setRetroData(prev => ({
+      ...prev,
+      [idEntrega]: { ...prev[idEntrega], status: "Guardando retroalimentación... ⏳" }
+    }));
+
+    const retroRes = await fetch(`http://localhost:5001/entrega/${idEntrega}/retroalimentacion`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        retroalimentacion: data.comentario,
+        ruta_documento: data.ruta_retro // Usamos la URL ya subida
+      })
+    });
+
+    if (!retroRes.ok) throw new Error("Error guardando retro");
+
+    // Actualizar la lista de entregas con la nueva retroalimentación
+    setEntregas(prev => prev.map(entrega => 
+      entrega.idEntrega === idEntrega ? {
+        ...entrega,
+        retroalimentacion: data.comentario,
+        ruta_retroalimentacion: data.ruta_retro
+      } : entrega
+    ));
+
+    setRetroData(prev => ({
+      ...prev,
+      [idEntrega]: {
+        show: false,
+        comentario: "",
+        archivo: null,
+        filePreview: "",
+        status: "✅ Retroalimentación guardada"
+      }
+    }));
+
+  } catch (error) {
+    console.error("Error:", error);
+    setRetroData(prev => ({
+      ...prev,
+      [idEntrega]: {
+        ...prev[idEntrega],
+        status: `❌ Error: ${error.message}`
+      }
+    }));
+  }
+};
 
   return (
     <div className="contenedor-entregas">
@@ -181,6 +231,28 @@ const EntregasPorPlan = () => {
                         {retroData[entrega.idEntrega]?.show ? "✕ Cancelar" : "💬 Agregar retroalimentación"}
                       </button>
                     </td>
+                  </tr>
+                  <tr className="fila-entrega">
+                    {/* ... otras celdas ... */}
+                      {entrega.retroalimentacion ? (
+                        <div className="retro-display">
+                          <p className="retro-text">📝Retroalimentación dada: {entrega.retroalimentacion}</p>
+                          {entrega.ruta_retroalimentacion && (
+                            <a
+                              href={`http://localhost:5001${entrega.ruta_retroalimentacion}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="enlace-retro"
+                            >
+                              📎 Ver documento de retroalimentación
+                            </a>
+                          )}
+                        </div>
+                      ) : (
+                        <button className="btn-retro" onClick={() => toggleRetroForm(entrega.idEntrega)}>
+                          💬 Agregar retroalimentación
+                        </button>
+                      )}
                   </tr>
 
                   {retroData[entrega.idEntrega]?.show && (

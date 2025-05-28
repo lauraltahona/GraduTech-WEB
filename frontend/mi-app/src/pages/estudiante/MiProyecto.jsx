@@ -15,7 +15,6 @@ import "../../shared/shared.css";
 export default function MiProyecto() {
   const [proyecto, setProyecto] = useState(null);
   const id_usuario = localStorage.getItem("userId");
-
   useEffect(() => {
     if (!id_usuario) return;
     fetch(`http://localhost:5001/proyectos/obtener/${id_usuario}`)
@@ -34,6 +33,9 @@ export default function MiProyecto() {
   if (!proyecto) {
     return <div className="loading">Cargando proyecto...</div>;
   }
+
+  localStorage.setItem("idProyecto", proyecto.idProyecto)
+
 
   // Formateo de fecha
   const fechaFormateada = new Date(proyecto.createdAt).toLocaleDateString(

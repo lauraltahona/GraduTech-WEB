@@ -15,17 +15,11 @@ import "../../shared/shared.css";
 
 const careers = [
   "Ingeniería de Sistemas",
-  "Ingeniería Industrial",
-  "Ingeniería Civil",
+  "Ingeniería Ambiental",
   "Administración de Empresas",
   "Contaduría Pública",
   "Derecho",
-  "Medicina",
   "Psicología",
-  "Matemáticas",
-  "Física",
-  "Química",
-  "Biología",
 ];
 
 const RegistrarJurado = () => {
@@ -54,7 +48,7 @@ const RegistrarJurado = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:3000/jurado", {
+      const res = await fetch("http://localhost:5001/jurado", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

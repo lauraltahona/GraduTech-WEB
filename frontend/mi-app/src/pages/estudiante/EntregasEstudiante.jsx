@@ -16,6 +16,7 @@ function EntregasEstudiante() {
         if (!response.ok) throw new Error("Error al obtener las entregas");
         const data = await response.json();
         setEntregas(data);
+        localStorage.setItem('corre_docente', response.correo_docente);
       } catch (err) {
         setError(err.message);
       } finally {

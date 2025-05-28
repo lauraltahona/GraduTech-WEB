@@ -22,7 +22,7 @@ export class EntregaModel{
         }
     }
 
-    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion) {
+    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente) {
 
         try {
             const estudiante = await Student.findOne({
@@ -56,6 +56,7 @@ export class EntregaModel{
                 ruta_documento,
                 descripcion
             });
+            await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
             return entrega;
         } catch (error) {
         await t.rollback();
@@ -64,6 +65,8 @@ export class EntregaModel{
     }
 
     static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion){
+        console.log(id_entrega);
+        
         try {
         const entrega = await Entrega.findByPk(id_entrega);
         
@@ -101,15 +104,20 @@ export class EntregaModel{
             
             const [rows] = await connection.query(`
                 SELECT 
-                pe.id_plan_entrega, 
-                pe.nro_entrega, 
-                pe.titulo, 
-                pe.descripcion, 
-                pe.fecha_limite
+                    pe.id_plan_entrega, 
+                    pe.nro_entrega, 
+                    pe.titulo, 
+                    pe.descripcion, 
+                    pe.fecha_limite,
+                    u.correo AS correo_docente
                 FROM plan_entregas pe
                 JOIN projects p ON pe.idProyecto = p.idProyecto
-                WHERE p.idEstudiante = ?`, [id_estudiante]
+                JOIN teachers t ON p.idDocente = t.idDocente
+                JOIN users u ON t.idUser = u.idUsers
+                WHERE p.idEstudiante = ?`, 
+                [id_estudiante]
             );
+
             console.log(rows);
             
             return rows;

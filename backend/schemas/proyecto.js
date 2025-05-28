@@ -12,13 +12,15 @@ import z from 'zod';
     idDocente: z.string()
         .min(8, {invalid_type_error: 'La cedula debe contener al menos 8 digitos'})
         .max(10, {invalid_type_error: 'La cedula no puede tener más de 10 digitos'})
-        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }),
+        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }).optional(),
     idJurado: z.string()
         .min(8, {invalid_type_error: 'La cedula debe contener al menos 8 digitos'})
         .max(10, {invalid_type_error: 'La cedula no puede tener más de 10 digitos'})
-        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }),
-    descripcion: z.string(),
-    estado: z.string()
+        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }).optional(),
+    descripcion: z.string().optional(),
+    estado: z.string().optional(),
+    autorizacion_repositorio: z.string().optional()
+
  })
 
  export function validateProyect(object){

@@ -11,6 +11,8 @@ export class ProyectController{
         }
 
         const {title, tipo, rutaDocumento, idEstudiante} = result.data;
+        console.log(result.data);
+        
 
         try{
             const proyecto = await ProyectModel.createProyect({title, tipo, rutaDocumento, idEstudiante});
@@ -140,6 +142,18 @@ export class ProyectController{
         try{
             const proyecto = await ProjectService.cambiarEstado(idProyecto, estado);
             res.status(200).json({message: 'Proyecto actualizado con exito', proyecto});
+        } catch(error){
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async autorizacionRepositorio(req, res){
+        const {idProyecto, autorizacion_repositorio} = req.body
+        console.log('estoy en controller', req.body);
+        
+        try{
+            const proyecto = await ProjectService.autorizacionRepositorio(idProyecto, autorizacion_repositorio);
+            res.status(200).json({message: 'Proyecto aprobado para el repositorio con exito', proyecto});
         } catch(error){
             res.status(500).json({ error: error.message });
         }
