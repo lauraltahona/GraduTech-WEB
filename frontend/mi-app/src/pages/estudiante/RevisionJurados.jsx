@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   CheckCircle,
   Users,
@@ -9,41 +9,74 @@ import {
 } from "lucide-react";
 import "../../styles/estudiante/revisionJurado.css";
 
-const juryMembers = [
-  {
-    name: "Dra. Ana Pérez",
-    role: "Jurado Principal",
-    specialty: "Ingeniería de Software",
-    status: "Aprobado",
-  },
-  {
-    name: "Dr. Juan Gómez",
-    role: "Jurado Secundario",
-    specialty: "Sistemas de Información",
-    status: "Aprobado",
-  },
-];
-
 export default function RevisionJurados() {
-  // const [jurados, setJurados] = useState([]);
-//   // const [estadoFinal, setEstadoFinal] = useState("");
-//   const [mostrarSubida, setMostrarSubida] = useState(false);
+  const [jurados, setJurados] = useState([]);
+  const [proyecto, setProyecto] = useState(null);
+  const [mostrarSubida, setMostrarSubida] = useState(false);
 
-  // Simular carga desde backend
-  // useEffect(() => {
-  //   // Datos de ejemplo
-  //   setJurados(["Dra. Ana Pérez", "Dr. Juan Gómez"]);
-  //   setEstadoFinal("Aprobado para grado"); // Cambia a "Reprobado, repetir próximo semestre" para probar
-  //   setMostrarSubida(true); // Solo true si fue aprobado
-  // }, []);
+  useEffect(() => {
+    const idUsuario = localStorage.getItem("userId");
 
-  const handleSubirRepositorio = () => {
-    alert("Redirigir al formulario de subida al repositorio");
+    if (!idUsuario) return;
+
+    fetch(`http://localhost:5001/proyectos/obtener/${idUsuario}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setProyecto(data);
+        setMostrarSubida(data.estado === "APROBADO");
+
+        // Obtener info del jurado
+        fetch(`http://localhost:5001/jurado/getById/${data.idJurado}`)
+          .then((res) => res.json())
+          .then((jurado) => {
+            // Suponiendo que hay dos jurados con la misma info (ajústalo si son dos distintos)
+            setJurados([
+              {
+                name: jurado.user.nombre || "No tienes asignado jurados",
+                role: "Jurado Principal",
+                specialty: jurado.carrera || "Sin especialidad",
+                status: jurado.idJurado || "Pendiente",
+              },
+            ]);
+          });
+      });
+  }, []);
+
+  const handleAutorizacion = async () => {
+    try {
+      const res = await fetch("http://localhost:5001/proyectos/autorizacion", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idProyecto: proyecto.idProyecto,
+          autorizacion_repositorio: "SI",
+        }),
+      });
+
+      if (res.ok) {
+        alert("Autorización enviada con éxito");
+      } else {
+        alert("Hubo un error al enviar la autorización");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error de conexión con el servidor");
+    }
+  };
+
+  const formatearFecha = (fechaStr) => {
+    const fecha = new Date(fechaStr);
+    return fecha.toLocaleDateString("es-ES", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   return (
     <div className="jury-review-container">
-      {/* Header */}
       <div className="page-header">
         <div className="header-content-juryReview">
           <div className="header-icon">
@@ -57,6 +90,7 @@ export default function RevisionJurados() {
           </div>
         </div>
       </div>
+
       <div className="content-grid">
         {/* Jurados Asignados */}
         <div className="section-card">
@@ -68,7 +102,7 @@ export default function RevisionJurados() {
           </div>
 
           <div className="jury-list">
-            {juryMembers.map((jury, index) => (
+            {jurados.map((jury, index) => (
               <div key={index} className="jury-card">
                 <div className="jury-avatar">
                   <span>
@@ -78,7 +112,6 @@ export default function RevisionJurados() {
                 </div>
                 <div className="jury-info">
                   <h3 className="jury-name">{jury.name}</h3>
-                  <p className="jury-role">{jury.role}</p>
                   <p className="jury-specialty">{jury.specialty}</p>
                 </div>
                 <div className="jury-status">
@@ -101,31 +134,30 @@ export default function RevisionJurados() {
             <h2 className="section-title">Estado Final</h2>
           </div>
 
-          <div className="final-status">
-            <div className="status-content">
-              <div className="status-icon">
-                <CheckCircle />
+          {proyecto && (
+            <div className="final-status">
+              <div className="status-content">
+                <div className="status-icon">
+                  <CheckCircle />
+                </div>
+                <div className="status-text">
+                  <h3 className="status-title">{proyecto.estado}</h3>
+                  <p className="status-description">
+                    {proyecto.estado === "APROBADO"
+                      ? "Tu proyecto ha sido aprobado por el jurado evaluador. Puedes proceder con la sustentación final."
+                      : "Tu proyecto aún no ha sido aprobado o está en revisión por los jurados."}
+                  </p>
+                </div>
               </div>
-              <div className="status-text">
-                <h3 className="status-title">Aprobado para grado</h3>
-                <p className="status-description">
-                  Tu proyecto ha sido aprobado por el jurado evaluador. Puedes
-                  proceder con la sustentación final.
-                </p>
-              </div>
-            </div>
 
-            <div className="status-details">
-              <div className="detail-item">
-                <Calendar size={16} />
-                <span>Fecha de aprobación: 15 de Enero, 2024</span>
-              </div>
-              <div className="detail-item">
-                <FileText size={16} />
-                <span>Calificación: Excelente</span>
+              <div className="status-details">
+                <div className="detail-item">
+                  <Calendar size={16} />
+                  <span>Fecha: {formatearFecha(proyecto.updatedAt)}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Acciones */}
@@ -142,25 +174,16 @@ export default function RevisionJurados() {
               Con la aprobación del jurado, ahora puedes subir tu proyecto al
               repositorio institucional.
             </p>
+            <p className="actions-description">
+              ¿Deseas darnos la autorización para subir tu proyecto al
+              repositorio?
+            </p>
 
-            {/* {mostrarSubida && (
-              <button className="upload-button">
-                <Upload size={20} />
-                <span>Subir a Repositorio Institucional</span>
-              </button>
-            )} */}
 
             <div className="additional-actions">
-              <button
-                className="secondary-button"
-                onClick={handleSubirRepositorio}
-              >
+              <button className="secondary-button" onClick={handleAutorizacion}>
                 <FileText size={16} />
-                <span>Descargar Certificado</span>
-              </button>
-              <button className="secondary-button">
-                <Calendar size={16} />
-                <span>Programar Sustentación</span>
+                <span>Dar autorización</span>
               </button>
             </div>
           </div>

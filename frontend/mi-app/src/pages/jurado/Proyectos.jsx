@@ -60,7 +60,7 @@ export default function Proyectos() {
 
   return (
     <div className="contenedor-proyectos">
-      <h2>📂 Proyectos Asignados al Jurado</h2>
+      <h2>📂 Proyectos Asignados</h2>
       {proyectos.length === 0 ? (
         <p>No tienes proyectos asignados.</p>
       ) : (

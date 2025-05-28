@@ -21,7 +21,7 @@ export class JuryService {
           nombre: usuario.nombre,
           correo: usuario.correo,
           contraseña: usuario.contraseña,
-          idRol: 3, // Rol base, por ejemplo 'Usuario'
+          idRol: 3,
         },
         { transaction: t }
       );
@@ -80,6 +80,27 @@ export class JuryService {
       },
     }));
   }
-  
+
+  static async getJuradoById(idJurado) {
+    try {
+      const jurado = await Jury.findOne({
+        where: { idJurado },
+        include: {
+          model: User,
+          attributes: ['nombre', 'correo'] // Puedes agregar más atributos si lo necesitas
+        }
+      });
+
+      if (!jurado) {
+        return { message: 'Jurado no encontrado' };
+      }
+
+      return jurado;
+    } catch (error) {
+      console.error('Error al obtener el jurado:', error);
+      return { message: 'Error interno del servidor' };
+    }
+  }
+    
 
 }

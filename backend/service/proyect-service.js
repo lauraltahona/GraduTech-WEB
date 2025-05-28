@@ -38,6 +38,20 @@ import { db } from "../db.js";
         return proyecto;
     }
 
+    static async autorizacionRepositorio(idProyecto, aprobacion){
+        console.log('estoy en service', aprobacion);
+        
+        const proyecto = await Project.findByPk(idProyecto);
+        if (!proyecto) {
+            throw new Error("Proyecto no encontrado");
+        }
+        
+        proyecto.autorizacion_repositorio = aprobacion;
+
+        await proyecto.save();
+        return proyecto;
+    }
+
     static async cambiarEstado(idProyecto, estado){
         const proyecto = await Project.findByPk(idProyecto);
         if (!proyecto) {
@@ -83,7 +97,8 @@ import { db } from "../db.js";
             const projects = await Project.findAll({
             where: {
                 tipo: tipo,
-                estado: 'APROBADO'
+                estado: 'APROBADO',
+                autorizacion_repositorio: 'SI'
             },
             include: [
                 {

@@ -35,7 +35,18 @@ export class JuryController{
             return res.status(200).json(jurys);
         } catch(error){
             console.log(error);
-            res.status(500).json({error: 'Error al obtener docentes'});
+            res.status(500).json({error: 'Error al obtener jurados'});
+        }
+    }
+
+    static async getById(req, res){
+        const {idJurado} = req.params
+        try{
+            const jurado = await JuryService.getJuradoById(idJurado);
+            return res.status(200).json(jurado);
+        } catch (error){
+            console.log(error);
+            res.status(500).json({error: 'Error al obtener jurado'});
         }
     }
 }

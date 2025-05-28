@@ -16,6 +16,7 @@ const careers = [
   "Ingeniería de Sistemas",
   "Ingeniería Ambiental",
   "Ingeniería Agroindustrial",
+  "Contaduría Pública",
   "Psicología",
   "Sociología",
 ];
@@ -199,6 +200,7 @@ const RegistrarEstudiante = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Mínimo 8 caracteres"
                   value={form.usuario.contraseña}
+                  onChange={handleChange}
                   className="form-input password-input"
                   required
                   minLength={8}

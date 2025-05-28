@@ -69,7 +69,8 @@ export const Project = sequelize.define('projects', {
     type: DataTypes.STRING(20),
     references: { model: Jury, key: 'idJurado' }
   },
-  descripcion: {type: DataTypes.TEXT}
+  descripcion: {type: DataTypes.TEXT, allowNull: true},
+  autorizacion_repositorio: {type: DataTypes.ENUM('SI', 'NO'), allowNull: true}
 });
 
 export const PlanEntrega = sequelize.define('plan_entrega', {
@@ -167,6 +168,3 @@ Student.hasMany(Entrega, { foreignKey: 'id_estudiante' });
 
 Project.belongsTo(Jury, { foreignKey: 'idJurado' });
 Jury.hasMany(Project, { foreignKey: 'idJurado' });
-
-Entrega.belongsTo(Project, { foreignKey: 'idProyecto' });
-Project.hasMany(Entrega, { foreignKey: 'idProyecto' });

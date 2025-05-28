@@ -116,11 +116,13 @@ export default function EntregaEstudiante() {
       return;
     }
 
+    const correo_docente = localStorage.getItem('correo_docente');
     const data = {
       id_plan_entrega: id_plan_entrega,
       id_usuario: idUsuario,
       descripcion,
       ruta_documento: rutaDocumento,
+      correo_docente: correo_docente,
     };
 
     

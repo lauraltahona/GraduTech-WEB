@@ -13,6 +13,27 @@
   color: #065f46;
   animation: fadeIn 0.5s ease-in-out;
 }
+.btn-programar, .btn-enviar-reunion {
+  background-color: #00c13d;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-programar:hover, .btn-enviar-reunion:hover {
+  background-color: #017204;
+}
+
+.formulario-reunion {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .contenedor-proyecto-final h2 {
   font-size: 28px;

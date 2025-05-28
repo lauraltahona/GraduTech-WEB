@@ -39,16 +39,18 @@ export class EmailService{
         }
     }
 
-    static async SendEmailRetroalimentacionCreada(email,nombre,titulo){
+    static async SendEmailProgramarReunión(email,fecha,hora){   
+        console.log('ESTOY EN SERVICE', email, fecha,hora);
+        
         try {
             const emailOptions = {
                 from: process.env.USER_EMAIL,
                 to:email,
-                subject:'Se ha subido una entrega del proyecto. Por favor no responder este correo',
+                subject:'Le han programado una reunión presencial, por favor no responder este correo',
                 template:'EmailRetroalimentacion',
                 context:{
-                    nombre,
-                    titulo
+                    fecha,
+                    hora
                 }
             }
             await transporter.sendMail(emailOptions)

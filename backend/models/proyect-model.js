@@ -41,7 +41,7 @@ export class ProyectModel {
       
       const proyecto = await Project.findOne({
         where: { idEstudiante: student.idEstudiante },
-        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "createdAt", "descripcion", "idDocente"]
+        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "updatedAt", "descripcion", "idDocente", "idJurado"]
       });
 
       return proyecto;

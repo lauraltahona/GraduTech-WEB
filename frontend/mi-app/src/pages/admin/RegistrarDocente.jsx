@@ -16,17 +16,12 @@ import "../../shared/shared.css";
 
 const careers = [
   "Ingeniería de Sistemas",
-  "Ingeniería Industrial",
-  "Ingeniería Civil",
+  "Ingeniería Agroindustrial",
+  "Ingeniería Ambiental",
   "Administración de Empresas",
   "Contaduría Pública",
   "Derecho",
-  "Medicina",
   "Psicología",
-  "Matemáticas",
-  "Física",
-  "Química",
-  "Biología",
 ];
 
 const RegistrarDocente = () => {

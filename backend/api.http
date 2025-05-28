@@ -15,9 +15,17 @@ Content-Type: application/json
 ###GET ESTUDIANTE
 GET http://localhost:5001/docente/getAll
 
-### GET BY ID
+### GET BY ID '
 GET http://localhost:5001/estudiante/id=/01235678
 
+### AGREGAR RETROALIMENTACION
+PATCH http://localhost:5001/entrega/3/retroalimentacion
+Content-Type: application/json
+
+{
+  "retroalimentacion": "Buen trabajo pero mejora los objetivos",
+  "ruta_retroalimentacion": "/files/proyectodeinvestigacian.pdf"
+}
 ###delete
 DELETE http://localhost:5001/estudiante/eliminar/258963147
 
@@ -26,12 +34,12 @@ POST http://localhost:5001/docente
 Content-Type: application/json
 
 {
-    "id_docente": "123456789",
+    "id_docente": "00000000",
     "profesion": "Docente",
-    "carrera": "Ingenieria de sistemas",
+    "carrera": "Ingenieria Ambiental",
     "usuario": {
-    "nombre": "Roberto Fernandez",
-    "correo": "roberto@unicesar.edu.co",
+    "nombre": "Nando Fernandez",
+    "correo": "nando@unicesar.edu.co",
     "contraseña": "hola1234"
     }
 }
@@ -54,17 +62,26 @@ Content-Type: application/json
 GET http://localhost:5001/proyectos/sin-jurado
 
 ### GET ALL JURADO
-GET http://localhost:5001/jurado/getAll
+GET http://localhost:5001/jurado/getById/33333333
 
 ### POST LOGIN
 POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "kadir@unicesar.edu.co",
+  "correo": "marco@unicesar.edu.co",
   "contraseña": "hola1234"
 }
 
+### PROGRAMAR REUNION
+POST http://localhost:5001/email/programar
+Content-Type: application/json
+
+{
+  "correo": "lauraaltahona01@gmail.com",
+  "fecha": "30/05/2025",
+  "hora": "15:00 a.m"
+}
 ### GET
 GET http://localhost:5001/proyectos/asignados/2
 
@@ -98,6 +115,14 @@ Content-Type: application/json
   "estado": "APROBADO POR DOCENTE"
 }
 
+### AUTORIZACION REPOSITORIO
+PATCH http://localhost:5001/proyectos/autorizacion
+Content-Type: application/json
+
+{
+  "idProyecto": "2",
+  "autorizacion_repositorio": "SI"
+}
 ###PROYECTOS SIN DOCENTE
 GET http://localhost:5001/proyectos/sin-docente
 
@@ -112,5 +137,5 @@ Content-Type: application/json
   "title": "Sistema de verificacion de identidad",
   "tipo": "Proyecto de grado",
   "rutaDocumento": "/files/proyectodeinvestigacian.pdf",
-  "idEstudiante": "98765432"
+  "idEstudiante": "012345678  "
 }
