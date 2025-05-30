@@ -16,7 +16,7 @@ function EntregasEstudiante() {
         if (!response.ok) throw new Error("Error al obtener las entregas");
         const data = await response.json();
         setEntregas(data);
-        localStorage.setItem('corre_docente', response.correo_docente);
+        localStorage.setItem('correo_docente', response.correo_docente);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,7 +47,12 @@ function EntregasEstudiante() {
               <p className="entrega-fecha">Fecha límite: <strong>{new Date(entrega.fecha_limite).toLocaleString()}</strong></p>
               <button
                 className="entrega-button"
-                onClick={() => navigate(`/menuEstudiante/subir-entrega/${entrega.id_plan_entrega}`)}
+                onClick={() => navigate(`/menuEstudiante/subir-entrega/${entrega.id_plan_entrega}`, {
+                    state: {
+                      fechaLimite: entrega.fecha_limite,
+                    },
+                  })
+                }
               >
                 Subir entrega
               </button>

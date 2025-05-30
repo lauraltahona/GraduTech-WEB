@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FolderOpen,
   Calendar,
@@ -22,6 +23,12 @@ const menuItems = [
 
 const MenuEstudiante = () => {
   const [activeItem, setActiveItem] = useState("registrarProyecto");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear(); 
+    navigate("/"); 
+  };
 
   return (
     <div className="layout">
@@ -68,6 +75,10 @@ const MenuEstudiante = () => {
               <p className="user-role">Estudiante</p>
             </div>
           </div>
+
+          <button className="logout-button" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
         </div>
       </aside>
       <main className="main-content">

@@ -19,6 +19,7 @@ import { syncModels } from './shared/schemas.js';
 
 import { PORT } from './config.js';
 import { Connect } from './db.js';
+import auditoriaRouter from './routes/auditoria-router.js';
 
 
 const app = express();
@@ -44,7 +45,7 @@ app.use('/entrega', entregaRouter);
 app.use('/jurado', juryRouter);
 app.use('/email', emailRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
-
+app.use('/auditoria', auditoriaRouter);
 
 
 app.listen(PORT, ()=>{

@@ -26,6 +26,9 @@ Content-Type: application/json
   "retroalimentacion": "Buen trabajo pero mejora los objetivos",
   "ruta_retroalimentacion": "/files/proyectodeinvestigacian.pdf"
 }
+###AUDITORIA
+GET http://localhost:5001/auditoria/getAll
+
 ###delete
 DELETE http://localhost:5001/estudiante/eliminar/258963147
 

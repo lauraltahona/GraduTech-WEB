@@ -14,14 +14,15 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 .btn-programar, .btn-enviar-reunion {
-  background-color: #00c13d;
-  color: white;
+  background-color: white;
+  color: #15803d;
   padding: 8px 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   margin-top: 10px;
   transition: background-color 0.3s;
+
 }
 
 .btn-programar:hover, .btn-enviar-reunion:hover {

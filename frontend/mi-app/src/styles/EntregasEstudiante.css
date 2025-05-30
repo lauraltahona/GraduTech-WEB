@@ -22,8 +22,9 @@
 }
 
 .entregas-list {
-  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
@@ -70,7 +71,7 @@
 }
 
 .entrega-button {
-  background-color: #66bb6a;
+  background-color: #138018;
   color: white;
   padding: 0.6rem 1rem;
   border: none;

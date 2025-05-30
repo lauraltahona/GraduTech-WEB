@@ -26,6 +26,8 @@ import ProyectoFinal from "./pages/jurado/ProyectoFinal.jsx";
 import Inicio from "./pages/inicio/Inicio.jsx";
 import HomeRepo from "./pages/repositorio/HomeRepo.jsx";
 import MostrarProyectos from "./pages/repositorio/MostrarProyectos.jsx";
+import ConsultaAuditoria from "./pages/admin/ConsultaAuditoria.jsx";
+import BienvenidaMenu from "./pages/inicio/BienvenidaMenu.jsx";
 
 function App() {
   return (
@@ -39,15 +41,13 @@ function App() {
         <Route path="/mostrarProyectosRepositorio" element={<MostrarProyectos />} />
         
         <Route path="/menuEstudiante" element={<MenuEstudiante />}>
+          <Route index element={<BienvenidaMenu />} />
           <Route path="registrarProyecto" element={<ProyectoEstudiante />} />
           <Route path="miProyecto" element={<MiProyecto />} />
           <Route path="revisionJurados" element={<RevisionJurados />} />
           <Route path="calendario" element={<Calendario />} />
           <Route path="entregasEstudiante" element={<EntregasEstudiante />} />
-          <Route
-            path="subir-entrega/:id_plan_entrega"
-            element={<SubirEntrega />}
-          />
+          <Route path="subir-entrega/:id_plan_entrega" element={<SubirEntrega />}/>
         </Route>
 
         <Route path="/proyectosAsignados" element={<ProyectosAsignados />} />
@@ -58,6 +58,7 @@ function App() {
         />
 
         <Route path="/menuAdmin" element={<MenuAdmin />}>
+          <Route index element={<BienvenidaMenu />} />
           <Route path="registrarEstudiante" element={<RegistrarEstudiante />} />
           <Route path="registrarDocente" element={<RegistrarDocente />} />
           <Route path="registrarJurado" element={<RegistrarJurado />} />
@@ -66,6 +67,7 @@ function App() {
           <Route path="menuConsultas" element={<MenuConsultas />}>
             <Route path="consultarEstudiante" element={<ConsultaEstudiante />} />
             <Route path="consultarDocente" element={<ConsultaDocente />} />
+            <Route path="consultarAuditoria" element={<ConsultaAuditoria />} />
           </Route>
         </Route>
 

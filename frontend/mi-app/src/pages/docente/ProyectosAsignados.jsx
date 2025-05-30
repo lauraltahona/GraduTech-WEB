@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/docente/Asignados.css";
+import HeaderDocente from '../auth/HeaderDocente.jsx';
 
 export default function ProyectosAsignados() {
   const [proyectos, setProyectos] = useState([]);
@@ -60,40 +61,13 @@ export default function ProyectosAsignados() {
     }
   };
 
-  const handleProgramarClick = () => {
-    setMostrarFormulario(true);
-  };
-
-  const enviarReunion = async () => {
-    try {
-      const response = await fetch('http://localhost:5001/email/programar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          correo: proyecto.correo,
-          fecha,
-          hora
-        })
-      });
-
-      if (response.ok) {
-        setMensaje('✅ Reunión programada con éxito');
-        setMostrarFormulario(false);
-      } else {
-        setMensaje('❌ Error al programar la reunión');
-      }
-    } catch (error) {
-      console.error(error);
-      setMensaje('❌ Error de conexión con el servidor');
-    }
-  };
   
   return (
+  <>
+    <HeaderDocente /> {/* Header arriba */}
     <div className="contenedor-proyectos">
       <h2>✅Proyectos Asignados</h2>
-      {proyectos.length === 0 ? (
+      {proyectos.length === 0 && proyectos.estado ==='APROBADO'? (
         <p>No hay proyectos asignados.</p>
       ) : (
         proyectos.map((proyecto) => (
@@ -112,32 +86,12 @@ export default function ProyectosAsignados() {
                 <option value="EN REVISIÓN">EN REVISIÓN</option>
                 <option value="APROBADO POR DOCENTE">APROBADO POR DOCENTE</option>
               </select>
-
-              <button onClick={handleProgramarClick} className="btn-programar">
-                📅 Programar Reunión
-              </button>
-
-              {mostrarFormulario && (
-                <div className="formulario-reunion">
-                  <label>
-                    Fecha:
-                    <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
-                  </label>
-                  <label>
-                    Hora:
-                    <input type="time" value={hora} onChange={(e) => setHora(e.target.value)} />
-                  </label>
-                  <button onClick={enviarReunion} className="btn-enviar-reunion">
-                    Enviar invitación
-                  </button>
-                </div>
-              )}
-
-              {mensaje && <p>{mensaje}</p>}
             </div>
           </div>
         ))
       )}
     </div>
-  );
+  </>
+);
+
 }
