@@ -12,6 +12,9 @@ const MenuConsultas = () => {
         <Link to="consultarDocente" className="menu-consultas-boton">
           Consultar Docente
         </Link>
+        <Link to="consultarAuditoria" className="menu-consultas-boton">
+          Consultar Auditoria
+        </Link>
       </div>
       <Outlet />
     </div>

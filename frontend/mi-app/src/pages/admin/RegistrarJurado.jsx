@@ -20,6 +20,7 @@ const careers = [
   "Contaduría Pública",
   "Derecho",
   "Psicología",
+  "Sociología"
 ];
 
 const RegistrarJurado = () => {

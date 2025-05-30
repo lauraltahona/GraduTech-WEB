@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { useParams } from "react-router-dom"
 import "../../styles/docente/EntregaPorPlan.css";
+import HeaderDocente from '../auth/HeaderDocente.jsx';
 const EntregasPorPlan = () => {
   const { id_plan_entrega } = useParams()
   const [entregas, setEntregas] = useState([])
@@ -128,8 +129,8 @@ const EntregasPorPlan = () => {
 const handleUploadRetroalimentacion = async (idEntrega) => {
   const data = retroData[idEntrega];
   
-  if (!data?.comentario || !data?.ruta_retro) {
-    alert("Debes subir un archivo y escribir un comentario");
+  if (!data?.comentario) {
+    alert("Debes escribir un comentario");
     return;
   }
 
@@ -183,19 +184,22 @@ const handleUploadRetroalimentacion = async (idEntrega) => {
 };
 
   return (
-    <div className="contenedor-entregas">
-      <div className="header-section">
-        <h2 className="titulo-principal">Entregas para el plan #{id_plan_entrega}</h2>
+<>
+  <HeaderDocente />
+  <div className="contenedor-entregas">
+    <div className="header-section">
+      <h2 className="titulo-principal">Entregas para el plan #{id_plan_entrega}</h2>
+    </div>
+
+    {error && (
+      <div className="mensaje-error">
+        <span className="error-icon">⚠️</span>
+        {error}
       </div>
+    )}
 
-      {error && (
-        <div className="mensaje-error">
-          <span className="error-icon">⚠️</span>
-          {error}
-        </div>
-      )}
-
-      {entregas.length > 0 ? (
+    {entregas.length > 0 ? (
+      <>
         <div className="tabla-container">
           <table className="tabla-entregas">
             <thead>
@@ -209,122 +213,119 @@ const handleUploadRetroalimentacion = async (idEntrega) => {
             </thead>
             <tbody>
               {entregas.map((entrega) => (
-                <React.Fragment key={entrega.idEntrega}>
-                  <tr className="fila-entrega">
-                    <td>{new Date(entrega.fecha_envio).toLocaleDateString()}</td>
-                    <td>
-                      <a
-                        href={`http://localhost:5001${entrega.ruta_documento}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="enlace-documento"
-                      >
-                        📄 Ver documento
-                      </a>
-                    </td>
-                    <td className="celda-descripcion">{entrega.descripcion}</td>
-                    <td>
-                      <span className="badge-estudiante">{entrega.id_estudiante}</span>
-                    </td>
-                    <td>
-                      <button className="btn-retro" onClick={() => toggleRetroForm(entrega.idEntrega)}>
-                        {retroData[entrega.idEntrega]?.show ? "✕ Cancelar" : "💬 Agregar retroalimentación"}
-                      </button>
-                    </td>
-                  </tr>
-                  <tr className="fila-entrega">
-                    {/* ... otras celdas ... */}
-                      {entrega.retroalimentacion ? (
-                        <div className="retro-display">
-                          <p className="retro-text">📝Retroalimentación dada: {entrega.retroalimentacion}</p>
-                          {entrega.ruta_retroalimentacion && (
-                            <a
-                              href={`http://localhost:5001${entrega.ruta_retroalimentacion}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="enlace-retro"
-                            >
-                              📎 Ver documento de retroalimentación
-                            </a>
-                          )}
-                        </div>
-                      ) : (
-                        <button className="btn-retro" onClick={() => toggleRetroForm(entrega.idEntrega)}>
-                          💬 Agregar retroalimentación
-                        </button>
-                      )}
-                  </tr>
-
-                  {retroData[entrega.idEntrega]?.show && (
-                    <tr className="fila-retro">
-                      <td colSpan="6">
-                        <div className="retro-form">
-                          <div className="form-header-deliveryForPlan">
-                            <h4>Agregar Retroalimentación</h4>
-                          </div>
-
-                          <div className="form-group">
-                            <label className="form-label">Comentario:</label>
-                            <textarea
-                              rows="4"
-                              value={retroData[entrega.idEntrega]?.comentario || ""}
-                              onChange={(e) => handleComentarioChange(entrega.idEntrega, e.target.value)}
-                              className="textarea-retro"
-                              placeholder="Escribe tu retroalimentación aquí..."
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label className="form-label">Archivo adjunto (opcional):</label>
-                            <div className="input-file-container">
-                              <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={(e) => handleFileChange(entrega.idEntrega, e.target.files[0])}
-                                accept=".pdf,.doc,.docx"
-                                className="input-file"
-                                id={`file-${entrega.idEntrega}`}
-                              />
-                              <label htmlFor={`file-${entrega.idEntrega}`} className="file-label">
-                                📎 Seleccionar archivo
-                              </label>
-                            </div>
-                          </div>
-
-                          {retroData[entrega.idEntrega]?.status && (
-                            <div className="estado-retro">
-                              <span className="status-icon">ℹ️</span>
-                              {retroData[entrega.idEntrega]?.status}
-                            </div>
-                          )}
-
-                          <div className="form-actions-deliveryForPlan">
-                            <button
-                              onClick={() => handleUploadRetroalimentacion(entrega.idEntrega)}
-                              className="btn-guardar-retro"
-                            >
-                              💾 Guardar retroalimentación
-                            </button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </React.Fragment>
+                <tr className="fila-entrega" key={entrega.idEntrega}>
+                  <td>{new Date(entrega.fecha_envio).toLocaleDateString()}</td>
+                  <td>
+                    <a
+                      href={`http://localhost:5001${entrega.ruta_documento}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="enlace-documento"
+                    >
+                      📄 Ver documento
+                    </a>
+                  </td>
+                  <td className="celda-descripcion">{entrega.descripcion}</td>
+                  <td>
+                    <span className="badge-estudiante">{entrega.id_estudiante}</span>
+                  </td>
+                  <td>
+                    <button
+                      className="btn-retro"
+                      onClick={() => toggleRetroForm(entrega.idEntrega)}
+                    >
+                      {retroData[entrega.idEntrega]?.show
+                        ? "✕ Cancelar"
+                        : "💬 Agregar retroalimentación"}
+                    </button>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
         </div>
-      ) : (
-        !error && (
-          <div className="mensaje-cargando">
-            <div className="spinner"></div>
-            <p>Cargando entregas...</p>
-          </div>
-        )
-      )}
-    </div>
-  )
+
+        {/* Retroalimentaciones existentes y formularios debajo de la tabla */}
+        <div className="retroalimentaciones-contenedor">
+          {entregas.map((entrega) => (
+            <div key={`retro-${entrega.idEntrega}`} className="bloque-retro">
+              {entrega.retroalimentacion && (
+                <div className="retro-display">
+                  <p className="retro-text">
+                    📝 Retroalimentación dada: {entrega.retroalimentacion}
+                  </p>
+                  {entrega.ruta_retroalimentacion && (
+                    <a
+                      href={`http://localhost:5001${entrega.ruta_retroalimentacion}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="enlace-retro"
+                    >
+                      📎 Ver documento de retroalimentación
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {retroData[entrega.idEntrega]?.show && (
+                <div className="retro-form">
+                  <div className="form-header-deliveryForPlan">
+                    <h4>Agregar Retroalimentación</h4>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Comentario:</label>
+                    <textarea
+                      rows="4"
+                      value={retroData[entrega.idEntrega]?.comentario || ""}
+                      onChange={(e) =>
+                        handleComentarioChange(entrega.idEntrega, e.target.value)
+                      }
+                      className="textarea-retro"
+                      placeholder="Escribe tu retroalimentación aquí..."
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Archivo adjunto (opcional):</label>
+                    <div className="input-file-container">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={(e) =>
+                          handleFileChange(entrega.idEntrega, e.target.files[0])
+                        }
+                        accept=".pdf,.doc,.docx"
+                        className="input-file"
+                        id={`file-${entrega.idEntrega}`}
+                      />
+                      <label htmlFor={`file-${entrega.idEntrega}`} className="file-label">
+                        📎 Seleccionar archivo
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="form-footer">
+                    <button
+                      className="btn-guardar-retro"
+                      onClick={() => handleUploadRetroalimentacion(entrega.idEntrega)}
+                    >
+                      Guardar retroalimentación
+                    </button>
+                    <span className="estado-retro">{retroData[entrega.idEntrega]?.status}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </>
+    ) : (
+      <p className="mensaje-sin-entregas">No hay entregas disponibles para mostrar.</p>
+    )}
+  </div>
+</>
+)
 }
 
 export default EntregasPorPlan

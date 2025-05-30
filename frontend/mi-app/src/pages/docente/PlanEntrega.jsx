@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../../styles/docente/PlanEntrega.css";
+import HeaderDocente from '../auth/HeaderDocente.jsx';
 
 export default function PlanEntrega() {
   const [entregas, setEntregas] = useState([]);
@@ -66,6 +67,8 @@ export default function PlanEntrega() {
   };
 
   return (
+  <>
+      <HeaderDocente /> {/* Header arriba */}
     <div className="plan-entrega-container">
       <h2>📌Planificación de entregas</h2>
 
@@ -95,7 +98,7 @@ export default function PlanEntrega() {
       <div className="card-list">
         {planesExistentes.map((plan, index) => (
           <div className="card" key={index}>
-            <a href={`/entrega-por-plan/${plan.id_plan_entrega}`} target="_blank" rel="noopener noreferrer">
+            <a href={`/entrega-por-plan/${plan.id_plan_entrega}`}>
               Entrega #{plan.nro_entrega}: {plan.titulo}
             </a>
             <p><strong>Fecha límite:</strong> {new Date(plan.fecha_limite).toLocaleDateString()}</p>
@@ -104,5 +107,6 @@ export default function PlanEntrega() {
         ))}
       </div>
     </div>
+  </>
   );
 }

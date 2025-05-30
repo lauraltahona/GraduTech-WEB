@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FolderOpen,
   Calendar,
@@ -27,8 +28,13 @@ const menuItems = [
 ];
 
 const MenuAdmin = () => {
-  const [activeItem, setActiveItem] = useState("registrarEstudiante");
+  const [activeItem, setActiveItem] = useState(null);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.clear(); 
+    navigate("/"); 
+  };
   return (
     <div className="layout">
       <aside className="sidebar">
@@ -74,6 +80,10 @@ const MenuAdmin = () => {
               <p className="user-role">Administrador</p>
             </div>
           </div>
+          
+          <button className="logout-button" onClick={handleLogout}>
+            Cerrar sesión
+          </button>
         </div>
       </aside>
       <main className="main-content">

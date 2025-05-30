@@ -18,7 +18,7 @@ export class EntregaModel{
         
         return nuevoPlan;
         } catch (error) {
-        throw new Error('Error al registrar plan de entrega: ' + error.message);
+        throw new Error('Error al registrar plan de entrega: ', error);
         }
     }
 
@@ -42,12 +42,7 @@ export class EntregaModel{
                 throw new Error("No se encontró el plan de entrega.");
             }
 
-            const fecha_limite = new Date(plan.fecha_limite);
             const ahora = new Date();
-
-            if (ahora > fecha_limite) {
-                throw new Error("La fecha límite expiró.");
-            }
 
             const entrega = await Entrega.create({
                 id_plan_entrega,
@@ -59,8 +54,8 @@ export class EntregaModel{
             await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
             return entrega;
         } catch (error) {
-        await t.rollback();
-        throw new Error("Error al registrar entrega: " + error.message);
+           console.log("Error al registrar entrega: ", error);
+           
         }
     }
 
@@ -123,7 +118,6 @@ export class EntregaModel{
             return rows;
         } catch(error){
             await connection.rollback();
-            throw new Error("Error al registrar entrega: " + error.message);
         } finally {
             connection.release();
         }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/docente/Asignados.css";
+import HeaderJurado from '../auth/HeaderJurado.jsx';
 
 export default function Proyectos() {
   const [proyectos, setProyectos] = useState([]);
@@ -59,6 +60,8 @@ export default function Proyectos() {
   };
 
   return (
+  <>
+    <HeaderJurado />
     <div className="contenedor-proyectos">
       <h2>📂 Proyectos Asignados</h2>
       {proyectos.length === 0 ? (
@@ -90,5 +93,7 @@ export default function Proyectos() {
         ))
       )}
     </div>
+
+  </>
   );
 }

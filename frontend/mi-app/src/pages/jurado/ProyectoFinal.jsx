@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import "../../styles/jurado/ProyectoJurado.css";
+import HeaderJurado from '../auth/HeaderJurado.jsx';
 
 const ProyectoFinal = () => {
   const location = useLocation();
@@ -44,6 +45,8 @@ const ProyectoFinal = () => {
   };
 
   return (
+  <>
+      <HeaderJurado />
     <div className="contenedor-proyecto-final">
       <h2>📄 Detalles del Proyecto</h2>
       <p><strong>Título:</strong> {proyecto.titulo}</p>
@@ -85,6 +88,7 @@ const ProyectoFinal = () => {
 
       {mensaje && <p>{mensaje}</p>}
     </div>
+    </>
   );
 };
 

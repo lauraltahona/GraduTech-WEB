@@ -1,17 +1,26 @@
 .tarjeta-entrega-verde {
   background-color: #ffffff;
-  border: 2px solid #bae2b6;
+  border: 2px solid #6ed965;
   border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 6px 15px rgba(32, 120, 68, 0.1);
+  box-shadow: 0 6px 15px rgba(29, 171, 50, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
 }
+.advertencia-fecha-limite {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 8px;
+  color: #856404;
+  font-weight: bold;
+}
 
 .tarjeta-entrega-verde:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(32, 120, 68, 0.2);
+  box-shadow: 0 10px 25px rgba(3, 204, 37, 0.2);
 }
 
 /* Líneas decorativas en la parte superior */
@@ -22,7 +31,7 @@
   left: 0;
   height: 6px;
   width: 100%;
-  background: linear-gradient(to right, #a7f3d0, #34d351);
+  background: linear-gradient(to right, #a7f3ad, #058d1e);
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 }
@@ -45,7 +54,7 @@
 
 /* Enlaces más decorativos */
 .enlace-documento-verde {
-  color: #1a936f;
+  color: #18962a;
   text-decoration: none;
   font-weight: bold;
   position: relative;
@@ -55,7 +64,7 @@
 }
 
 .enlace-documento-verde:hover {
-  border-color: #1a936f;
+  border-color: #18962a;
   cursor: pointer;
 }
 
