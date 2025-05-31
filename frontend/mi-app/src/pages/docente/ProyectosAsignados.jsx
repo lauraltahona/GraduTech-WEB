@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import "../../styles/docente/Asignados.css";
+import HeaderDocente from '../auth/HeaderDocente.jsx';
 
 export default function ProyectosAsignados() {
   const [proyectos, setProyectos] = useState([]);
@@ -8,8 +10,39 @@ export default function ProyectosAsignados() {
 
   useEffect(() => {
     const fetchProyectos = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/proyectos/asignados/${idUsuario}`);
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error HTTP ${response.status}: ${errorText}`);
+        }
+        const data = await response.json();
+        setProyectos(data);
+      } catch (error) {
+        console.error('Error al obtener proyectos:', error);
+      }
+    };
+
+    if (idUsuario) {
+      fetchProyectos();
+    }
+  }, [idUsuario]);
+
+  const irAPlanEntrega = (idProyecto, correo) => {
+    localStorage.setItem('id_proyecto', idProyecto);
+    localStorage.setItem('correo', correo);
+    navigate('/planEntrega');
+  };
+
+  const cambiarEstado = async (idProyecto, nuevoEstado) => {
     try {
-      const response = await fetch(`http://localhost:5001/proyectos/asignados/${idUsuario}`);
+      const response = await fetch('http://localhost:5001/proyectos/cambiar-estado', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idProyecto, estado: nuevoEstado }),
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -17,53 +50,48 @@ export default function ProyectosAsignados() {
       }
 
       const data = await response.json();
-      setProyectos(data);
+      console.log('Proyecto actualizado:', data);
+      setProyectos((prev) =>
+        prev.map((proy) =>
+          proy.idProyecto === idProyecto ? { ...proy, estado: nuevoEstado } : proy
+        )
+      );
     } catch (error) {
-      console.error('Error al obtener proyectos:', error);
+      console.error('Error al cambiar el estado del proyecto:', error);
     }
-};
-
-    if (idUsuario) {
-      fetchProyectos();
-    }
-  }, [idUsuario]);
-
-  const irAPlanEntrega = (idProyecto) => {
-    localStorage.setItem("id_proyecto", idProyecto);
-    navigate("/planEntrega"); 
   };
 
+  
   return (
-    <div>
-      <h2>Proyectos Asignados</h2>
-      {proyectos.length === 0 ? (
+  <>
+    <HeaderDocente /> {/* Header arriba */}
+    <div className="contenedor-proyectos">
+      <h2>✅Proyectos Asignados</h2>
+      {proyectos.length === 0 && proyectos.estado ==='APROBADO'? (
         <p>No hay proyectos asignados.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Título</th>
-              <th>Estado</th>
-              <th>Estudiante</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proyectos.map((proyecto) => (
-              <tr key={proyecto.idProyecto}>
-                <td>{proyecto.idProyecto}</td>
-                <td>{proyecto.title}</td>
-                <td>{proyecto.estado}</td>
-                <td>{proyecto.estudiante}</td>
-                <td>
-                  <button onClick={() => irAPlanEntrega(proyecto.idProyecto)}>Planear entrega</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        proyectos.map((proyecto) => (
+          <div className="card-proyecto" key={proyecto.idProyecto}>
+            <h3>{proyecto.titulo}</h3>
+            <p><strong>Estudiante:</strong> {proyecto.estudiante}</p>
+            <p><strong>Estado:</strong> {proyecto.estado}</p>
+            <div className="acciones-plan-entrega">
+              <button onClick={() => irAPlanEntrega(proyecto.idProyecto, proyecto.correo)}>
+                Planear entrega
+              </button>
+              <select
+                value={proyecto.estado}
+                onChange={(e) => cambiarEstado(proyecto.idProyecto, e.target.value)}
+              >
+                <option value="EN REVISIÓN">EN REVISIÓN</option>
+                <option value="APROBADO POR DOCENTE">APROBADO POR DOCENTE</option>
+              </select>
+            </div>
+          </div>
+        ))
       )}
     </div>
-  );
+  </>
+);
+
 }

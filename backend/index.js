@@ -13,10 +13,13 @@ import userRouter from './routes/user-router.js';
 import fileRouter from './routes/file-router.js';
 import proyectRouter from './routes/proyect-router.js';
 import entregaRouter from './routes/entrega-router.js';
+import juryRouter from './routes/jury-router.js';
+import emailRouter from './routes/email-router.js';
 import { syncModels } from './shared/schemas.js';
 
 import { PORT } from './config.js';
 import { Connect } from './db.js';
+import auditoriaRouter from './routes/auditoria-router.js';
 
 
 const app = express();
@@ -39,7 +42,10 @@ app.use('/upload', fileRouter);
 app.use('/files', express.static(path.join(__dirname, 'uploads')));
 app.use('/proyectos', proyectRouter);
 app.use('/entrega', entregaRouter);
+app.use('/jurado', juryRouter);
+app.use('/email', emailRouter);
 app.use(express.static(path.join(__dirname, '../frontend')));
+app.use('/auditoria', auditoriaRouter);
 
 
 app.listen(PORT, ()=>{

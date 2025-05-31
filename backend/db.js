@@ -25,7 +25,7 @@ export const sequelize = new Sequelize(
     dialect: 'mysql',
     logging:false,
     pool: {
-      max: 50,      // máximo de conexiones activas al mismo tiempo
+      max: 70,      // máximo de conexiones activas al mismo tiempo
       min: 0,       // mínimo de conexiones
       acquire: 30000, // tiempo máximo (ms) que Sequelize intentará obtener una conexión antes de lanzar error
       idle: 10000    // tiempo máximo (ms) que una conexión puede estar inactiva antes de ser liberada

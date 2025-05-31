@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import '../styles/SubirEntrega.css'
+import { useLocation } from "react-router-dom";
+import '../../styles/SubirEntrega.css'
 
 export default function EntregaEstudiante() {
   const { id_plan_entrega } = useParams(); 
@@ -11,6 +12,10 @@ export default function EntregaEstudiante() {
   const [entregasAnteriores, setEntregasAnteriores] = useState([]);
   const [errorEntregas, setErrorEntregas] = useState('');
   const inputRef = useRef(null);
+  const location = useLocation();
+  const FechaLimite = location.state?.fechaLimite;
+  const fechaLimiteDate = FechaLimite ? new Date(FechaLimite) : null;
+  
   useEffect(() => {
     const obtenerEntregasEstudiante = async () => {
       try {
@@ -116,11 +121,13 @@ export default function EntregaEstudiante() {
       return;
     }
 
+    const correo_docente = localStorage.getItem('correo_docente');
     const data = {
       id_plan_entrega: id_plan_entrega,
       id_usuario: idUsuario,
       descripcion,
       ruta_documento: rutaDocumento,
+      correo_docente: correo_docente,
     };
 
     
@@ -214,11 +221,15 @@ export default function EntregaEstudiante() {
           ))}
         </div>
 
-        <button className="boton-editar-verde">Editar entregas</button>
       </>
     ) : (
       <>
         <h1 className="titulo-subida-verde">Subir Entrega</h1>
+        {fechaLimiteDate && new Date() > fechaLimiteDate && (
+    <div className="advertencia-fecha-limite">
+      ⚠️ <strong>ADVERTENCIA:</strong> La fecha límite ha pasado. Puedes enviar la evidencia, pero no podrás reclamar si tu docente demora en revisarla. Recuerda que la fecha de envío queda registrada.
+    </div>
+  )}
         <div className="formulario-subida-verde">
           <div className="campo-formulario-verde">
             <label className="label-verde">Descripción</label>

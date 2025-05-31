@@ -1,8 +1,10 @@
 import { db } from "../db.js";
+import { EmailService } from "../service/emailSevice.js";
 import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
 
 export class EntregaModel{
-    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite) {
+    
+    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite, correo) {
         try {
         const nuevoPlan = await PlanEntrega.create({
             idProyecto,
@@ -12,13 +14,15 @@ export class EntregaModel{
             fecha_limite
         });
 
+        await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion);
+        
         return nuevoPlan;
         } catch (error) {
-        throw new Error('Error al registrar plan de entrega: ' + error.message);
+        throw new Error('Error al registrar plan de entrega: ', error);
         }
     }
 
-    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion) {
+    static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente) {
 
         try {
             const estudiante = await Student.findOne({
@@ -38,12 +42,7 @@ export class EntregaModel{
                 throw new Error("No se encontró el plan de entrega.");
             }
 
-            const fecha_limite = new Date(plan.fecha_limite);
             const ahora = new Date();
-
-            if (ahora > fecha_limite) {
-                throw new Error("La fecha límite expiró.");
-            }
 
             const entrega = await Entrega.create({
                 id_plan_entrega,
@@ -52,14 +51,17 @@ export class EntregaModel{
                 ruta_documento,
                 descripcion
             });
+            await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
             return entrega;
         } catch (error) {
-        await t.rollback();
-        throw new Error("Error al registrar entrega: " + error.message);
+           console.log("Error al registrar entrega: ", error);
+           
         }
     }
 
     static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion){
+        console.log(id_entrega);
+        
         try {
         const entrega = await Entrega.findByPk(id_entrega);
         
@@ -71,7 +73,7 @@ export class EntregaModel{
         entrega.ruta_retroalimentacion = ruta_retroalimentacion;
 
         await entrega.save();
-
+        
         return { success: true, message: 'Retroalimentación guardada correctamente.' };
         } catch (error) {
             console.error('Error al agregar retroalimentación:', error);
@@ -97,21 +99,25 @@ export class EntregaModel{
             
             const [rows] = await connection.query(`
                 SELECT 
-                pe.id_plan_entrega, 
-                pe.nro_entrega, 
-                pe.titulo, 
-                pe.descripcion, 
-                pe.fecha_limite
+                    pe.id_plan_entrega, 
+                    pe.nro_entrega, 
+                    pe.titulo, 
+                    pe.descripcion, 
+                    pe.fecha_limite,
+                    u.correo AS correo_docente
                 FROM plan_entregas pe
                 JOIN projects p ON pe.idProyecto = p.idProyecto
-                WHERE p.idEstudiante = ?`, [id_estudiante]
+                JOIN teachers t ON p.idDocente = t.idDocente
+                JOIN users u ON t.idUser = u.idUsers
+                WHERE p.idEstudiante = ?`, 
+                [id_estudiante]
             );
+
             console.log(rows);
             
             return rows;
         } catch(error){
             await connection.rollback();
-            throw new Error("Error al registrar entrega: " + error.message);
         } finally {
             connection.release();
         }

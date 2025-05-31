@@ -2,9 +2,8 @@ import { Teacher, User, UsersRols } from '../shared/schemas.js';
 import { UserModel } from './user-model.js';
 
 export class TeacherModel {
-  static async createTeacher({ id_docente, profesion, disponibilidad, carrera, usuario }) {
+  static async createTeacher({ id_docente, profesion, carrera, usuario }) {
     const t = await User.sequelize.transaction();
-
     try {
       // Verificar si el correo ya está registrado
       const existingUser = await User.findOne({
@@ -25,7 +24,8 @@ export class TeacherModel {
       if (existingTeacher) {
         throw new Error('TEACHER_ALREADY_REGISTERED');
       }
-
+      console.log();
+      
       // Crear usuario
       const user = await User.create(
         {
@@ -38,13 +38,14 @@ export class TeacherModel {
       );
       console.log('Usuario creado:', user?.toJSON?.());
       // Crear docente
+      const disponibilidad = 'DISPONIBLE';
       const teacher = await Teacher.create(
         {
           idDocente: id_docente,
           profesion,
           disponibilidad,
-          idUser: user.idUsers,
           carrera,
+          idUser: user.idUsers,
         },
         { transaction: t }
       );
@@ -53,7 +54,7 @@ export class TeacherModel {
       await UsersRols.create(
         {
           idUsersRol: user.idUsers,
-          idRols: 2,
+          idRols: 3,
         },
         { transaction: t }
       );
@@ -67,6 +68,7 @@ export class TeacherModel {
         nombre: usuario.nombre,
         profesion,
         disponibilidad,
+        carrera,
       };
     } catch (error) {
       await t.rollback();

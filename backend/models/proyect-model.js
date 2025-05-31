@@ -2,8 +2,10 @@ import { Teacher, User, Project, Student } from '../shared/schemas.js';
 import { db } from '../db.js';
 
 export class ProyectModel {
-  // Crear proyecto
+  // Crear proyecto 
   static async createProyect({ title, tipo, rutaDocumento, idEstudiante }) {
+    console.log('Hola estoy en model',title, tipo, rutaDocumento, idEstudiante);
+    
     try {
       const existingProyect = await Project.findOne({ where: { title } });
       if (existingProyect) throw new Error("El título ya existe");
@@ -35,10 +37,11 @@ export class ProyectModel {
 
       if (!student) throw new Error("No se encontró un estudiante con ese usuario.");
       console.log(student);
+      const nombre = student.nombre;
       
       const proyecto = await Project.findOne({
         where: { idEstudiante: student.idEstudiante },
-        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante"]
+        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "updatedAt", "descripcion", "idDocente", "idJurado"]
       });
 
       return proyecto;
@@ -66,13 +69,16 @@ export class ProyectModel {
               p.idProyecto, 
               p.title AS titulo, 
               p.estado, 
-              u.nombre AS estudiante
+              u.nombre AS estudiante,
+              u.correo AS correo
           FROM projects p
           JOIN students s ON s.idEstudiante = p.idEstudiante
           JOIN users u ON u.idUsers = s.idUser
           WHERE p.idDocente = ?
         `, [id_docente]);
         await connection.commit();
+        console.log(rows);
+        
         return rows;
       } catch (error) {
         throw new Error("Error al obtener proyectos asignados: " + error.message);
@@ -80,6 +86,5 @@ export class ProyectModel {
         connection.release();
       }
     }
-
 
 }

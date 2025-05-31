@@ -1,0 +1,122 @@
+/* PlanEntrega.css */
+
+.plan-entrega-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #15803d;
+  background: linear-gradient(145deg, #55ff63, #ffffff);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.plan-entrega-container h2 {
+  font-size: 2.5rem;
+  color: #14532d;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.form-grid-deliveryPlan {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 3rem;
+}
+
+.form-grid-deliveryPlan label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #08692e;
+}
+
+.form-grid-deliveryPlan input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #a7f3d0;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-grid-deliveryPlan input:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+  outline: none;
+}
+
+.form-grid-deliveryPlan button {
+  background: linear-gradient(to right, #16a34a, #22c55e);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.form-grid-deliveryPlan button:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
+
+.card-list {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 128, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 128, 0, 0.15);
+}
+
+.card a {
+  display: block;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #16a34a;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.card a:hover {
+  color: #0f766e;
+  text-decoration: underline;
+}
+
+.card p {
+  margin: 0.4rem 0;
+  line-height: 1.4;
+  color: #1f2937;
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

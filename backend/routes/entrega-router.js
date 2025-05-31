@@ -18,4 +18,6 @@ entregaRouter.get('/entrega-por-plan/:id_plan_entrega', EntregaController.obtene
 entregaRouter.get('/fechas/:id_usuario', EntregaController.obtenerFechaLimite);
 entregaRouter.patch('/:idEntrega/retroalimentacion', EntregaController.comentarRetroalimentación);
 
+entregaRouter.post('/email',EntregaController.EmailsSend)
+
 export default entregaRouter;

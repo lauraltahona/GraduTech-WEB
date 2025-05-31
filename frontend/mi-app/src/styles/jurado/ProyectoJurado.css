@@ -1,0 +1,83 @@
+/* ProyectoFinal.css */
+
+.contenedor-proyecto-final {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f0fdf4;
+  border: 2px solid #bbf7d0;
+  border-radius: 16px;
+  background: linear-gradient(to right, #78f186, #f0f4ff);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #065f46;
+  animation: fadeIn 0.5s ease-in-out;
+}
+.btn-programar, .btn-enviar-reunion {
+  background-color: white;
+  color: #15803d;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+
+}
+
+.btn-programar:hover, .btn-enviar-reunion:hover {
+  background-color: #017204;
+}
+
+.formulario-reunion {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contenedor-proyecto-final h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #16a34a;
+  border-bottom: 2px solid #16a34a;
+  padding-bottom: 10px;
+}
+
+.contenedor-proyecto-final p {
+  font-size: 18px;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+.contenedor-proyecto-final strong {
+  color: #065f46;
+  font-weight: 600;
+}
+
+.enlace-documento-final {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: #16a34a;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+}
+
+.enlace-documento-final:hover {
+  background-color: #15803d;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

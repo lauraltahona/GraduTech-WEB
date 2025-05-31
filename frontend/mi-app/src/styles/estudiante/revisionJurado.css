@@ -1,0 +1,389 @@
+/* Contenedor principal */
+.jury-review-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header de la página */
+.page-header {
+    margin-bottom: 32px;
+}
+
+.header-content-juryReview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(46, 134, 46, 0.1);
+    border: 1px solid #dbf5db;
+}
+
+.header-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #8cd68c 0%, #56c256 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(86, 194, 86, 0.3);
+}
+
+.header-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.header-text-juryReview {
+    flex: 1;
+}
+
+/* Grid de contenido */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.actions-card {
+    grid-column: 1 / -1;
+}
+
+/* Tarjetas de sección */
+.section-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(46, 134, 46, 0.08);
+    border: 1px solid #dbf5db;
+    transition: all 0.3s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(46, 134, 46, 0.12);
+}
+
+/* Header de sección */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0faf0;
+}
+
+.section-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #b8e5b8 0%, #8cd68c 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #276c27;
+}
+
+.section-icon.success {
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    color: #92400e;
+}
+
+.section-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e481e;
+    margin: 0;
+}
+
+/* Lista de jurados */
+.jury-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.jury-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #f0faf0;
+    border-radius: 12px;
+    border: 1px solid #dbf5db;
+    transition: all 0.3s ease;
+}
+
+.jury-card:hover {
+    background: #dbf5db;
+    transform: translateX(4px);
+}
+
+.jury-avatar {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #56c256 0%, #3ba53b 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(86, 194, 86, 0.3);
+}
+
+.jury-info {
+    flex: 1;
+}
+
+.jury-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e481e;
+    margin: 0 0 4px 0;
+}
+
+.jury-role {
+    font-size: 14px;
+    color: #56c256;
+    margin: 0 0 2px 0;
+    font-weight: 500;
+}
+
+.jury-specialty {
+    font-size: 13px;
+    color: #8cd68c;
+    margin: 0;
+}
+
+.jury-status {
+    display: flex;
+    align-items: center;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge.approved {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Estado final */
+.final-status {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.status-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border-radius: 12px;
+    border: 1px solid #b8e5b8;
+}
+
+.status-icon {
+    width: 48px;
+    height: 48px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.status-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.status-text {
+    flex: 1;
+}
+
+.status-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #155724;
+    margin: 0 0 8px 0;
+}
+
+.status-description {
+    font-size: 14px;
+    color: #155724;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.status-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #f0faf0;
+    border-radius: 8px;
+    color: #276c27;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Acciones */
+.actions-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.actions-description {
+    font-size: 16px;
+    color: #276c27;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, #3ba53b 0%, #2e862e 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(59, 165, 59, 0.3);
+}
+
+.upload-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59, 165, 59, 0.4);
+}
+
+.additional-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.secondary-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: white;
+    color: #276c27;
+    border: 2px solid #dbf5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.secondary-button:hover {
+    background: #f0faf0;
+    border-color: #b8e5b8;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jury-review-container {
+        padding: 0 16px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .header-content-juryReview {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .jury-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .status-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .additional-actions {
+        flex-direction: column;
+    }
+}
+
+/* Animaciones */
+.section-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.section-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.section-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.section-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

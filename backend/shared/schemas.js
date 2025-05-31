@@ -46,16 +46,16 @@ export const Teacher = sequelize.define('teachers', {
 });
 
 export const Jury = sequelize.define('jurys', {
-  idJurado: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  idJurado: { type: DataTypes.STRING(20), primaryKey: true, autoIncrement: true },
   idUser: { type: DataTypes.INTEGER, references: { model: User, key: 'idUsers' } },
   carrera: { type: DataTypes.STRING(50) }
 });
 
 export const Project = sequelize.define('projects', {
   idProyecto: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  title: { type: DataTypes.STRING(60) },
+  title: { type: DataTypes.STRING(60), unique: true },
   tipo: { type: DataTypes.STRING(40) },
-  estado: { type: DataTypes.ENUM('APROBADO', 'EN REVISIÓN') },
+  estado: { type: DataTypes.ENUM('APROBADO', 'EN REVISIÓN', 'APROBADO POR DOCENTE', 'RECHAZADO') },
   rutaDocumento: { type: DataTypes.STRING(250) },
   idEstudiante: {
     type: DataTypes.STRING(20),
@@ -64,7 +64,13 @@ export const Project = sequelize.define('projects', {
   idDocente: {
     type: DataTypes.STRING(20),
     references: { model: Teacher, key: 'idDocente' }
-  }
+  },
+  idJurado: {
+    type: DataTypes.STRING(20),
+    references: { model: Jury, key: 'idJurado' }
+  },
+  descripcion: {type: DataTypes.TEXT, allowNull: true},
+  autorizacion_repositorio: {type: DataTypes.ENUM('SI', 'NO'), allowNull: true}
 });
 
 export const PlanEntrega = sequelize.define('plan_entrega', {
@@ -159,3 +165,6 @@ PlanEntrega.hasMany(Entrega, { foreignKey: 'id_plan_entrega' });
 
 Entrega.belongsTo(Student, { foreignKey: 'id_estudiante' });
 Student.hasMany(Entrega, { foreignKey: 'id_estudiante' });
+
+Project.belongsTo(Jury, { foreignKey: 'idJurado' });
+Jury.hasMany(Project, { foreignKey: 'idJurado' });

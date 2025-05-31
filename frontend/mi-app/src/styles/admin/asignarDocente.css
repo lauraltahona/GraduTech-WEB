@@ -1,0 +1,83 @@
+.asignar-docente-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #f9f9fb;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.titulo {
+  text-align: center;
+  color: #2e862e;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.descripcion {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2e862e;
+  font-weight: 500;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #2e862e;
+  outline: none;
+}
+
+.btn-asignar {
+  width: 100%;
+  padding: 12px;
+  background-color: #2e862e;
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-asignar:hover:not(:disabled) {
+  background-color: #27ae60;
+}
+
+.btn-asignar:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.no-docentes {
+  color: #e74c3c;
+  font-style: italic;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+}

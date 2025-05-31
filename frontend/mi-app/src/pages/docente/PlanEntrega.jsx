@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "../../styles/docente/PlanEntrega.css";
+import HeaderDocente from '../auth/HeaderDocente.jsx';
 
 export default function PlanEntrega() {
   const [entregas, setEntregas] = useState([]);
@@ -11,6 +13,7 @@ export default function PlanEntrega() {
   });
 
   const id_proyecto = localStorage.getItem("id_proyecto");
+  const correo_estudiante = localStorage.getItem("correo");
 
   useEffect(() => {
     const fetchPlanes = async () => {
@@ -35,6 +38,7 @@ export default function PlanEntrega() {
     const nuevaEntrega = {
       id_proyecto: Number(id_proyecto),
       ...formData,
+      correo: correo_estudiante,
     };
 
     try {
@@ -53,7 +57,6 @@ export default function PlanEntrega() {
       setEntregas([...entregas, nuevaEntrega]);
       setFormData({ nro_entrega: "", titulo: "", descripcion: "", fecha_limite: "" });
 
-      // Recargar los planes existentes para que se actualicen automáticamente
       const updated = await fetch(`http://localhost:5001/entrega/proyecto/${id_proyecto}`);
       const updatedData = await updated.json();
       setPlanesExistentes(updatedData);
@@ -64,19 +67,21 @@ export default function PlanEntrega() {
   };
 
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Planificación de entregas</h2>
+  <>
+      <HeaderDocente /> {/* Header arriba */}
+    <div className="plan-entrega-container">
+      <h2>📌Planificación de entregas</h2>
 
-      <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+      <div className="form-grid-deliveryPlan">
         <div>
           <label>N° Entrega</label>
           <input name="nro_entrega" value={formData.nro_entrega} onChange={handleChange} />
         </div>
         <div>
           <label>Título</label>
-          <input name="titulo" value={formData.title} onChange={handleChange} />
+          <input name="titulo" value={formData.titulo} onChange={handleChange} />
         </div>
-        <div style={{ gridColumn: '1 / -1' }}>
+        <div style={{ gridColumn: "1 / -1" }}>
           <label>Descripción</label>
           <input name="descripcion" value={formData.descripcion} onChange={handleChange} />
         </div>
@@ -84,39 +89,24 @@ export default function PlanEntrega() {
           <label>Fecha límite</label>
           <input type="date" name="fecha_limite" value={formData.fecha_limite} onChange={handleChange} />
         </div>
-        <div style={{ alignSelf: 'end' }}>
+        <div style={{ alignSelf: "end" }}>
           <button onClick={handleAdd}>Agregar</button>
         </div>
       </div>
 
-      {/* Mostramos los planes ya creados abajo como enlaces */}
-      <div style={{ marginTop: '2rem' }}>
-        <h3 style={{ fontWeight: 'bold', marginBottom: '1rem' }}>Planes de entrega ya creados:</h3>
-        <ul>
-          {planesExistentes.map((plan, index) => (
-            <li key={index}>
-              <a
-                href={`/entrega-por-plan/${plan.id_plan_entrega}`} // Asegúrate de tener esta ruta configurada en tu app
-                style={{ color: 'blue', textDecoration: 'underline' }}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Entrega #{plan.nro_entrega}: {plan.titulo} - {new Date(plan.fecha_limite).toLocaleDateString()}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div style={{ marginTop: '1rem' }}>
-        {entregas.map((e, idx) => (
-          <div key={idx} style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
-            <p><strong>Entrega #{e.nro_entrega}:</strong> {e.titulo}</p>
-            <p>{e.descripcion}</p>
-            <p><strong>Fecha límite:</strong> {e.fecha_limite}</p>
+      <h3 style={{ marginBottom: "1rem" }}>Planes de entrega ya creados:</h3>
+      <div className="card-list">
+        {planesExistentes.map((plan, index) => (
+          <div className="card" key={index}>
+            <a href={`/entrega-por-plan/${plan.id_plan_entrega}`}>
+              Entrega #{plan.nro_entrega}: {plan.titulo}
+            </a>
+            <p><strong>Fecha límite:</strong> {new Date(plan.fecha_limite).toLocaleDateString()}</p>
+            <p>{plan.descripcion}</p>
           </div>
         ))}
       </div>
     </div>
+  </>
   );
 }

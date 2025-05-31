@@ -1,0 +1,106 @@
+/* Contenedor general */
+.contenedor-proyectos {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: linear-gradient(to right, #55ff63, #f1fff0);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Título */
+.contenedor-proyectos h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #15803d;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* Tarjeta de proyecto */
+.card-proyecto {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(60, 60, 90, 0.1);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-proyecto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(60, 60, 90, 0.15);
+}
+
+/* Títulos y textos */
+.card-proyecto h3 {
+  color: #15803d;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-proyecto p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0.4rem 0;
+}
+
+.card-proyecto strong {
+  color: #4ec77b;
+}
+
+/* Contenedor de acciones */
+.acciones-plan-entrega {    
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Botón */
+.acciones-plan-entrega button {
+  background-color: #15803d;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.acciones-plan-entrega button:hover {
+  background-color: #0d4e25;
+  transform: scale(1.05);
+}
+
+/* Select */
+.acciones-plan-entrega select {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f7f7f7;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.acciones-plan-entrega select:focus {
+  border-color: #15803d;
+  outline: none;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
