@@ -1,40 +1,31 @@
-import { Project, Student } from "../shared/schemas.js";
+import Student from "../models/student-model.js";
+import Project from "../models/proyect-model.js";
+import { ProjectRepository } from "../repository/project-repository.js";
 import { db } from "../db.js";
 
  export class ProjectService{
-    static async asignarDocenteAProyecto(title, idDocente) {
-        console.log('ESTOY EN MODEL:', title, idDocente);
-        
-        // Validar que el proyecto existe
-        const proyecto = await Project.findOne({ where: { title } });
-        if (!proyecto) {
-            throw new Error("Proyecto no encontrado");
-        }
+    static async createProject({ title, tipo, rutaDocumento, idEstudiante }) {
+        const project = await ProjectRepository.createProject({ title, tipo, rutaDocumento, idEstudiante });
+        return project;
+    }
+    
+    static async obtenerProyecto(idUser){
+        const project = await ProjectRepository.obtenerProyecto(idUser);
+        return project;
+    }
 
-        // Asignar el docente
-        proyecto.idDocente = idDocente;
-
-        // Guardar cambios
-        await proyecto.save();
-
+    static async obtenerProyectosAsignados(id_usuario) {
+        const proyectos = await ProjectRepository.obtenerProyectosAsignados(id_usuario);
+        return proyectos;
+    }
+    
+    static async asignarDocenteAProyecto(title, cedulaDocente) {
+        const proyecto = await ProjectService.asignarDocenteAProyecto(title, cedulaDocente);
         return proyecto;
     }
     
     static async asignarJuradoAProyecto(title, idJurado) {
-        console.log('ESTOY EN MODEL:', title, idJurado);
-        
-        // Validar que el proyecto existe
-        const proyecto = await Project.findOne({ where: { title } });
-        if (!proyecto) {
-            throw new Error("Proyecto no encontrado");
-        }
-
-        // Asignar el docente
-        proyecto.idJurado = idJurado;
-
-        // Guardar cambios
-        await proyecto.save();
-
+        const proyecto = await.ProjectService.asignarJuradoAProyecto(title, idJurado);
         return proyecto;
     }
 

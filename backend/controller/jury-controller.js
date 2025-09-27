@@ -10,15 +10,9 @@ export class JuryController{
             return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})
         }
         const {idJurado, carrera, usuario} = result.data;
-        try{
-            const hashedPass = await bcrypt.hash(usuario.contraseña, 10);
-                    
+        try{        
             const jurado = await JuryService.createJury(
-                {idJurado, carrera,
-                    usuario:{
-                    ...usuario,
-                    contraseña: hashedPass
-                }
+                {idJurado, carrera, usuario
             })
             return res.status(200).json({message: 'Jurado registrado', jurado});
         } catch(error){

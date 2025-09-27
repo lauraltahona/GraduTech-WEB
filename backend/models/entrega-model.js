@@ -1,6 +1,7 @@
 import { db } from "../db.js";
 import { EmailService } from "../service/emailSevice.js";
-import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
+import { PlanEntrega, Entrega } from '../shared/schemas.js';
+import Student from "../models/student-model.js";
 
 export class EntregaModel{
     

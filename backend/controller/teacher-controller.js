@@ -1,37 +1,28 @@
-import { TeacherModel } from "../models/teacher-model.js";
 import { validateTeacher } from "../schemas/docente.js";
-import bcrypt, { hashSync } from "bcryptjs";
 import { TeacherService } from "../service/teacher-service.js";
 
 export class TeacherController{
     static async createTeacher(req, res){
+        //llama la función de validación
         const resultTeacher = validateTeacher(req.body);
-        console.log(req.body);
-        
 
         if(!resultTeacher.success){
             return res.status(400).json({message: 'Datos invalidos', error: resultTeacher.error.format()});
         }
 
-        const {id_docente, profesion, carrera, usuario} = resultTeacher.data;
-        console.log(resultTeacher.data);
+        const { profesion, carrera, usuario} = resultTeacher.data;
         
         try{
-            const hashedPass = await bcrypt.hash(usuario.contraseña, 10);
-            
-            const docente = await TeacherModel.createTeacher(
-                {id_docente, profesion, carrera,
-                usuario:{
-                    ...usuario,
-                    contraseña: hashedPass
-                }
+            const docente = await TeacherService.createTeacher(
+                { profesion, carrera, usuario
             })
-            return res.status(200).json({message: 'Docente registrado', docente})
+
+            return res.status(200).json({message: 'Docente registrado', docente});
+
         } catch(error){
             console.log(error);
             res.status(500).json({message: 'Error al registrar docente'})
         }
-
     }
 
     static async obtenerDocentesDisponibles(req, res) {
@@ -74,7 +65,7 @@ export class TeacherController{
         console.log(idDocente);
         
         try{
-            const message = await StudentService.deleteStudent(idDocente);
+            const message = await TeacherService.deleteStudent(idDocente);
             return res.status(200).json(message);
         } catch (error){
             console.log(error);

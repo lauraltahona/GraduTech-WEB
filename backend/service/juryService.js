@@ -1,4 +1,5 @@
-import { Jury, User, UsersRols } from '../shared/schemas.js';
+import Jury from '../models/jury-model.js';
+import User from '../models/user-model.js';
 
 export class JuryService {
   static async createJury({idJurado, carrera, usuario}) {
@@ -34,15 +35,6 @@ export class JuryService {
           idUser: user.idUsers,
           idJurado,
           carrera,
-        },
-        { transaction: t }
-      );
-
-      // Asociar rol de jurado
-      await UsersRols.create(
-        {
-          idUsersRol: user.idUsers,
-          idRols: 3, 
         },
         { transaction: t }
       );
