@@ -20,12 +20,14 @@ import { db } from "../db.js";
     }
     
     static async asignarDocenteAProyecto(title, cedulaDocente) {
-        const proyecto = await ProjectService.asignarDocenteAProyecto(title, cedulaDocente);
+        console.log('estoy en service: ',title, cedulaDocente);
+        
+        const proyecto = await ProjectRepository.asignarDocenteAProyecto(title, cedulaDocente);
         return proyecto;
     }
     
-    static async asignarJuradoAProyecto(title, idJurado) {
-        const proyecto = await.ProjectService.asignarJuradoAProyecto(title, idJurado);
+    static async asignarJuradoAProyecto(title, cedulaJurado) {
+        const proyecto = await ProjectRepository.asignarJuradoAProyecto(title, cedulaJurado);
         return proyecto;
     }
 

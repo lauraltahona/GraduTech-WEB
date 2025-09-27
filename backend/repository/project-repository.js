@@ -1,6 +1,7 @@
 import Project from '../models/proyect-model.js';
 import Student from '../models/student-model.js';   
 import User from '../models/user-model.js';
+import Teacher from '../models/teacher-model.js';
 import { db } from '../db.js';
 import { Op, where } from "sequelize";
 
@@ -77,7 +78,7 @@ export class ProjectRepository {
     try {
       // Obtener idDocente
       const docenteResult = await db.query(
-        "SELECT idDocente FROM teachers WHERE idUser = $1",
+        `SELECT "idDocente" FROM teachers WHERE "idUser" = $1`,
         [id_usuario]
       );
 
@@ -90,17 +91,18 @@ export class ProjectRepository {
       // Consultar proyectos asignados
       const result = await db.query(`
         SELECT 
-          p.idProyecto, 
-          p.title AS titulo, 
+          p."idProyecto",
+          p.title AS titulo,
           p.estado, 
           u.nombre AS estudiante,
           u.correo AS correo
         FROM projects p
-        JOIN students s ON s.idEstudiante = p.idEstudiante
-        JOIN users u ON u.idUsers = s.idUser
-        WHERE p.idDocente = $1
+        JOIN students s ON s."idEstudiante" = p."idEstudiante" 
+        JOIN users u ON u."idUsers" = s."idUser"
+        WHERE p."idDocente" = $1
       `, [id_docente]);
-
+      //no es recomendable usar mayusculas en nombres de columnas en Postgre,
+       //dado esto, se le ponen comillas a los nombres en las sentencias
       console.log(result.rows);
       return result.rows;
     } catch (error) {
@@ -111,6 +113,8 @@ export class ProjectRepository {
   static async asignarDocenteAProyecto(title, cedulaDocente) {
 
     try{
+      console.log('estoy en repositorio: ',title, cedulaDocente);
+      
       const proyecto = await Project.findOne({where: {title: title}});
       if (!proyecto) {
         throw new Error("No se encontró un proyecto con ese título.");
