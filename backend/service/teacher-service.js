@@ -1,6 +1,13 @@
-import { Teacher, User } from '../shared/schemas.js';
+import Teacher from '../models/teacher-model.js';
+import User from '../models/user-model.js';
+import { TeacherRepository } from '../repository/teacher-repository.js';
 
 export class TeacherService{
+    static async createTeacher({ profesion, carrera, usuario }) {
+        const teacher = await TeacherRepository.createTeacher({ profesion, carrera, usuario });
+        return teacher;
+    }
+    
     static async getAllTeachers() {
         const teachers = await Teacher.findAll({
             include: {

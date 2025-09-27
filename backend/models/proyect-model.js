@@ -1,90 +1,54 @@
-import { Teacher, User, Project, Student } from '../shared/schemas.js';
-import { db } from '../db.js';
+import { sequelize } from "../db.js";
+import { DataTypes } from "sequelize";
 
-export class ProyectModel {
-  // Crear proyecto 
-  static async createProyect({ title, tipo, rutaDocumento, idEstudiante }) {
-    console.log('Hola estoy en model',title, tipo, rutaDocumento, idEstudiante);
-    
-    try {
-      const existingProyect = await Project.findOne({ where: { title } });
-      if (existingProyect) throw new Error("El título ya existe");
-
-      const studentProject = await Project.findOne({ where: { idEstudiante } });
-      if (studentProject) throw new Error("El estudiante ya tiene un proyecto registrado");
-
-      const nuevoProyecto = await Project.create({
-        title,
-        tipo,
-        estado: "EN REVISIÓN",
-        rutaDocumento,
-        idEstudiante
-      });
-      console.log(nuevoProyecto);
- 
-      return nuevoProyecto;
-    } catch (error) {
-      throw new Error("Error al registrar proyecto: " + error.message);
-    }
+const Project = sequelize.define('projects', {
+  idProyecto: { 
+    type: DataTypes.INTEGER, 
+    primaryKey: true, 
+    autoIncrement: true 
+  },
+  title: {
+    type: DataTypes.STRING(150),
+    allowNull: false,
+    unique: true,
+  },
+  tipo: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+  },
+  estado: {
+    type: DataTypes.ENUM('APROBADO POR DOCENTE', 'EN REVISIÓN', 'RECHAZADO', 'PENDIENTE', 'APROBADO'),
+  },
+  rutaDocumento: {
+    type: DataTypes.STRING(250),
+  },
+  descripcion: {
+    type: DataTypes.TEXT,
+  },
+  idEstudiante: {
+    type: DataTypes.INTEGER(),
+    references: { model: 'students', key: 'idEstudiante' },
+  },
+  idDocente: {
+    type: DataTypes.INTEGER(),
+    references: { model: 'teachers', key: 'idDocente' },
+  },
+  idJurado: {
+    type: DataTypes.INTEGER(),
+    references: {model: 'juries', key: 'idJurado' }
+  },
+  autorizacion_repositorio: {
+    type: DataTypes.ENUM('SI', 'NO'),
+    allowNull: true,
   }
+})
 
-  // Obtener proyecto por id_usuario
-  static async obtenerProyecto(idUser) {
-    console.log("Model - idUser recibido:", idUser);
-    
-    try {
-      const student = await Student.findOne({ where: { idUser } });
+Project.associate = (models) => {
+  Project.belongsTo(models.Student, { foreignKey: 'idEstudiante' });
+  Project.belongsTo(models.Jury , {foreignKey: 'idJurado'});
+  Project.belongsTo(models.Teacher, { foreignKey: 'idDocente' });
+  Project.hasMany(models.PlanEntrega, { foreignKey: 'idProyecto' });
 
-      if (!student) throw new Error("No se encontró un estudiante con ese usuario.");
-      console.log(student);
-      const nombre = student.nombre;
-      
-      const proyecto = await Project.findOne({
-        where: { idEstudiante: student.idEstudiante },
-        attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "updatedAt", "descripcion", "idDocente", "idJurado"]
-      });
-
-      return proyecto;
-    } catch (error) {
-      throw new Error("Error al obtener proyecto: " + error.message);
-    }
-  }
-  
-  static async obtenerProyectosAsignados(id_usuario) {
-
-      const connection = await db.getConnection();
-      try {
-        
-        const [docenteResult] = await connection.query(
-          "SELECT idDocente FROM teachers WHERE idUser = ?", 
-          [id_usuario]
-        );
-
-        if (docenteResult.length === 0) {
-          throw new Error("No se encontró un docente con ese usuario.");
-        }
-        const id_docente = docenteResult[0].idDocente;
-        const [rows] = await connection.query(`
-          SELECT 
-              p.idProyecto, 
-              p.title AS titulo, 
-              p.estado, 
-              u.nombre AS estudiante,
-              u.correo AS correo
-          FROM projects p
-          JOIN students s ON s.idEstudiante = p.idEstudiante
-          JOIN users u ON u.idUsers = s.idUser
-          WHERE p.idDocente = ?
-        `, [id_docente]);
-        await connection.commit();
-        console.log(rows);
-        
-        return rows;
-      } catch (error) {
-        throw new Error("Error al obtener proyectos asignados: " + error.message);
-      } finally {
-        connection.release();
-      }
-    }
 
 }
+export default Project;

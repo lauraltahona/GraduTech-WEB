@@ -1,42 +1,48 @@
-import bcrypt from "bcryptjs";
-import { User, Rol, UsersRols } from "../shared/schemas.js";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../db.js";
 
-export class UserModel {
 
-  static async login({ correo, contraseña }) {
-    try {
-      // Buscar usuario con su rol
-      const user = await User.findOne({
-        where: { correo },
-        include: [{ model: Rol, attributes: ['nombreRol'] }]
-      });
+const User = sequelize.define("users", {
 
-      if (!user) {
-        throw new Error("El correo no existe");
-      }
+  idUsers: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  cedula: {
+    type: DataTypes.STRING(),
+    allowNull: false,
+    unique: true,
+  },
+  nombre: {
+    type: DataTypes.STRING(150),
+    allowNull: false,
+    unique: true,
+  },
+  correo: {
+    type: DataTypes.STRING(150),
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING(250),
+    allowNull: false,
+  },
 
-      // Verificar contraseña
-      const isValid = await bcrypt.compare(contraseña, user.contraseña);
-      if (!isValid) {
-        throw new Error("Contraseña incorrecta");
-      }
-
-      // Acceder al nombre del rol
-      const rol = user.rol?.nombreRol;
-
-      return {
-        id_usuario: user.idUsers,
-        nombre: user.nombre,
-        correo: user.correo,
-        rol
-      };
-    } catch (error) {
-      throw error;
-    }
+  idRol: {
+    type: DataTypes.INTEGER,
+    references: {model: 'roles', key: 'idRol' }
   }
+});
 
+// asociaciones
+User.associate = (models) => {
+  User.belongsTo(models.Rol, { foreignKey: "idRol" });
+  User.belongsToMany(models.Rol, {
+    through: "usersRols",
+    foreignKey: "idUsers",
+    otherKey: "idRoles",
+  });
+};
 
-  static async findbyEmail(correo) {
-    return await User.findOne({ where: { correo } });
-  }
-}
+export default User;

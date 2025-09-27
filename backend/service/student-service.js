@@ -1,6 +1,13 @@
-import { Student, User } from '../shared/schemas.js';
+import Student from "../models/student-model.js";
+import User from "../models/user-model.js";
+import {StudentRepository} from "../repository/student-repository.js";
 
 export class StudentService{
+    static async createStudent({carrera, semestre, usuario}) {
+        const student = await StudentRepository.createStudent({carrera, semestre, usuario});
+        return student;
+    }
+    
     static async getAllStudents() {
         try {
             const students = await Student.findAll({
