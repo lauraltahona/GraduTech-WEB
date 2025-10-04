@@ -26,14 +26,13 @@ const careers = [
 
 const RegistrarDocente = () => {
   const [form, setForm] = useState({
-    id_docente: "",
     profesion: "",
-    disponibilidad: "",
     carrera: "",
     usuario: {
+      cedula: "",
       nombre: "",
       correo: "",
-      contraseña: "",
+      password: "",
     },
   });
 
@@ -42,7 +41,8 @@ const RegistrarDocente = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (["nombre", "correo", "contraseña"].includes(name)) {
+
+    if (["cedula", "nombre", "correo", "password"].includes(name)) {
       setForm({ ...form, usuario: { ...form.usuario, [name]: value } });
     } else {
       setForm({ ...form, [name]: value });
@@ -104,18 +104,18 @@ const RegistrarDocente = () => {
 
         <form onSubmit={handleSubmit} className="teacher-form">
           <div className="form-grid-teacher">
-            {/* ID Docente */}
+            {/* Cédula */}
             <div className="form-group">
-              <label htmlFor="teacherId" className="form-label-teacher">
+              <label htmlFor="cedula" className="form-label-teacher">
                 <IdCard size={16} />
-                ID Docente
+                Cédula
               </label>
               <input
-                id="id_docente"
-                name="id_docente"
+                id="cedula"
+                name="cedula"
                 type="text"
-                placeholder="Ej. DOC2024001"
-                value={form.id_docente}
+                placeholder="Ej. 222222222"
+                value={form.usuario.cedula}
                 onChange={handleChange}
                 className="form-input"
                 required
@@ -124,7 +124,7 @@ const RegistrarDocente = () => {
 
             {/* Profesión */}
             <div className="form-group">
-              <label htmlFor="profession" className="form-label-teacher">
+              <label htmlFor="profesion" className="form-label-teacher">
                 <Briefcase size={16} />
                 Profesión
               </label>
@@ -141,7 +141,7 @@ const RegistrarDocente = () => {
 
             {/* Carrera */}
             <div className="form-group">
-              <label htmlFor="career" className="form-label-teacher">
+              <label htmlFor="carrera" className="form-label-teacher">
                 <GraduationCap size={16} />
                 Carrera
               </label>
@@ -164,7 +164,7 @@ const RegistrarDocente = () => {
 
             {/* Nombre */}
             <div className="form-group">
-              <label htmlFor="name" className="form-label-teacher">
+              <label htmlFor="nombre" className="form-label-teacher">
                 <User size={16} />
                 Nombre Completo
               </label>
@@ -182,7 +182,7 @@ const RegistrarDocente = () => {
 
             {/* Correo */}
             <div className="form-group">
-              <label htmlFor="email" className="form-label-teacher">
+              <label htmlFor="correo" className="form-label-teacher">
                 <Mail size={16} />
                 Correo Electrónico
               </label>
@@ -198,7 +198,7 @@ const RegistrarDocente = () => {
               />
             </div>
 
-            {/* Contraseña */}
+            {/* Password */}
             <div className="form-group">
               <label htmlFor="password" className="form-label-teacher">
                 <Lock size={16} />
@@ -206,11 +206,11 @@ const RegistrarDocente = () => {
               </label>
               <div className="password-input-container">
                 <input
-                  id="contraseña"
-                  name="contraseña"
+                  id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Mínimo 8 caracteres"
-                  value={form.usuario.contraseña}
+                  value={form.usuario.password}
                   onChange={handleChange}
                   className="form-input password-input"
                   required
@@ -263,7 +263,7 @@ const RegistrarDocente = () => {
               <div className="info-content">
                 <h3 className="info-title">Requisitos</h3>
                 <ul className="info-list">
-                  <li>ID único en el sistema</li>
+                  <li>Cédula única en el sistema</li>
                   <li>Correo institucional válido</li>
                   <li>Contraseña segura (8+ caracteres)</li>
                 </ul>

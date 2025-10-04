@@ -31,6 +31,19 @@ Content-Type: application/json
 ###AUDITORIA
 GET http://localhost:5001/auditoria/getAll
 
+### CREAR PLAN ENTREGA
+POST http://localhost:5001/entrega/planear
+Content-Type: application/json
+
+{
+ "id_proyecto": 1,
+  "nro_entrega": 2,
+  "titulo": "Avance 1",
+  "descripcion": "Entregar objetivos y justificacion",
+  "fecha_limite": "2025-09-29",
+  "correo": "lvaltahona@unicesar.edu.co"
+}
+
 ###delete
 DELETE http://localhost:5001/estudiante/eliminar/258963147
 
@@ -88,7 +101,7 @@ Content-Type: application/json
   "hora": "15:00 a.m"
 }
 ### GET
-GET http://localhost:5001/proyectos/asignados/2
+GET http://localhost:5001/proyectos/asignados/9
 
 ###GET ENTREGAS ASIGNADAS
 GET http://localhost:5001/entrega/asignadas/1
@@ -102,7 +115,7 @@ GET http://localhost:5001/entrega/proyecto/1
 GET http://localhost:5001/entrega/entrega-por-plan/1
 
 ###GET MI PROYECTO
-GET http://localhost:5001/proyectos/obtener/1
+GET http://localhost:5001/proyectos/obtener/7
 
 ### GET FECHAS LIMITES
 GET http://localhost:5001/entrega/fechas/5
@@ -132,14 +145,24 @@ Content-Type: application/json
 GET http://localhost:5001/proyectos/sin-docente
 
 ###DOCENTE DISPONIBLES
-GET http://localhost:5001/docente/docentes-disponibles
+GET http://localhost:5001/jurado/jurados-disponibles
 
 ###Registrar proyecto title, tipo, rutaDocumento, idEstudiante
 POST http://localhost:5001/proyectos
 Content-Type: application/json
 
 {
+  "title": "Colaboracion en Nueva Eps",
+  "tipo": "Pasantia",
+  "rutaDocumento": "/files/proyectodeinvestigacian.pdf",
+  "idEstudiante": "789456123"
+}
+
+###ASIGNAR DOCENTE A PROYECTO
+PATCH http://localhost:5001/proyectos/asignar-docente
+Content-Type: application/json
+
+{
   "title": "Sistema de verificacion de identidad",
-  "tipo": "Proyecto de grado",
-  "rutaDocumento": "/files/proyectodeinvestigacian.pdf"
+  "idDocente": "3"
 }

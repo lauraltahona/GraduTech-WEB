@@ -20,17 +20,17 @@ const careers = [
   "Contaduría Pública",
   "Derecho",
   "Psicología",
-  "Sociología"
+  "Sociología",
 ];
 
 const RegistrarJurado = () => {
   const [form, setForm] = useState({
-    idJurado: "",
     carrera: "",
     usuario: {
+      cedula: "",
       nombre: "",
       correo: "",
-      contraseña: "",
+      password: "",
     },
   });
 
@@ -39,7 +39,7 @@ const RegistrarJurado = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (["nombre", "correo", "contraseña"].includes(name)) {
+    if (["cedula", "nombre", "correo", "password"].includes(name)) {
       setForm({ ...form, usuario: { ...form.usuario, [name]: value } });
     } else {
       setForm({ ...form, [name]: value });
@@ -60,7 +60,9 @@ const RegistrarJurado = () => {
       if (res.ok) {
         setMensaje(`✅ ${data.message || "Jurado registrado correctamente"}`);
       } else {
-        setMensaje(`❌ Error: ${data.error || "No se pudo registrar el jurado"}`);
+        setMensaje(
+          `❌ Error: ${data.error || "No se pudo registrar el jurado"}`
+        );
       }
     } catch (error) {
       console.error(error);
@@ -70,6 +72,7 @@ const RegistrarJurado = () => {
 
   return (
     <div className="register-teacher-container">
+      {/* Header */}
       <div className="page-header">
         <div className="header-content-teacher">
           <div className="header-icon">
@@ -84,6 +87,7 @@ const RegistrarJurado = () => {
         </div>
       </div>
 
+      {/* Form */}
       <div className="form-card">
         <div className="form-header">
           <div className="form-header-icon">
@@ -97,23 +101,25 @@ const RegistrarJurado = () => {
 
         <form onSubmit={handleSubmit} className="teacher-form">
           <div className="form-grid-teacher">
+            {/* Cedula */}
             <div className="form-group">
-              <label htmlFor="idJurado" className="form-label-teacher">
+              <label htmlFor="cedula" className="form-label-teacher">
                 <IdCard size={16} />
-                ID Jurado
+                Cédula
               </label>
               <input
-                id="idJurado"
-                name="idJurado"
+                id="cedula"
+                name="cedula"
                 type="text"
-                placeholder="Ej. JUR2024001"
-                value={form.idJurado}
+                placeholder="Ej. 1234567890"
+                value={form.usuario.cedula}
                 onChange={handleChange}
                 className="form-input"
                 required
               />
             </div>
 
+            {/* Carrera */}
             <div className="form-group">
               <label htmlFor="carrera" className="form-label-teacher">
                 <GraduationCap size={16} />
@@ -136,6 +142,7 @@ const RegistrarJurado = () => {
               </select>
             </div>
 
+            {/* Nombre */}
             <div className="form-group">
               <label htmlFor="nombre" className="form-label-teacher">
                 <User size={16} />
@@ -153,6 +160,7 @@ const RegistrarJurado = () => {
               />
             </div>
 
+            {/* Correo */}
             <div className="form-group">
               <label htmlFor="correo" className="form-label-teacher">
                 <Mail size={16} />
@@ -170,18 +178,19 @@ const RegistrarJurado = () => {
               />
             </div>
 
+            {/* Password */}
             <div className="form-group">
-              <label htmlFor="contraseña" className="form-label-teacher">
+              <label htmlFor="password" className="form-label-teacher">
                 <Lock size={16} />
                 Contraseña
               </label>
               <div className="password-input-container">
                 <input
-                  id="contraseña"
-                  name="contraseña"
+                  id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Mínimo 8 caracteres"
-                  value={form.usuario.contraseña}
+                  value={form.usuario.password}
                   onChange={handleChange}
                   className="form-input password-input"
                   required
@@ -191,7 +200,9 @@ const RegistrarJurado = () => {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="password-toggle"
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  aria-label={
+                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                  }
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -199,6 +210,7 @@ const RegistrarJurado = () => {
             </div>
           </div>
 
+          {/* Submit */}
           <div className="form-actions-teacher">
             <button type="submit" className="submit-button-teacher">
               <UserPlus size={20} />
