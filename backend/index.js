@@ -15,11 +15,11 @@ import proyectRouter from './routes/proyect-router.js';
 import entregaRouter from './routes/entrega-router.js';
 import juryRouter from './routes/jury-router.js';
 import emailRouter from './routes/email-router.js';
-import { syncModels } from './shared/schemas.js';
+import auditoriaRouter from './routes/auditoria-router.js';
 
 import { PORT } from './config.js';
 import { Connect } from './db.js';
-import auditoriaRouter from './routes/auditoria-router.js';
+import models from './models/index.js';
 
 
 const app = express();
@@ -33,7 +33,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(authMiddleware);
 
-Connect()
 
 app.use('/estudiante', studentRouter);
 app.use('/docente', teacherRouter);
@@ -48,6 +47,11 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/auditoria', auditoriaRouter);
 
 
-app.listen(PORT, ()=>{
-    console.log(`escuchando puerto en http://localhost:${PORT}`);
-})
+const start = async () => {
+  await Connect();
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
+  });
+};
+
+start();

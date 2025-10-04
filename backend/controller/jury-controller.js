@@ -4,21 +4,16 @@ import bcrypt from "bcryptjs";
 
 export class JuryController{
     static async createJury(req, res){
-        console.log('estoy en modelo', req.body);
         const result = validateJury(req.body);
+        console.log('Validation result:', result);
+        
         if(!result.success){
             return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})
         }
-        const {idJurado, carrera, usuario} = result.data;
-        try{
-            const hashedPass = await bcrypt.hash(usuario.contraseña, 10);
-                    
+        const { carrera, usuario} = result.data;
+        try{        
             const jurado = await JuryService.createJury(
-                {idJurado, carrera,
-                    usuario:{
-                    ...usuario,
-                    contraseña: hashedPass
-                }
+                { carrera, usuario
             })
             return res.status(200).json({message: 'Jurado registrado', jurado});
         } catch(error){
@@ -26,7 +21,6 @@ export class JuryController{
             res.status(500).json({message: 'Error al registrar jurado'})
         }
         
-
     }
 
     static async getAllJurys(req, res){

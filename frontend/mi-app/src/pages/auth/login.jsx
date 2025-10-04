@@ -27,7 +27,7 @@ function Login() {
       const user = result.user;
       console.log(user);
 
-      localStorage.setItem("token", result.token); // si tienes token
+      localStorage.setItem("token", result.token); 
       localStorage.setItem("userId", user.id_usuario);
       localStorage.setItem("userRol", user.rol);
 

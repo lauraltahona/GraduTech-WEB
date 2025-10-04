@@ -1,23 +1,17 @@
 import z from 'zod';
 
  const proyectSchema = z.object({
-    title: z.string().max(250, {invalid_type_error: 'el titulo es muy largo'})
+    title: z.string().max(150, {message: 'El título no puede exceder 150 caracteres'})
         .regex(/^[^\d]+$/, { message: 'No se permiten números en este campo' }),
     tipo: z.string(),
     rutaDocumento: z.string(),
     idEstudiante: z.string()
-        .min(8, {invalid_type_error: 'La cedula debe contener al menos 8 digitos'})
-        .max(10, {invalid_type_error: 'La cedula no puede tener más de 10 digitos'})
-        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }),
-    idDocente: z.string()
-        .min(8, {invalid_type_error: 'La cedula debe contener al menos 8 digitos'})
-        .max(10, {invalid_type_error: 'La cedula no puede tener más de 10 digitos'})
-        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }).optional(),
-    idJurado: z.string()
-        .min(8, {invalid_type_error: 'La cedula debe contener al menos 8 digitos'})
-        .max(10, {invalid_type_error: 'La cedula no puede tener más de 10 digitos'})
-        .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }).optional(),
-    descripcion: z.string().optional(),
+            .min(8, {invalid_type_error: 'la cedula debe tener al menos 8 numeros'})
+            .max(10, {invalid_type_error: 'la cedula solo debe contener 10 numeros'})
+            .regex(/^\d+$/, { message: 'La cédula debe contener solo números' }),
+    idDocente: z.number().int().optional(),
+    idJurado: z.number().int().optional(),
+    descripcion: z.string().max(250, {message: 'descripción no puede exceder 250 caracteres'}).optional(),
     estado: z.string().optional(),
     autorizacion_repositorio: z.string().optional()
 

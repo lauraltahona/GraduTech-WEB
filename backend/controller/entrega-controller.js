@@ -4,8 +4,9 @@ import { EmailService } from "../service/emailSevice.js";
 export class EntregaController{
     static async crearPlanEntrega(req, res){
         const result = req.body;
+        console.log('esto es req.body en controller: ',req.body);
         
-        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result.data;
+        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result;
         try{
             const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite, correo);
             return res.status(200).json({message: 'Plan de entrega creado con exito'});

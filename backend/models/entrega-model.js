@@ -1,24 +1,30 @@
 import { db } from "../db.js";
 import { EmailService } from "../service/emailSevice.js";
-import { PlanEntrega, Entrega, Student } from '../shared/schemas.js';
+import { PlanEntrega, Entrega } from '../shared/schemas.js';
+import Student from "../models/student-model.js";
 
 export class EntregaModel{
     
-    static async crearPlanEntrega(idProyecto, nro_entrega, titulo, descripcion, fecha_limite, correo) {
-        try {
-        const nuevoPlan = await PlanEntrega.create({
-            idProyecto,
-            nro_entrega,
-            titulo,
-            descripcion,
-            fecha_limite
-        });
-
-        await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion);
+    static async crearPlanEntrega(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo) {
+        console.log('esto llego a model: ',id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo);
         
-        return nuevoPlan;
+        try {
+            const nuevoPlan = await PlanEntrega.create({
+                id_proyecto,
+                nro_entrega,
+                titulo,
+                descripcion,
+                fecha_limite
+            });
+
+            console.log('nuevo plan: ',nuevoPlan);
+            
+
+            await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion);
+            
+            return nuevoPlan;
         } catch (error) {
-        throw new Error('Error al registrar plan de entrega: ', error);
+            console.log('Error al registrar plan de entrega: ', error);
         }
     }
 
@@ -83,21 +89,19 @@ export class EntregaModel{
 
 
     static async obtenerEntregasPorEstudiante(id_usuario) {
-        const connection = await db.getConnection();
-        
         try{
-            const [studentResult] = await connection.query(
-            `SELECT idEstudiante FROM students WHERE idUser = ?`, 
+            const studentResult = await db.query(
+            `SELECT "idEstudiante" FROM students WHERE "idUser" = $1`, 
             [id_usuario]
             );
             console.log(studentResult);
             
-            if (studentResult.length === 0) {
+            if (studentResult.rows.length === 0) {
                 throw new Error("No se encontró un estudiante con ese usuario.");
             }
-            const id_estudiante = studentResult[0].idEstudiante;
+            const id_estudiante = studentResult.rows[0].idEstudiante;
             
-            const [rows] = await connection.query(`
+            const entregas = await db.query(`
                 SELECT 
                     pe.id_plan_entrega, 
                     pe.nro_entrega, 
@@ -106,80 +110,69 @@ export class EntregaModel{
                     pe.fecha_limite,
                     u.correo AS correo_docente
                 FROM plan_entregas pe
-                JOIN projects p ON pe.idProyecto = p.idProyecto
-                JOIN teachers t ON p.idDocente = t.idDocente
-                JOIN users u ON t.idUser = u.idUsers
-                WHERE p.idEstudiante = ?`, 
+                JOIN projects p ON pe."idProyecto" = p."idProyecto"
+                JOIN teachers t ON p."idDocente" = t."idDocente"
+                JOIN users u ON t."idUser" = u."idUsers"
+                WHERE p."idEstudiante" = $1`, 
                 [id_estudiante]
             );
 
-            console.log(rows);
+            console.log(entregas.rows);
             
-            return rows;
+            return entregas.rows;
         } catch(error){
-            await connection.rollback();
-        } finally {
-            connection.release();
-        }
+            throw new Error("Error al obtener proyectos asignados: " + error.message);
+        } 
     }
 
     static async obtenerPlanesEntrega(id_proyecto){
-        const connection = await db.getConnection();
         try {
-        const [rows] = await connection.query(
-            "SELECT * FROM plan_entregas WHERE idProyecto = ?",
-            [id_proyecto]
-        );
-        return rows;
+            const rows = await db.query(
+                `SELECT * FROM plan_entregas WHERE "idProyecto" = $1`,
+                [id_proyecto]
+            );
+            return rows.rows;
         } catch (error) {
             console.error("Error al obtener entregas por proyecto:", error);
-        } finally {
-            connection.release();
-        }
+        } 
     }
 
     static async obtenerEntregasPorPlan(id_plan_entrega) {
-        const connection = await db.getConnection();
         try{
-            const [rows] = await connection.query(`
-                SELECT E.idEntrega, E.fecha_envio, E.ruta_documento, E.descripcion, E.id_estudiante, E.retroalimentacion, E.ruta_retroalimentacion
+            const rows = await db.query(`
+                SELECT E."idEntrega", E.fecha_envio, E.ruta_documento, E.descripcion, E.id_estudiante, E.retroalimentacion, E.ruta_retroalimentacion
                 FROM entregas E
                 JOIN plan_entregas PE ON E.id_plan_entrega = PE.id_plan_entrega
-                WHERE PE.id_plan_entrega = ?`, [id_plan_entrega]
+                WHERE PE.id_plan_entrega = $1`, [id_plan_entrega]
             );
 
-            return rows;
+            return rows.rows;
         } catch(error){
             console.log('Error al obtener consulta de entregas', error);
-        } finally{
-            connection.release();
-        }
+        } 
         
     }
     static async obtenerFechaLimite(id_usuario){
-        const connection = await db.getConnection();
 
-        const [studentResult] = await connection.query(
-            `SELECT idEstudiante FROM students WHERE idUser = ?`,
+        const studentResult = await db.query(
+            `SELECT "idEstudiante" FROM students WHERE "idUser" = $1`,
             [id_usuario]
         );
-        if (studentResult.length === 0) {
+        if (studentResult.rows.length === 0) {
             throw new Error("No se encontró un estudiante con ese usuario.");
         }
-        const id_estudiante = studentResult[0].idEstudiante;
+        const id_estudiante = studentResult.rows[0].idEstudiante;
 
         try{
-            const [fechas] = await connection.query(`
+            const fechas = await db.query(`
                 SELECT pe.fecha_limite, pe.titulo 
                 FROM plan_entregas pe
-                INNER JOIN projects p ON pe.idProyecto = p.idProyecto
-                WHERE p.idEstudiante = ?`, [id_estudiante]
+                INNER JOIN projects p ON pe."idProyecto" = p."idProyecto"
+                WHERE p."idEstudiante" = $1`, [id_estudiante]
             );
-            return fechas;
+            return fechas.rows;
         } catch(error){
             console.log('Error en consulta de fecha', error);
-        } finally{
-            connection.release();
-        }
-    } 
+        } 
+    }
 }

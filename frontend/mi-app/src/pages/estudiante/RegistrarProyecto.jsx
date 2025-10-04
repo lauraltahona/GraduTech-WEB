@@ -250,9 +250,10 @@ export default function ProyectoEstudiante() {
             <button type="button" className="btn-secondary">
               Cancelar
             </button>
-            <button onClick={handleGuardar} className="btn-primary">
+            <button type="button" onClick={handleGuardar} className="btn-primary">
               Guardar Proyecto
             </button>
+
           </div>
         </form>
       </div>

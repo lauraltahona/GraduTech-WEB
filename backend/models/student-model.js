@@ -1,53 +1,31 @@
-import { Student, User, UsersRols } from '../shared/schemas.js';
-import { UserModel } from './user-model.js';
+import { sequelize } from "../db.js";
+import { DataTypes } from "sequelize";
 
-
-export class StudentModel{
-    
-    static async createStudent({id_estudiante, carrera, semestre, usuario}){
-
-        const t = await User.sequelize.transaction();
-        try{
-            const resultFindByEmail = await UserModel.findbyEmail(usuario.correo) 
-
-            if(resultFindByEmail) throw new Error('EMAIL_ALREADY_REGISTERED');
-
-            const user = await User.create({
-                nombre:usuario.nombre ,
-                correo: usuario.correo,
-                contraseña: usuario.contraseña,
-                idRol:1
-            })
-
-            const resultFindById = await this.findbyId(id_estudiante) 
-            if(resultFindById) throw new Error('STUDENT_ALREADY_REGISTERED');
-
-            const student = await Student.create({
-                  idEstudiante:id_estudiante,
-                  carrera,
-                  semestre,
-                  idUser: user.idUsers
-            })
-
-            await UsersRols.create({
-                idRols: 1,
-                idUsersRol:user.idUsers
-            })
-            
-            await t.commit();
-            return { id_estudiante, nombre: usuario.nombre, carrera, semestre };
-        } catch(error){
-            await t.rollback();
-            throw error;
-        } 
-    } 
-    
-    static async findbyId (id){
-        const find = await Student.findOne({
-            where:{idEstudiante:id}
-        })
-        return find
+const Student = sequelize.define("students", {
+    idEstudiante: {
+        type: DataTypes.INTEGER(), 
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    idUser: {
+        type: DataTypes.INTEGER(),
+        allowNull: false,
+        references: { model: 'users', key: "idUsers"}
+    },
+    carrera:{
+        type: DataTypes.STRING(150),
+        allowNull: false,
+    },
+    semestre: {
+        type: DataTypes.INTEGER(),
+        allowNull: false,
     }
+});
 
-    
+Student.associate = (models) => {
+    Student.belongsTo(models.User, { foreignKey: "idUser" });
+    Student.hasOne(models.Project, { foreignKey: 'idEstudiante' });
+    Student.hasMany(models.Entrega, { foreignKey: 'id_estudiante' });
 }
+
+export default Student;
