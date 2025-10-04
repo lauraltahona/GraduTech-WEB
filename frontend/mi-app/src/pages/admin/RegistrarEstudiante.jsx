@@ -23,13 +23,13 @@ const careers = [
 
 const RegistrarEstudiante = () => {
   const [form, setForm] = useState({
-    id_estudiante: "",
     carrera: "",
     semestre: "",
     usuario: {
+      cedula: "",
       nombre: "",
       correo: "",
-      contraseña: "",
+      password: "",
     },
   });
 
@@ -39,12 +39,12 @@ const RegistrarEstudiante = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (["nombre", "correo", "contraseña"].includes(name)) {
+    if (["cedula", "nombre", "correo", "password"].includes(name)) {
       setForm({ ...form, usuario: { ...form.usuario, [name]: value } });
     } else {
       setForm({
         ...form,
-        [name]: name === "semestre" ? parseInt(value, 10) : value,
+        [name]: name === "semestre" ? parseInt(value, 10) || "" : value,
       });
     }
   };
@@ -91,18 +91,18 @@ const RegistrarEstudiante = () => {
       <div className="form-card">
         <form onSubmit={handleSubmit} className="student-form">
           <div className="form-grid-student">
-            {/* ID Estudiante */}
+            {/* Cédula / ID Estudiante */}
             <div className="form-group">
-              <label htmlFor="studentId" className="form-label-student">
+              <label htmlFor="cedula" className="form-label-student">
                 <IdCard size={16} />
-                ID Estudiante
+                Cédula / ID Estudiante
               </label>
               <input
-                id="d_estudiante"
-                name="id_estudiante"
+                id="cedula"
+                name="cedula"
                 type="text"
                 placeholder="Ej. 2024001234"
-                value={form.id_estudiante}
+                value={form.usuario.cedula}
                 onChange={handleChange}
                 className="form-input"
                 required
@@ -111,7 +111,7 @@ const RegistrarEstudiante = () => {
 
             {/* Carrera */}
             <div className="form-group">
-              <label htmlFor="career" className="form-label-student">
+              <label htmlFor="carrera" className="form-label-student">
                 <GraduationCap size={16} />
                 Carrera
               </label>
@@ -134,7 +134,7 @@ const RegistrarEstudiante = () => {
 
             {/* Semestre */}
             <div className="form-group">
-              <label htmlFor="semester" className="form-label-student">
+              <label htmlFor="semestre" className="form-label-student">
                 <Calendar size={16} />
                 Semestre
               </label>
@@ -153,7 +153,7 @@ const RegistrarEstudiante = () => {
 
             {/* Nombre */}
             <div className="form-group">
-              <label htmlFor="name" className="form-label-student">
+              <label htmlFor="nombre" className="form-label-student">
                 <User size={16} />
                 Nombre Completo
               </label>
@@ -171,7 +171,7 @@ const RegistrarEstudiante = () => {
 
             {/* Correo */}
             <div className="form-group">
-              <label htmlFor="email" className="form-label-student">
+              <label htmlFor="correo" className="form-label-student">
                 <Mail size={16} />
                 Correo Electrónico
               </label>
@@ -195,11 +195,11 @@ const RegistrarEstudiante = () => {
               </label>
               <div className="password-input-container">
                 <input
-                  id="contraseña"
-                  name="contraseña"
+                  id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Mínimo 8 caracteres"
-                  value={form.usuario.contraseña}
+                  value={form.usuario.password}
                   onChange={handleChange}
                   className="form-input password-input"
                   required
@@ -237,7 +237,7 @@ const RegistrarEstudiante = () => {
             <div className="info-content">
               <h3 className="info-title">Información Importante</h3>
               <ul className="info-list">
-                <li>El ID de estudiante debe ser único en el sistema</li>
+                <li>La cédula/ID de estudiante debe ser única en el sistema</li>
                 <li>La contraseña debe tener al menos 8 caracteres</li>
                 <li>El correo electrónico será usado para notificaciones</li>
                 <li>Todos los campos son obligatorios</li>

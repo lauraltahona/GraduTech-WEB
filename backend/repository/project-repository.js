@@ -1,5 +1,5 @@
 import Project from '../models/proyect-model.js';
-import Student from '../models/student-model.js';   
+import Student from '../models/student-model.js';
 import User from '../models/user-model.js';
 import Teacher from '../models/teacher-model.js';
 import { db } from '../db.js';
@@ -9,17 +9,19 @@ import { Op, where } from "sequelize";
 export class ProjectRepository {
   // Crear proyecto 
   static async createProject({ title, tipo, rutaDocumento, idEstudiante }) {
+    console.log('estoy en repository: ',title, tipo, rutaDocumento, idEstudiante);
+    
     const t = await Project.sequelize.transaction();
     try {
 
       const user = await User.findOne({
-        where: {cedula: idEstudiante},
-      } , { transaction: t });
+        where: { cedula: idEstudiante },
+      }, { transaction: t });
 
       const student = await Student.findOne({
-        where: {idUser: user.idUsers}, 
-      } , { transaction: t });
-      
+        where: { idUser: user.idUsers },
+      }, { transaction: t });
+
       //verificar si el titulo o el estudiante ya tienen un proyecto
       const existingProject = await Project.findOne({
         where: {
@@ -45,7 +47,7 @@ export class ProjectRepository {
       await t.commit();
       return nuevoProyecto;
     } catch (error) {
-      if (!t.finished){
+      if (!t.finished) {
         await t.rollback();
       }
       throw new Error("Error al registrar proyecto: " + error.message);
@@ -55,14 +57,14 @@ export class ProjectRepository {
   // Obtener proyecto por id_usuario
   static async obtenerProyecto(idUser) {
     console.log("Model - idUser recibido:", idUser);
-    
+
     try {
       const student = await Student.findOne({ where: { idUser } });
 
       if (!student) throw new Error("No se encontró un estudiante con ese usuario.");
       console.log(student);
       const nombre = student.nombre;
-      
+
       const proyecto = await Project.findOne({
         where: { idEstudiante: student.idEstudiante },
         attributes: ["idProyecto", "title", "estado", "rutaDocumento", "idEstudiante", "updatedAt", "descripcion", "idDocente", "idJurado"]
@@ -73,7 +75,7 @@ export class ProjectRepository {
       throw new Error("Error al obtener proyecto: " + error.message);
     }
   }
-  
+
   static async obtenerProyectosAsignados(id_usuario) {
     try {
       // Obtener idDocente
@@ -102,36 +104,33 @@ export class ProjectRepository {
         WHERE p."idDocente" = $1
       `, [id_docente]);
       //no es recomendable usar mayusculas en nombres de columnas en Postgre,
-       //dado esto, se le ponen comillas a los nombres en las sentencias
+      //dado esto, se le ponen comillas a los nombres en las sentencias
       console.log(result.rows);
       return result.rows;
     } catch (error) {
+      console.log(error);
+
       throw new Error("Error al obtener proyectos asignados: " + error.message);
     }
   }
 
-  static async asignarDocenteAProyecto(title, cedulaDocente) {
+  static async asignarDocenteAProyecto(title, idDocente) {
 
-    try{
-      console.log('estoy en repositorio: ',title, cedulaDocente);
-      
-      const proyecto = await Project.findOne({where: {title: title}});
+    try {
+      console.log('estoy en repositorio: ', title, idDocente);
+
+      const proyecto = await Project.findOne({ where: { title: title } });
       if (!proyecto) {
         throw new Error("No se encontró un proyecto con ese título.");
       }
 
-      const docente = await Teacher.findOne({
-        include:[{
-          model: User,
-          where: {cedula: cedulaDocente}
-        }]
-      });
-
-      if(!docente){
-        throw new Error("No se encontró un docente con esa cédula.");
+      const docente = await Teacher.findByPk(idDocente)
+      console.log(docente);
+      if (!docente) {
+        throw new Error("No se encontró un docente con esa id.");
       }
 
-      proyecto.idDocente = docente.idDocente;
+      proyecto.idDocente = idDocente;
       await proyecto.save();
       return proyecto;
     } catch (error) {
@@ -139,25 +138,20 @@ export class ProjectRepository {
     }
   }
 
-  static async asignarJuradoAProyecto(title, cedulaJurado) {
-    try{
-      const proyecto = await Project.findOne({where: {title: title}});
+  static async asignarJuradoAProyecto(title, idJurado) {
+    try {
+      const proyecto = await Project.findOne({ where: { title: title } });
       if (!proyecto) {
         throw new Error("No se encontró un proyecto con ese título.");
       }
 
-      const jurado = await Jury.findOne({
-        include: [{
-          model: User,
-          where: {cedula: cedulaJurado}
-        }]
-      });
+      const jurado = await Jury.findByPk(idJurado)
 
-      if(!jurado){
+      if (!jurado) {
         throw new Error("No se encontró un jurado con esa cédula.");
       }
 
-      proyecto.idJurado = jurado.idJurado;
+      proyecto.idJurado = idJurado;
       await proyecto.save();
       return proyecto;
 
@@ -166,4 +160,109 @@ export class ProjectRepository {
     }
   }
 
+  static async autorizacionRepositorio(idProyecto, aprobacion) {
+    const proyecto = await Project.findByPk(idProyecto);
+    if (!proyecto) {
+      throw new Error("Proyecto no encontrado");
+    }
+
+    proyecto.autorizacion_repositorio = aprobacion;
+
+    await proyecto.save();
+    return proyecto;
+  }
+
+  static async cambiarEstado(idProyecto, estado) {
+    const proyecto = await Project.findByPk(idProyecto);
+    if (!proyecto) {
+      throw new Error("Proyecto no encontrado");
+    }
+
+    proyecto.estado = estado;
+    await proyecto.save();
+    return proyecto;
+  }
+
+  static async listarProyectosSinDocente() {
+    const proyectos = await Project.findAll({
+      where: { idDocente: null },
+      include: [{ model: Student }],
+    })
+
+    return proyectos.map(p => ({
+      id: p.idProyecto,
+      title: p.title,
+      estado: p.estado,
+      carrera: p.student?.carrera,
+    }));
+  }
+
+  static async listarProyectosSinJurado() {
+    const proyectos = await Project.findAll({
+      where: { idJurado: null },
+      include: [{ model: Student }],
+    })
+    return proyectos.map(p => ({
+      id: p.idProyecto,
+      title: p.title,
+      estado: p.estado,
+      carrera: p.student?.carrera,
+    }));
+  }
+
+  static async mostrarProyectosPorTipo(tipo) {
+    try {
+      const projects = await Project.findAll({
+        where: {
+          tipo: tipo,
+          estado: 'APROBADO',
+          autorizacion_repositorio: 'SI'
+        },
+        include: [
+          {
+            model: Student,
+            attributes: ['carrera']
+          }
+        ]
+      });
+      console.log(projects);
+
+      return projects;
+    } catch (error) {
+
+    }
+  }
+
+  static async obtenerProyectosAsignadosJurados(id_usuario) {
+    try {
+
+      const juradoResult = await db.query(
+        `SELECT "idJurado" FROM jurys WHERE "idUser" = ?`,
+        [id_usuario]
+      );
+
+      if (juradoResult.length === 0) {
+        throw new Error("No se encontró un jurado con ese usuario.");
+      }
+      const id_jurado = juradoResult[0].idJurado;
+      const rows = await db.query(`
+          SELECT 
+              p."idProyecto", 
+              p.title AS titulo, 
+              p.tipo AS tipo,
+              p.estado, 
+              u.nombre AS estudiante,
+              u.correo AS correo,
+              p.rutaDocumento AS rutaDocumento
+          FROM projects p
+          JOIN students s ON s."idEstudiante" = p."idEstudiante"
+          JOIN users u ON u."idUsers" = s."idUser"
+          WHERE p."idJurado" = $1
+        `, [id_jurado]);
+
+      return rows.rows;
+    } catch (error) {
+      throw new Error("Error al obtener proyectos asignados: " + error.message);
+    } 
+  }
 }

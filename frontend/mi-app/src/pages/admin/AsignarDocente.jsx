@@ -107,7 +107,7 @@ const AsignarDocente = () => {
             <option value="">-- Selecciona --</option>
             {docentesFiltrados.map((d) => (
               <option key={d.id} value={d.id}>
-                {d.nombre} ({d.id})
+                {d.nombre}, CC ({d.cedula})
               </option>
             ))}
           </select>
