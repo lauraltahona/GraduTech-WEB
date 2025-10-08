@@ -83,7 +83,6 @@ export class ProyectController{
     static async asignarDocente(req, res) {
         const { title, idDocente } = req.body;
 
-        console.log('ESTOY EN CONTROLLER:', title, idDocente);
         try {
             const proyectoActualizado = await ProjectService.asignarDocenteAProyecto(title, idDocente);
             console.log(proyectoActualizado);

@@ -4,11 +4,13 @@ import bcrypt from "bcryptjs";
 
 export class JuryController{
     static async createJury(req, res){
+        console.log('req.body en controller: ', req.body);
+        
         const result = validateJury(req.body);
         console.log('Validation result:', result);
         
         if(!result.success){
-            return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})
+            return res.status(400).json({error: `Error con datos del jurado: ${(result.error.format())}`})
         }
         const { carrera, usuario} = result.data;
         try{        

@@ -2,15 +2,13 @@ import Jury from "../models/jury-model.js";
 import { UserService } from "../service/user-service.js";
 export class JuryRepository {
   static async createJury({ carrera, usuario }) {
-    console.log('Creating in repository jury with:', { carrera, usuario });
-    
     const t = await Jury.sequelize.transaction();
     try {
       const existingUser = await UserService.findByEmail(usuario.correo);
       const existingJury = await UserService.findById(usuario.cedula);
       if (existingUser || existingJury) throw new Error('ALREADY_REGISTERED');
 
-      usuario.idRol = 3;
+      usuario.idRol = 3; //rol Jurado
       const user = await UserService.createUser(usuario);
 
       const jury = Jury.create({

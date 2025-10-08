@@ -4,7 +4,7 @@ import { userSchema } from "./usuario.js";
  const juryDto = z.object({
     carrera: z.string({invalid_type_error: 'La carrera debe ser una cadena de texto'})
         .regex(/^[^\d]+$/, { message: 'No se permiten números en este campo' }),
-    usuario: userSchema
+    usuario: userSchema //aqui se reutiliza el esquema de usuario (nombre, cedula, correo, password)
 });
 
 export function validateJury(object){

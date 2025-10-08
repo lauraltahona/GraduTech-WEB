@@ -7,7 +7,8 @@ import { UserService } from '../service/user-service.js';
 export class StudentRepository {
 
     static async createStudent({ carrera, semestre, usuario }) {
-
+        console.log('Creating student in repository with data:', { carrera, semestre, usuario });
+        
         const t = await User.sequelize.transaction();
         try {
             const existingUser = await UserService.findByEmail(usuario.correo);

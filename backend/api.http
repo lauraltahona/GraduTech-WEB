@@ -6,13 +6,37 @@ Content-Type: application/json
     "carrera": "Ingeniería de Sistemas",
     "semestre": 10,
     "usuario": {
-    "cedula": "0123456789",
-    "nombre": "Laura Altahona Vargas",  
-    "correo": "lvaltahona@unicesar.edu.co",
+    "cedula": "3333333333",
+    "nombre": "Camila Peñaranda",  
+    "correo": "estudiante1@unicesar.edu.co",
     "password": "hola1234"
     }
 }
 
+###PLANEAR ENTREGA
+POST http://localhost:5001/entrega/planear
+Content-Type: application/json
+
+{
+  "id_proyecto": 1,
+  "nro_entrega": 3,
+  "titulo": "Propuesta de proyecto",
+  "descripcion": "Entregar propuesta de proyecto",
+  "fecha_limite": "2025-10-15",
+  "correo": "aljanes@unicesar.edu.co"
+}
+
+###SUBIR ENTREGA
+POST http://localhost:5001/entrega/subir
+Content-Type: application/json
+
+{
+  "id_plan_entrega": 5,
+  "id_usuario": 26,
+  "ruta_documento": "/files/proyectodeinvestigacian.pdf",
+  "descripcion": "Primera entrega del proyecto",
+  "correo_docente": "docente1@unicesar.edu.co",
+}
 
 ###GET ESTUDIANTE
 GET http://localhost:5001/docente/getAll
@@ -36,12 +60,12 @@ POST http://localhost:5001/entrega/planear
 Content-Type: application/json
 
 {
- "id_proyecto": 1,
-  "nro_entrega": 2,
+ "id_proyecto": 9,
+  "nro_entrega": 1,
   "titulo": "Avance 1",
-  "descripcion": "Entregar objetivos y justificacion",
-  "fecha_limite": "2025-09-29",
-  "correo": "lvaltahona@unicesar.edu.co"
+  "descripcion": "Entregar avance 1 del proyecto",
+  "fecha_limite": "2025-10-25",
+  "correo": "estudiante1@unicesar.edu.co"
 }
 
 ###delete
@@ -55,9 +79,9 @@ Content-Type: application/json
     "profesion": "Docente",
     "carrera": "Ingenieria de Sistemas",
     "usuario": {
-    "cedula": "222222222",
-    "nombre": "John Patiño",
-    "correo": "patino@unicesar.edu.co",
+    "cedula": "4444444444",
+    "nombre": "Maribel Romero",
+    "correo": "docente1@unicesar.edu.co",
     "password": "hola1234"
     }
 }
@@ -70,8 +94,8 @@ Content-Type: application/json
     "idJurado": "123456789",
     "carrera": "Ingenieria de sistemas",
     "usuario": {
-    "nombre": "Kadir Daza",
-    "correo": "kadir@unicesar.edu.co",
+    "nombre": "Zamir Villamil",
+    "correo": "jurado1@unicesar.edu.co",
     "contraseña": "hola1234"
     }
 }
@@ -104,7 +128,7 @@ Content-Type: application/json
 GET http://localhost:5001/proyectos/asignados/9
 
 ###GET ENTREGAS ASIGNADAS
-GET http://localhost:5001/entrega/asignadas/1
+GET http://localhost:5001/entrega/asignadas/7
 
 ###PROYECTOS ASIGNADOS
 GET http://localhost:5001/proyectos/asignados/jurado/9
@@ -118,7 +142,7 @@ GET http://localhost:5001/entrega/entrega-por-plan/1
 GET http://localhost:5001/proyectos/obtener/7
 
 ### GET FECHAS LIMITES
-GET http://localhost:5001/entrega/fechas/5
+GET http://localhost:5001/entrega/fechas/7
 
 ### GET PROYECTOS POR TIPO
 GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Pasantía
@@ -145,17 +169,17 @@ Content-Type: application/json
 GET http://localhost:5001/proyectos/sin-docente
 
 ###DOCENTE DISPONIBLES
-GET http://localhost:5001/jurado/jurados-disponibles
+GET http://localhost:5001/docente/docentes-disponibles
 
 ###Registrar proyecto title, tipo, rutaDocumento, idEstudiante
 POST http://localhost:5001/proyectos
 Content-Type: application/json
 
 {
-  "title": "Colaboracion en Nueva Eps",
-  "tipo": "Pasantia",
+  "title": "Agenda digital con Inteligencia Artificial para estudiantes",
+  "tipo": "Tesis",
   "rutaDocumento": "/files/proyectodeinvestigacian.pdf",
-  "idEstudiante": "789456123"
+  "idEstudiante": "3333333333"
 }
 
 ###ASIGNAR DOCENTE A PROYECTO
@@ -163,6 +187,6 @@ PATCH http://localhost:5001/proyectos/asignar-docente
 Content-Type: application/json
 
 {
-  "title": "Sistema de verificacion de identidad",
-  "idDocente": "3"
+  "title": "Agenda digital con Inteligencia Artificial para estudiantes",
+  "idDocente": "6"
 }

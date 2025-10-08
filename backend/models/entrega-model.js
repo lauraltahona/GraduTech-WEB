@@ -10,7 +10,7 @@ export class EntregaModel{
         
         try {
             const nuevoPlan = await PlanEntrega.create({
-                id_proyecto,
+                idProyecto: id_proyecto,
                 nro_entrega,
                 titulo,
                 descripcion,
@@ -34,7 +34,6 @@ export class EntregaModel{
             const estudiante = await Student.findOne({
                 where: { idUser: id_usuario }
             });
-            console.log(estudiante);
             
             if (!estudiante) {
                 throw new Error("No se encontró un estudiante con ese usuario.");
