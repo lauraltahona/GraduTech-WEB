@@ -4,6 +4,8 @@ import {StudentRepository} from "../repository/student-repository.js";
 
 export class StudentService{
     static async createStudent({carrera, semestre, usuario}) {
+        console.log('Creating student with data:', {carrera, semestre, usuario});
+        
         const student = await StudentRepository.createStudent({carrera, semestre, usuario});
         return student;
     }

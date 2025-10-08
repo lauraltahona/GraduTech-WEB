@@ -10,7 +10,7 @@ export class StudentController{
         const result = validateStudent(req.body); 
         
         if(!result.success){
-            return res.status(400).json({error: `Error con datos del estudiante: ${(result.error.format())}`})
+            return res.status(400).json({error: `Error con datos del estudiante: ${(result.error)}`})
         }
         
         const { carrera, semestre, usuario} = result.data;

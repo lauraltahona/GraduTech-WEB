@@ -55,6 +55,34 @@ yarn.lock
 .vscode/
 
 # =======================================
+# PYTHON
+# =======================================
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribución / empaquetado
+*.so
+dist/
+build/
+*.egg-info/
+.Python
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# =======================================
 # OTROS
 # =======================================
 

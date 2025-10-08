@@ -6,7 +6,7 @@ export class EntregaController{
         const result = req.body;
         console.log('esto es req.body en controller: ',req.body);
         
-        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result;
+        const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result
         try{
             const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite, correo);
             return res.status(200).json({message: 'Plan de entrega creado con exito'});
@@ -30,6 +30,7 @@ export class EntregaController{
     static async subirEntrega(req, res){
 
         const {id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente } = req.body;
+        console.log(req.body);
         
         try{
             const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente);
