@@ -1,5 +1,7 @@
 import Jury from "../models/jury-model.js";
 import { UserService } from "../service/user-service.js";
+import User from "../models/user-model.js";
+
 export class JuryRepository {
   static async createJury({ carrera, usuario }) {
     const t = await Jury.sequelize.transaction();
@@ -8,7 +10,7 @@ export class JuryRepository {
       const existingJury = await UserService.findById(usuario.cedula);
       if (existingUser || existingJury) throw new Error('ALREADY_REGISTERED');
 
-      usuario.idRol = 3; //rol Jurado
+      usuario.idRol = 4; //rol Jurado
       const user = await UserService.createUser(usuario);
 
       const jury = Jury.create({
@@ -28,13 +30,15 @@ export class JuryRepository {
   }
 
   static async getAllJurys() {
+  
     const jurys = await Jury.findAll({
       include: {
         model: User,
-        attributes: ['idUsers', 'nombre', 'correo'],
+        attributes: ['idUsers', 'nombre', 'correo', 'cedula'],
       },
     });
 
+     console.log('Entrando a getAllJurys del repository', jurys);
     return jurys.map(t => ({
       id_jurado: t.idJurado,
       carrera: t.carrera,
@@ -42,6 +46,7 @@ export class JuryRepository {
         id_usuario: t.user.idUsers,
         nombre: t.user.nombre,
         correo: t.user.correo,
+        cedula: t.user.cedula,
       },
     }));
   }
@@ -52,7 +57,7 @@ export class JuryRepository {
         where: { idJurado },
         include: {
           model: User,
-          attributes: ['nombre', 'correo']
+          attributes: ['nombre', 'correo', 'cedula'],
         }
       });
 

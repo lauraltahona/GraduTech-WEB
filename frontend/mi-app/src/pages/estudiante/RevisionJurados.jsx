@@ -12,6 +12,7 @@ import "../../styles/estudiante/revisionJurado.css";
 export default function RevisionJurados() {
   const [jurados, setJurados] = useState([]);
   const [proyecto, setProyecto] = useState(null);
+  // eslint-disable-next-line
   const [mostrarSubida, setMostrarSubida] = useState(false);
 
   useEffect(() => {
@@ -25,20 +26,49 @@ export default function RevisionJurados() {
         setProyecto(data);
         setMostrarSubida(data.estado === "APROBADO");
 
+        if (!data.idJurado) {
+        setJurados([
+          {
+            name: "No tienes jurado asignado",
+            role: "-",
+            specialty: "-",
+            status: "Pendiente",
+          },
+        ]);
+        return;
+}
         // Obtener info del jurado
         fetch(`http://localhost:5001/jurado/getById/${data.idJurado}`)
           .then((res) => res.json())
           .then((jurado) => {
-            // Suponiendo que hay dos jurados con la misma info (ajústalo si son dos distintos)
+            if(!jurado || !jurado.user) {
+              setJurados([
+                {
+                  name: "No tienes jurado asignado",
+                  role: "-",
+                  specialty: "-",
+                  status: "Pendiente",
+                },
+              ])
+            }
             setJurados([
               {
-                name: jurado.user.nombre || "No tienes asignado jurados",
+                name: jurado.user.nombre || "Sin nombre",
                 role: "Jurado Principal",
                 specialty: jurado.carrera || "Sin especialidad",
                 status: jurado.idJurado || "Pendiente",
               },
             ]);
-          });
+          }).catch((err) => {
+            setJurados([
+              {
+                name: "Error al cargar jurado",
+                role: "-",
+                specialty: "-",
+                status: "Pendiente",
+              },
+            ]);       
+          })
       });
   }, []);
 
