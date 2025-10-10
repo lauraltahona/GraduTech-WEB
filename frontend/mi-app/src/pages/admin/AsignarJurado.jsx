@@ -111,7 +111,7 @@ const AsignarJurado = () => {
             <option value="">-- Selecciona --</option>
             {juradosFiltrados.map((j) => (
               <option key={j.id_jurado} value={j.id_jurado}>
-                {j.usuario.nombre} ({j.id_jurado})
+                {j.usuario.nombre} C.C: ({j.usuario.cedula})
               </option>
             ))}
           </select>

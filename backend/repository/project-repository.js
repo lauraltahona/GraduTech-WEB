@@ -2,6 +2,7 @@ import Project from '../models/proyect-model.js';
 import Student from '../models/student-model.js';
 import User from '../models/user-model.js';
 import Teacher from '../models/teacher-model.js';
+import Jury from '../models/jury-model.js';
 import { db } from '../db.js';
 import { Op, where } from "sequelize";
 
@@ -131,6 +132,7 @@ export class ProjectRepository {
       }
 
       proyecto.idDocente = idDocente;
+      proyecto.estado = 'EN REVISIÓN';
       await proyecto.save();
       return proyecto;
     } catch (error) {
@@ -141,12 +143,12 @@ export class ProjectRepository {
   static async asignarJuradoAProyecto(title, idJurado) {
     try {
       const proyecto = await Project.findOne({ where: { title: title } });
+
       if (!proyecto) {
         throw new Error("No se encontró un proyecto con ese título.");
       }
 
       const jurado = await Jury.findByPk(idJurado)
-
       if (!jurado) {
         throw new Error("No se encontró un jurado con esa cédula.");
       }
@@ -237,14 +239,15 @@ export class ProjectRepository {
     try {
 
       const juradoResult = await db.query(
-        `SELECT "idJurado" FROM jurys WHERE "idUser" = ?`,
+        `SELECT "idJurado" FROM juries WHERE "idUser" = $1`,
         [id_usuario]
       );
-
+      
       if (juradoResult.length === 0) {
         throw new Error("No se encontró un jurado con ese usuario.");
       }
-      const id_jurado = juradoResult[0].idJurado;
+      const id_jurado = juradoResult.rows[0].idJurado;
+      
       const rows = await db.query(`
           SELECT 
               p."idProyecto", 
@@ -253,7 +256,7 @@ export class ProjectRepository {
               p.estado, 
               u.nombre AS estudiante,
               u.correo AS correo,
-              p.rutaDocumento AS rutaDocumento
+              p."rutaDocumento" AS "rutaDocumento"
           FROM projects p
           JOIN students s ON s."idEstudiante" = p."idEstudiante"
           JOIN users u ON u."idUsers" = s."idUser"
