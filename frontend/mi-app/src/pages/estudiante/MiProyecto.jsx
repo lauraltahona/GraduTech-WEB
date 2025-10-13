@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FileText,
   CheckCircle,
@@ -15,6 +16,7 @@ import "../../shared/shared.css";
 export default function MiProyecto() {
   const [proyecto, setProyecto] = useState(null);
   const id_usuario = localStorage.getItem("userId");
+  const navigate = useNavigate();
   useEffect(() => {
     if (!id_usuario) return;
     fetch(`http://localhost:5001/proyectos/obtener/${id_usuario}`)
@@ -46,7 +48,9 @@ export default function MiProyecto() {
       year: "numeric",
     }
   );
-
+  const handleEditar = () => {
+    navigate("/menuEstudiante/editarProyecto");
+  }
   return (
     <div className="my-project-container">
       {/* Header */}
@@ -150,7 +154,7 @@ export default function MiProyecto() {
 
           {/* Action Buttons */}
           <div className="project-actions">
-            <button className="action-button primary">
+            <button className="action-button primary" onClick={handleEditar}>
               <Edit size={18} />
               <span>Editar Proyecto</span>
             </button>

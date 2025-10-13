@@ -9,7 +9,7 @@ import { Op, where } from "sequelize";
 
 export class ProjectRepository {
   // Crear proyecto 
-  static async createProject({ title, tipo, rutaDocumento, idEstudiante }) {
+  static async createProject({ title, tipo, rutaDocumento, idEstudiante, descripcion }) {
     console.log('estoy en repository: ',title, tipo, rutaDocumento, idEstudiante);
     
     const t = await Project.sequelize.transaction();
@@ -42,7 +42,8 @@ export class ProjectRepository {
         tipo,
         estado: "PENDIENTE",
         rutaDocumento,
-        idEstudiante: student.idEstudiante
+        idEstudiante: student.idEstudiante,
+        descripcion
       });
 
       await t.commit();
@@ -53,6 +54,24 @@ export class ProjectRepository {
       }
       throw new Error("Error al registrar proyecto: " + error.message);
     }
+  }
+
+  static async updateProject(idProyecto, title, rutaDocumento, descripcion){
+    try{
+      
+      const project = await Project.findOne({
+        where: {idProyecto: idProyecto}
+      });
+
+      project.title = title;
+      project.rutaDocumento = rutaDocumento;
+      project.descripcion = descripcion;
+      await project.save();
+      return project;
+    }catch(error){
+      throw new Error("Error al actualizar proyecto: " + error.message);
+    }
+
   }
 
   // Obtener proyecto por id_usuario

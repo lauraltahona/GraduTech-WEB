@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/docente/Asignados.css";
 import HeaderDocente from '../auth/HeaderDocente.jsx';
@@ -85,6 +85,7 @@ export default function ProyectosAsignados() {
               >
                 <option value="EN REVISIÓN">EN REVISIÓN</option>
                 <option value="APROBADO POR DOCENTE">APROBADO POR DOCENTE</option>
+                <option value="RECHAZADO">RECHAZADO</option>
               </select>
             </div>
           </div>

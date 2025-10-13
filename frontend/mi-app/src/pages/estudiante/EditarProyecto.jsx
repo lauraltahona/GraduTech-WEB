@@ -2,13 +2,11 @@ import { useState, useRef } from "react";
 import "../../styles/estudiante/RegistrarProyecto.css";
 import { Upload } from "lucide-react";
 
-export default function ProyectoEstudiante() {
+export default function EditarProyecto() {
   const [title, setTitle] = useState("");
-  const [tipo, setTipo] = useState("Selecciona el tipo");
-  const [idEstudiante, setIdEstudiante] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const [preview, setPreview] = useState([]);
   const [rutaDocumento, setRutaDocumento] = useState("");
-  const [descripcion, setDescripcion] = useState("");
   const inputRef = useRef(null);
 
   const handleFileInput = (e) => {
@@ -115,22 +113,21 @@ export default function ProyectoEstudiante() {
   };
 
   const handleGuardar = async () => {
-    if (!title || !tipo || !idEstudiante || !rutaDocumento) {
+    if (!title || !descripcion || !rutaDocumento) {
       alert("Por favor completa todos los campos y sube un archivo.");
       return;
     }
 
     const proyecto = {
       title,
-      tipo,
-      rutaDocumento: rutaDocumento,
-      idEstudiante: idEstudiante,
-      descripcion: descripcion
+      descripcion,
+      rutaDocumento: rutaDocumento
     };
 
     try {
-      const res = await fetch("http://localhost:5001/proyectos", {
-        method: "POST",
+        const idProyecto = localStorage.getItem("idProyecto");
+      const res = await fetch(`http://localhost:5001/proyectos/update/${idProyecto}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -138,15 +135,13 @@ export default function ProyectoEstudiante() {
       });
 
       const data = await res.json();
-      alert("Proyecto guardado exitosamente");
+      alert("Proyecto actualizado exitosamente");
       console.log(data);
 
       // Limpiar campos si deseas
       setTitle("");
-      setTipo("Pasantía");
-      setIdEstudiante("");
-      setRutaDocumento("");
       setDescripcion("");
+      setRutaDocumento("");
       setPreview([]);
     } catch (error) {
       console.error("Error al guardar proyecto:", error);
@@ -158,7 +153,7 @@ export default function ProyectoEstudiante() {
     <div className="register-form-container">
       <div className="register-form-card">
         <div className="form-header-register-project">
-          <h1 className="form-title-register-project">Registrar Proyecto</h1>
+          <h1 className="form-title-register-project">Actualizar Proyecto</h1>
           <p className="form-subtitle-register-project">
             Completa la información de tu proyecto académico
           </p>
@@ -177,43 +172,13 @@ export default function ProyectoEstudiante() {
               className="form-input"
             />
           </div>
-
-          <div className="form-group">
-            <label htmlFor="type" className="form-label">
-              Tipo de proyecto
-            </label>
-            <select
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-              className="form-select"
-            >
-              <option value="">Selecciona el tipo</option>
-              <option value="Pasantía">Pasantía</option>
-              <option value="Proyecto de grado">Proyecto de grado</option>
-              <option value="Tesis">Tesis</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="studentId" className="form-label">
-              ID del estudiante
-            </label>
-            <input
-              type="text"
-              placeholder="Ej: 12345678"
-              value={idEstudiante}
-              onChange={(e) => setIdEstudiante(e.target.value)}
-              className="form-input"
-            />
-          </div>
-
           <div className="form-group">
             <label htmlFor="studentId" className="form-label">
               Descripción
             </label>
             <input
               type="text"
-              placeholder="Ej: Este proyecto tiene como objetivo..."
+              placeholder="Ej: 12345678"
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               className="form-input"

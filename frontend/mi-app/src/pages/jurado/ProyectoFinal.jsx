@@ -11,6 +11,7 @@ const ProyectoFinal = () => {
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
   const [mensaje, setMensaje] = useState('');
+  const [lugar, setLugar] = useState('');
 
   if (!proyecto) return <p>No se encontró la información del proyecto.</p>;
 
@@ -28,7 +29,8 @@ const ProyectoFinal = () => {
         body: JSON.stringify({
           correo: proyecto.correo,
           fecha,
-          hora
+          hora,
+          lugar
         })
       });
 
@@ -67,7 +69,7 @@ const ProyectoFinal = () => {
       </p>
 
       <button onClick={handleProgramarClick} className="btn-programar">
-        📅 Programar Reunión
+        📅 Programar Sustentación
       </button>
 
       {mostrarFormulario && (
@@ -80,9 +82,14 @@ const ProyectoFinal = () => {
             Hora:
             <input type="time" value={hora} onChange={(e) => setHora(e.target.value)} />
           </label>
+          <label>
+            Lugar:
+            <input type="text" value={lugar} onChange={(e) => setLugar(e.target.value)} placeholder="Ej. Sala de profesores"/>
+          </label>
           <button onClick={enviarReunion} className="btn-enviar-reunion">
             Enviar invitación
           </button>
+          
         </div>
       )}
 

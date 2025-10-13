@@ -20,3 +20,7 @@ import z from 'zod';
  export function validateProyect(object){
     return proyectSchema.safeParse(object);
  }
+
+export function validateUpdateProyect(object){
+    return proyectSchema.partial().safeParse(object);
+}

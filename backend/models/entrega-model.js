@@ -19,8 +19,8 @@ export class EntregaModel{
 
             console.log('nuevo plan: ',nuevoPlan);
             
-
-            await EmailService.SendEMailPlanEntregaCreado(correo, titulo, descripcion);
+            const email = "lauraaltahona01@gmail.com";
+            await EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion);
             
             return nuevoPlan;
         } catch (error) {
@@ -56,7 +56,8 @@ export class EntregaModel{
                 ruta_documento,
                 descripcion
             });
-            await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
+            const email = "lauraaltahona01@gmail.com";
+            await EmailService.SendEmailEntregaCreada(email, id_estudiante, descripcion);
             return entrega;
         } catch (error) {
            console.log("Error al registrar entrega: ", error);
