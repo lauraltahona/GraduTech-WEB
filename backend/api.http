@@ -38,8 +38,8 @@ Content-Type: application/json
   "correo_docente": "docente1@unicesar.edu.co",
 }
 
-###GET ESTUDIANTE
-GET http://localhost:5001/docente/getAll
+###GET ALL JURADO
+GET http://localhost:5001/jurado/getAll
 
 ### GET BY ID '
 GET http://localhost:5001/estudiante/id=/01235678
@@ -104,7 +104,7 @@ Content-Type: application/json
 GET http://localhost:5001/proyectos/sin-jurado
 
 ### GET ALL JURADO
-GET http://localhost:5001/jurado/getById/33333333
+GET http://localhost:5001/jurado/getById/6
 
 ### POST LOGIN
 POST http://localhost:5001/usuario/login
@@ -180,6 +180,16 @@ Content-Type: application/json
   "tipo": "Tesis",
   "rutaDocumento": "/files/proyectodeinvestigacian.pdf",
   "idEstudiante": "3333333333"
+}
+
+###UPDATE PROYECTO
+PATCH http://localhost:5001/proyectos/update/3
+Content-Type: application/json
+
+{
+  "title": "Verificación y Control de Entregas en el Comedor Universitario de la UPC",
+  "descripcion": "Este proyecto tiene como objetivo desarrollar un sistema de verificación y control de entregas en el comedor universitario de la UPC, utilizando tecnologías como IoT y bases de datos para mejorar la eficiencia y seguridad en la gestión de alimentos.",
+  "rutaDocumento": "/files/proyectodeinvestigacian.pdf"
 }
 
 ###ASIGNAR DOCENTE A PROYECTO

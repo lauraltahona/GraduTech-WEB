@@ -6,12 +6,14 @@ import {
   Award,
   Calendar,
   FileText,
+  X,
 } from "lucide-react";
 import "../../styles/estudiante/revisionJurado.css";
 
 export default function RevisionJurados() {
   const [jurados, setJurados] = useState([]);
   const [proyecto, setProyecto] = useState(null);
+  const [mostrarModal, setMostrarModal] = useState(false); 
   // eslint-disable-next-line
   const [mostrarSubida, setMostrarSubida] = useState(false);
 
@@ -27,21 +29,21 @@ export default function RevisionJurados() {
         setMostrarSubida(data.estado === "APROBADO");
 
         if (!data.idJurado) {
-        setJurados([
-          {
-            name: "No tienes jurado asignado",
-            role: "-",
-            specialty: "-",
-            status: "Pendiente",
-          },
-        ]);
-        return;
-}
-        // Obtener info del jurado
+          setJurados([
+            {
+              name: "No tienes jurado asignado",
+              role: "-",
+              specialty: "-",
+              status: "Pendiente",
+            },
+          ]);
+          return;
+        }
+
         fetch(`http://localhost:5001/jurado/getById/${data.idJurado}`)
           .then((res) => res.json())
           .then((jurado) => {
-            if(!jurado || !jurado.user) {
+            if (!jurado || !jurado.user) {
               setJurados([
                 {
                   name: "No tienes jurado asignado",
@@ -49,7 +51,8 @@ export default function RevisionJurados() {
                   specialty: "-",
                   status: "Pendiente",
                 },
-              ])
+              ]);
+              return;
             }
             setJurados([
               {
@@ -59,7 +62,8 @@ export default function RevisionJurados() {
                 status: jurado.idJurado || "Pendiente",
               },
             ]);
-          }).catch((err) => {
+          })
+          .catch(() => {
             setJurados([
               {
                 name: "Error al cargar jurado",
@@ -67,8 +71,8 @@ export default function RevisionJurados() {
                 specialty: "-",
                 status: "Pendiente",
               },
-            ]);       
-          })
+            ]);
+          });
       });
   }, []);
 
@@ -86,9 +90,10 @@ export default function RevisionJurados() {
       });
 
       if (res.ok) {
-        alert("Autorización enviada con éxito");
+        alert("✅ Autorización enviada con éxito");
+        setMostrarModal(false);
       } else {
-        alert("Hubo un error al enviar la autorización");
+        alert("❌ Hubo un error al enviar la autorización");
       }
     } catch (error) {
       console.error(error);
@@ -174,7 +179,7 @@ export default function RevisionJurados() {
                   <h3 className="status-title">{proyecto.estado}</h3>
                   <p className="status-description">
                     {proyecto.estado === "APROBADO"
-                      ? "Tu proyecto ha sido aprobado por el jurado evaluador. Puedes proceder con la sustentación final."
+                      ? "Tu proyecto ha sido aprobado por el jurado evaluador. ¡Felicidades!"
                       : "Tu proyecto aún no ha sido aprobado o está en revisión por los jurados."}
                   </p>
                 </div>
@@ -190,35 +195,73 @@ export default function RevisionJurados() {
           )}
         </div>
 
-        {/* Acciones */}
-        <div className="section-card actions-card">
-          <div className="section-header">
-            <div className="section-icon">
-              <Upload />
+        {/* 👇 Mostrar solo si el estado es APROBADO */}
+        {proyecto?.estado === "APROBADO" && (
+          <div className="section-card actions-card">
+            <div className="section-header">
+              <div className="section-icon">
+                <Upload />
+              </div>
+              <h2 className="section-title">Próximos Pasos</h2>
             </div>
-            <h2 className="section-title">Próximos Pasos</h2>
+
+            <div className="actions-content">
+              <p className="actions-description">
+                Con la aprobación del jurado, ahora puedes subir tu proyecto al
+                repositorio institucional.
+              </p>
+              <p className="actions-description">
+                ¿Deseas darnos la autorización para subir tu proyecto al
+                repositorio?
+              </p>
+
+              <div className="additional-actions">
+                <button
+                  className="secondary-button"
+                  onClick={() => setMostrarModal(true)} // 👈 abre el modal
+                >
+                  <FileText size={16} />
+                  <span>Dar autorización</span>
+                </button>
+              </div>
+            </div>
           </div>
+        )}
+      </div>
 
-          <div className="actions-content">
-            <p className="actions-description">
-              Con la aprobación del jurado, ahora puedes subir tu proyecto al
-              repositorio institucional.
+      {/* 🧾 Modal de términos y condiciones */}
+      {mostrarModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-button" onClick={() => setMostrarModal(false)}>
+              <X size={18} />
+            </button>
+            <h3>📜 Términos y Condiciones</h3>
+            <p>
+              Al aceptar, autorizas que tu proyecto sea publicado en el
+              repositorio institucional de la Universidad. Tu trabajo podrá ser
+              consultado por la comunidad académica y será de acceso público con
+              fines educativos y de investigación. Conservas los derechos de
+              autor sobre tu obra.
             </p>
-            <p className="actions-description">
-              ¿Deseas darnos la autorización para subir tu proyecto al
-              repositorio?
-            </p>
-
-
-            <div className="additional-actions">
-              <button className="secondary-button" onClick={handleAutorizacion}>
-                <FileText size={16} />
-                <span>Dar autorización</span>
+            <p>¿Deseas continuar con la autorización?</p>
+            <div className="modal-buttons">
+              <button
+                className="accept-button"
+                onClick={handleAutorizacion}
+              >
+                Aceptar y autorizar
+              </button>
+              <button
+                className="cancel-button"
+                onClick={() => setMostrarModal(false)}
+              >
+                Cancelar
               </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
