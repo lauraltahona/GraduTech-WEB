@@ -1,4 +1,5 @@
 import {transporter} from '../shared/configEmail.js'
+import 'dotenv/config.js';
 
 export class EmailService{
     static async SendEMailPlanEntregaCreado (email,titulo,descripcion){
@@ -14,10 +15,9 @@ export class EmailService{
                 }
             }
             const correo = await transporter.sendMail(emailOptions)
-            console.log(correo);
             
         } catch (error) {
-            throw new error
+            throw new Error('Error al enviar correo: '+ error.message)
         }
     }
 
@@ -35,12 +35,13 @@ export class EmailService{
             }
             await transporter.sendMail(emailOptions)
         } catch (error) {
-            throw new error
+            throw new Error('Error al enviar correo: '+ error.message)
         }
     }
 
-    static async SendEmailProgramarReunión(email,fecha,hora){   
-        console.log('ESTOY EN SERVICE', email, fecha,hora);
+    static async SendEmailProgramarReunión(fecha, hora, lugar){ 
+        const email = "lauraaltahona01@gmail.com"
+        console.log(email, fecha, hora, lugar);
         
         try {
             const emailOptions = {
@@ -50,12 +51,14 @@ export class EmailService{
                 template:'EmailRetroalimentacion',
                 context:{
                     fecha,
-                    hora
+                    hora,
+                    lugar
                 }
             }
+            
             await transporter.sendMail(emailOptions)
         } catch (error) {
-            throw new error
+            throw new Error('Error al enviar correo: '+ error.message)
         }
     }
     
