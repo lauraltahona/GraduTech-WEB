@@ -1,4 +1,4 @@
-import { validateProyect } from "../schemas/proyecto.js";
+import { validateProyect, validateUpdateProyect } from "../schemas/proyecto.js";
 import { ProjectService } from "../service/proyect-service.js";
 
 export class ProyectController{
@@ -10,11 +10,11 @@ export class ProyectController{
             return res.status(401).json({error: 'error con los datos del proyecto'});
         }
 
-        const {title, tipo, rutaDocumento, idEstudiante} = result.data;
+        const {title, tipo, rutaDocumento, idEstudiante, descripcion} = result.data;
         
         try{
             //llama la función de creación del proyecto
-            const proyecto = await ProjectService.createProject({title, tipo, rutaDocumento, idEstudiante});
+            const proyecto = await ProjectService.createProject({title, tipo, rutaDocumento, idEstudiante, descripcion});
             return res.status(200).json({message: 'Proyecto registrado con exito', proyecto})
         } catch(error){
             console.log(error);
@@ -22,6 +22,23 @@ export class ProyectController{
         }
     }
 
+    static async updateProyect(req, res){
+        const {idProyecto} = req.params;
+        const newProject = validateUpdateProyect(req.body);
+        if(!newProject.success){
+            return res.status(401).json({error: 'error con los datos del proyecto'});
+        }
+
+        const {title, rutaDocumento, descripcion} = newProject.data;
+        try{
+            const project = await ProjectService.updateProject(idProyecto, title, rutaDocumento, descripcion);
+            return res.status(200).json({message: 'Proyecto actualizado con exito', project})
+        } catch(error){
+            res.status(500).json({message: 'Error al actualizar proyecto' + error.message})
+        }
+    }
+
+    
     static async getProyectosAsignados(req, res) {
         const {id_usuario} = req.params;
 

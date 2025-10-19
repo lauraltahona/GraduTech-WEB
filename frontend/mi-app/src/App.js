@@ -28,6 +28,7 @@ import HomeRepo from "./pages/repositorio/HomeRepo.jsx";
 import MostrarProyectos from "./pages/repositorio/MostrarProyectos.jsx";
 import ConsultaAuditoria from "./pages/admin/ConsultaAuditoria.jsx";
 import BienvenidaMenu from "./pages/inicio/BienvenidaMenu.jsx";
+import EditarProyecto from "./pages/estudiante/EditarProyecto.jsx";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/menuEstudiante" element={<MenuEstudiante />}>
           <Route index element={<BienvenidaMenu />} />
           <Route path="registrarProyecto" element={<ProyectoEstudiante />} />
+          <Route path="editarProyecto" element={<EditarProyecto />} />
           <Route path="miProyecto" element={<MiProyecto />} />
           <Route path="revisionJurados" element={<RevisionJurados />} />
           <Route path="calendario" element={<Calendario />} />

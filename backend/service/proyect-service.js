@@ -4,8 +4,8 @@ import { ProjectRepository } from "../repository/project-repository.js";
 import { db } from "../db.js";
 
  export class ProjectService{
-    static async createProject({ title, tipo, rutaDocumento, idEstudiante }) {
-        const project = await ProjectRepository.createProject({ title, tipo, rutaDocumento, idEstudiante });
+    static async createProject({ title, tipo, rutaDocumento, idEstudiante, descripcion }) {
+        const project = await ProjectRepository.createProject({ title, tipo, rutaDocumento, idEstudiante, descripcion });
         return project;
     }
     
@@ -14,6 +14,10 @@ import { db } from "../db.js";
         return project;
     }
 
+    static async updateProject(idProyecto, title, rutaDocumento, descripcion){
+        const project = await ProjectRepository.updateProject(idProyecto, title, rutaDocumento, descripcion);
+        return project;
+    }
     static async obtenerProyectosAsignados(id_usuario) {
         const proyectos = await ProjectRepository.obtenerProyectosAsignados(id_usuario);
         return proyectos;

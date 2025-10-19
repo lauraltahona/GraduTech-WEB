@@ -5,10 +5,10 @@ import cookieParser from "cookie-parser";
 
 export class UserController{
     static async login(req,res){
-        const {correo, contraseña} = req.body;
+        const {correo, password} = req.body;
         
         try{
-            const user = await UserService.login({correo,contraseña});
+            const user = await UserService.login({correo,password});
             const token = jwt.sign({
                 id_usuario: user.id_usuario,
                 correo: user.correo,

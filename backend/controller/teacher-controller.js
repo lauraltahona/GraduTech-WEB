@@ -65,7 +65,7 @@ export class TeacherController{
         console.log(idDocente);
         
         try{
-            const message = await TeacherService.deleteStudent(idDocente);
+            const message = await TeacherService.deleteTeacher(idDocente);
             return res.status(200).json(message);
         } catch (error){
             console.log(error);

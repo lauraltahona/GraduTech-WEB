@@ -14,7 +14,7 @@ import {
 import "../../styles/Menu.css";
 
 const menuItems = [
-  { id: "registrarProyecto", label: "Mis Proyectos", icon: FolderOpen },
+  { id: "registrarProyecto", label: "Registrar Proyecto", icon: FolderOpen },
   { id: "calendario", label: "Calendario", icon: Calendar },
   { id: "miProyecto", label: "Mi proyecto", icon: FileText },
   { id: "entregasEstudiante", label: "Entregas", icon: Package },

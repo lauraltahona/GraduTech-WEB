@@ -47,7 +47,7 @@ export default function PlanEntrega() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: nuevaEntrega }),
+        body: JSON.stringify(nuevaEntrega),
       });
 
       if (!response.ok) {
