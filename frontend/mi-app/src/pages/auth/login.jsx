@@ -6,7 +6,7 @@ import Logo from "../../assets/login/Logo.png";
 
 function Login() {
   const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
+  const [password, setContraseña] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ function Login() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ correo, contraseña }),
+      body: JSON.stringify({ correo, password }),
     });
 
     const result = await response.json();
@@ -92,7 +92,7 @@ function Login() {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                value={contraseña}
+                value={password}
                 onChange={(e) => setContraseña(e.target.value)}
                 placeholder="••••••••"
                 className="input"
