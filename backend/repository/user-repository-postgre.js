@@ -14,7 +14,7 @@ export class UserRepository{
     return user;
   }
   
-  static async login({ correo, contraseña }) {
+  static async login({ correo, password }) {
     try {
 
       const user = await User.findOne({
@@ -26,7 +26,7 @@ export class UserRepository{
         throw new Error("El correo no existe");
       }
       
-      const isValid = await bcrypt.compare(contraseña, user.password);
+      const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
         throw new Error("Contraseña incorrecta");
       }

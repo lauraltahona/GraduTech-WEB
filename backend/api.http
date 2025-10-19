@@ -112,7 +112,7 @@ Content-Type: application/json
 
 {
   "correo": "lvaltahona@unicesar.edu.co",
-  "contraseña": "hola1234"
+  "password": "hola1234"
 }
 
 ### PROGRAMAR REUNION
