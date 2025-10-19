@@ -4,7 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { CalendarDays } from "lucide-react";
 import "../../styles/estudiante/Calendario.css"; // Asegúrate de tener este archivo
 
-export default function Calendario({ idEstudiante }) {
+export default function Calendario() {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
   const [fechasImportantes, setFechasImportantes] = useState([]);
   const id_usuario = localStorage.getItem("userId");

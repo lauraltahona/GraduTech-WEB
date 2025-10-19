@@ -2,8 +2,8 @@ import { UserRepository } from "../repository/user-repository-postgre.js";
 import bcrypt from 'bcryptjs';
 
 export class UserService{
-    static async login({correo, contraseña}){
-        const user = await UserRepository.login({correo, contraseña});
+    static async login({correo, password}){
+        const user = await UserRepository.login({correo, password});
         return user;
     }
 
