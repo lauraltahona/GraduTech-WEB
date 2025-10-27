@@ -145,7 +145,7 @@ GET http://localhost:5001/proyectos/obtener/7
 GET http://localhost:5001/entrega/fechas/7
 
 ### GET PROYECTOS POR TIPO
-GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Pasantía
+GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Proyecto de grado
 
 
 ### PATCH RETRO

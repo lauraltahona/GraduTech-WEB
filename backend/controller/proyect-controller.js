@@ -5,7 +5,8 @@ export class ProyectController{
     static async createProyect(req,res){
         //llama la función de validación
         const result = validateProyect(req.body);
-
+        console.log("esto llego a controller: ", result);
+        
         if(!result.success){
             return res.status(401).json({error: 'error con los datos del proyecto'});
         }
