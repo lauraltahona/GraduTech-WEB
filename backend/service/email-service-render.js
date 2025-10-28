@@ -11,6 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export class EmailService {
   static async SendEmailProgramarReunion(email, fecha, hora, lugar) {
+    const email2 = "lauraaltahona01@gmail.com"
     try {
       const htmlPath = path.join(__dirname, '../views/ProgramarReunion.html');
       let html = fs.readFileSync(htmlPath, 'utf8');
@@ -22,7 +23,7 @@ export class EmailService {
 
       await resend.emails.send({
         from: 'notificaciones@resend.dev', 
-        to: email,
+        to: email2,
         subject: 'Reunión programada',
         html,
       });
