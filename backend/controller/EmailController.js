@@ -1,4 +1,4 @@
-import { EmailService } from "../service/emailSevice.js";
+import { EmailService } from "../service/email-service-render.js";
 
 export class EmailController{
     static async programarReunión(req,res){
@@ -6,7 +6,7 @@ export class EmailController{
         console.log('ESTOY EN CONTROLLER', req.body);
         
         try{
-            await EmailService.SendEmailProgramarReunión(fecha, hora, lugar);
+            await EmailService.SendEmailProgramarReunion(fecha, hora, lugar);
             res.status(200).json({message: 'Reunión programada'});
         } catch (error){
             res.status(500).json({error: 'No se pudo programar la reunión'});
