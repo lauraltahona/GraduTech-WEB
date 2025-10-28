@@ -34,7 +34,7 @@ export class EntregaController{
         
         try{
             const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente);
-            return res.status(200).json({message: 'Entrega subida con exito'});
+            return res.status(200).json({message: 'Entrega subida con exito', fileUrlServer: ruta_documento});
         } catch(error){
             console.log('error al registrar entrega', error);
             res.status(500).json({message: 'Error al registrar entrega'+ error.message});
