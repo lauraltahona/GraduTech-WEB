@@ -6,9 +6,9 @@ Content-Type: application/json
     "carrera": "Ingeniería de Sistemas",
     "semestre": 10,
     "usuario": {
-    "cedula": "3333333333",
-    "nombre": "Camila Peñaranda",  
-    "correo": "estudiante1@unicesar.edu.co",
+    "cedula": "1067592444",
+    "nombre": "Natalia Caballero",  
+    "correo": "natalia@unicesar.edu.co",
     "password": "hola1234"
     }
 }
