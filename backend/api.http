@@ -68,6 +68,19 @@ Content-Type: application/json
   "correo": "estudiante1@unicesar.edu.co"
 }
 
+
+### SUBIR ENTREGA
+POST http://localhost:5001/entrega/subir
+Content-Type: application/json
+
+{
+  "id_plan_entrega":
+  "id_usuario":
+  "descripcion":
+  "ruta_documento":
+  "correo_docente":
+}
+
 ###delete
 DELETE http://localhost:5001/estudiante/eliminar/258963147
 
