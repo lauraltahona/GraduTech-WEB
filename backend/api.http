@@ -74,11 +74,11 @@ POST http://localhost:5001/entrega/subir
 Content-Type: application/json
 
 {
-  "id_plan_entrega":
-  "id_usuario":
-  "descripcion":
-  "ruta_documento":
-  "correo_docente":
+  "id_plan_entrega": 14, 
+  "id_usuario": 15,
+  "descripcion": "aqui esta mi entrega",
+  "ruta_documento": "https://res.cloudinary.com/dmkq9zyrm/raw/upload/v1761703516/gradutech_entregas/file_jvgxv0",
+  "correo_docente": "lauraaltahona01@gmail.com"
 }
 
 ###delete
