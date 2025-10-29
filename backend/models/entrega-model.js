@@ -3,11 +3,11 @@ import { EmailService } from "../service/emailSevice.js";
 import { PlanEntrega, Entrega } from '../shared/schemas.js';
 import Student from "../models/student-model.js";
 
-export class EntregaModel{
-    
+export class EntregaModel {
+
     static async crearPlanEntrega(id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo) {
-        console.log('esto llego a model: ',id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo);
-        
+        console.log('esto llego a model: ', id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo);
+
         try {
             const nuevoPlan = await PlanEntrega.create({
                 idProyecto: id_proyecto,
@@ -17,11 +17,11 @@ export class EntregaModel{
                 fecha_limite
             });
 
-            console.log('nuevo plan: ',nuevoPlan);
-            
+            console.log('nuevo plan: ', nuevoPlan);
+
             const email = "lauraaltahona01@gmail.com";
             await EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion);
-            
+
             return nuevoPlan;
         } catch (error) {
             console.log('Error al registrar plan de entrega: ', error);
@@ -29,58 +29,48 @@ export class EntregaModel{
     }
 
     static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente) {
-
         try {
-            const estudiante = await Student.findOne({
-                where: { idUser: id_usuario }
-            });
-            
-            if (!estudiante) {
-                throw new Error("No se encontró un estudiante con ese usuario.");
-            }
+            const estudiante = await Student.findOne({ where: { idUser: id_usuario } });
+            if (!estudiante) throw new Error("No se encontró un estudiante con ese usuario.");
 
             const id_estudiante = estudiante.idEstudiante;
 
             const plan = await PlanEntrega.findByPk(id_plan_entrega);
-
-            if (!plan) {
-                throw new Error("No se encontró el plan de entrega.");
-            }
-
-            const ahora = new Date();
+            if (!plan) throw new Error("No se encontró el plan de entrega.");
 
             const entrega = await Entrega.create({
                 id_plan_entrega,
                 id_estudiante,
-                fecha_envio: ahora,
+                fecha_envio: new Date(),
                 ruta_documento,
                 descripcion
             });
-            const email = "lauraaltahona01@gmail.com";
-            await EmailService.SendEmailEntregaCreada(email, id_estudiante, descripcion);
+
+            await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
+
             return entrega;
         } catch (error) {
-           console.log("Error al registrar entrega: ", error);
-           
+            console.error("Error al registrar entrega:", error);
+            throw error; // ✅ Propagar el error
         }
     }
 
-    static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion){
+    static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion) {
         console.log(id_entrega);
-        
+
         try {
-        const entrega = await Entrega.findByPk(id_entrega);
-        
-        if (!entrega) {
-        throw new Error('Entrega no encontrada.');
-        }
+            const entrega = await Entrega.findByPk(id_entrega);
 
-        entrega.retroalimentacion = retroalimentacion;
-        entrega.ruta_retroalimentacion = ruta_retroalimentacion;
+            if (!entrega) {
+                throw new Error('Entrega no encontrada.');
+            }
 
-        await entrega.save();
-        
-        return { success: true, message: 'Retroalimentación guardada correctamente.' };
+            entrega.retroalimentacion = retroalimentacion;
+            entrega.ruta_retroalimentacion = ruta_retroalimentacion;
+
+            await entrega.save();
+
+            return { success: true, message: 'Retroalimentación guardada correctamente.' };
         } catch (error) {
             console.error('Error al agregar retroalimentación:', error);
             return { success: false, message: error.message };
@@ -89,18 +79,18 @@ export class EntregaModel{
 
 
     static async obtenerEntregasPorEstudiante(id_usuario) {
-        try{
+        try {
             const studentResult = await db.query(
-            `SELECT "idEstudiante" FROM students WHERE "idUser" = $1`, 
-            [id_usuario]
+                `SELECT "idEstudiante" FROM students WHERE "idUser" = $1`,
+                [id_usuario]
             );
             console.log(studentResult);
-            
+
             if (studentResult.rows.length === 0) {
                 throw new Error("No se encontró un estudiante con ese usuario.");
             }
             const id_estudiante = studentResult.rows[0].idEstudiante;
-            
+
             const entregas = await db.query(`
                 SELECT 
                     pe.id_plan_entrega, 
@@ -113,19 +103,19 @@ export class EntregaModel{
                 JOIN projects p ON pe."idProyecto" = p."idProyecto"
                 JOIN teachers t ON p."idDocente" = t."idDocente"
                 JOIN users u ON t."idUser" = u."idUsers"
-                WHERE p."idEstudiante" = $1`, 
+                WHERE p."idEstudiante" = $1`,
                 [id_estudiante]
             );
 
             console.log(entregas.rows);
-            
+
             return entregas.rows;
-        } catch(error){
+        } catch (error) {
             throw new Error("Error al obtener proyectos asignados: " + error.message);
-        } 
+        }
     }
 
-    static async obtenerPlanesEntrega(id_proyecto){
+    static async obtenerPlanesEntrega(id_proyecto) {
         try {
             const rows = await db.query(
                 `SELECT * FROM plan_entregas WHERE "idProyecto" = $1`,
@@ -134,11 +124,11 @@ export class EntregaModel{
             return rows.rows;
         } catch (error) {
             console.error("Error al obtener entregas por proyecto:", error);
-        } 
+        }
     }
 
     static async obtenerEntregasPorPlan(id_plan_entrega) {
-        try{
+        try {
             const rows = await db.query(`
                 SELECT E."idEntrega", E.fecha_envio, E.ruta_documento, E.descripcion, E.id_estudiante, E.retroalimentacion, E.ruta_retroalimentacion
                 FROM entregas E
@@ -147,12 +137,12 @@ export class EntregaModel{
             );
 
             return rows.rows;
-        } catch(error){
+        } catch (error) {
             console.log('Error al obtener consulta de entregas', error);
-        } 
-        
+        }
+
     }
-    static async obtenerFechaLimite(id_usuario){
+    static async obtenerFechaLimite(id_usuario) {
 
         const studentResult = await db.query(
             `SELECT "idEstudiante" FROM students WHERE "idUser" = $1`,
@@ -163,7 +153,7 @@ export class EntregaModel{
         }
         const id_estudiante = studentResult.rows[0].idEstudiante;
 
-        try{
+        try {
             const fechas = await db.query(`
                 SELECT pe.fecha_limite, pe.titulo 
                 FROM plan_entregas pe
@@ -171,8 +161,8 @@ export class EntregaModel{
                 WHERE p."idEstudiante" = $1`, [id_estudiante]
             );
             return fechas.rows;
-        } catch(error){
+        } catch (error) {
             console.log('Error en consulta de fecha', error);
-        } 
+        }
     }
 }

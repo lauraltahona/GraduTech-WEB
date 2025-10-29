@@ -27,22 +27,24 @@ export class EntregaController{
         }
     }
 
-    static async subirEntrega(req, res){
+    static async subirEntrega(req, res) {
+    const { id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente } = req.body;
+    console.log("📦 Body recibido en subirEntrega:", req.body);
 
-        const {id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente } = req.body;
-        console.log("esto es el body que llegó a subir entrega ", req.body);
-        
-        try{
-            const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente);
-            return res.status(200).json({message: 'Entrega subida con exito', fileUrlServer: ruta_documento});
-            console.log("esto es result: ",result);
-            
-            
-        } catch(error){
-            console.log('error al registrar entrega', error);
-            res.status(500).json({message: 'Error al registrar entrega'+ error.message});
-        }
+    try {
+        const result = await EntregaModel.subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente);
+        console.log("✅ Entrega registrada:", result);
+
+        return res.status(200).json({
+            message: 'Entrega subida con éxito',
+            fileUrlServer: ruta_documento
+        });
+    } catch (error) {
+        console.error('❌ Error al registrar entrega:', error.message);
+        return res.status(500).json({ message: 'Error al registrar entrega: ' + error.message });
     }
+}
+
 
     static async comentarRetroalimentación(req, res){
         const {idEntrega} = req.params;
