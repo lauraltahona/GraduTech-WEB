@@ -136,7 +136,7 @@ GET http://localhost:5001/proyectos/asignados/jurado/9
 GET http://localhost:5001/entrega/proyecto/1
 
 ###GET ENTREGA POR PLAN
-GET http://localhost:5001/entrega/entrega-por-plan/1
+GET http://localhost:5001/entrega/entrega-por-plan/2
 
 ###GET MI PROYECTO
 GET http://localhost:5001/proyectos/obtener/7
