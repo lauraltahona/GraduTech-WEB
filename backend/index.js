@@ -16,6 +16,7 @@ import entregaRouter from './routes/entrega-router.js';
 import juryRouter from './routes/jury-router.js';
 import emailRouter from './routes/email-router.js';
 import auditoriaRouter from './routes/auditoria-router.js';
+import cloudinaryRouter from './routes/cloudinary-router.js';
 
 import { PORT } from './config.js';
 import { Connect } from './db.js';
@@ -40,6 +41,7 @@ app.use('/usuario', userRouter);
 app.use('/upload', fileRouter);
 app.use('/files', express.static(path.join(process.cwd(), 'uploads')));
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.use('/cloudinary', cloudinaryRouter);
 app.use('/proyectos', proyectRouter);
 app.use('/entrega', entregaRouter);
 app.use('/jurado', juryRouter);
