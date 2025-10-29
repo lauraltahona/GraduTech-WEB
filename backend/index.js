@@ -38,6 +38,7 @@ app.use('/estudiante', studentRouter);
 app.use('/docente', teacherRouter);
 app.use('/usuario', userRouter);
 app.use('/upload', fileRouter);
+app.use('/files', express.static(path.join(process.cwd(), 'uploads')));
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use('/proyectos', proyectRouter);
 app.use('/entrega', entregaRouter);
