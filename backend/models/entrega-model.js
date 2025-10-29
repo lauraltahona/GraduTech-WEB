@@ -20,7 +20,8 @@ export class EntregaModel {
             console.log('nuevo plan: ', nuevoPlan);
 
             const email = "lauraaltahona01@gmail.com";
-            await EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion);
+            EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion)
+            .catch(err => console.error("⚠️ Error enviando correo:", err.message));
 
             return nuevoPlan;
         } catch (error) {
@@ -29,6 +30,7 @@ export class EntregaModel {
     }
 
     static async subirEntrega(id_plan_entrega, id_usuario, ruta_documento, descripcion, correo_docente) {
+        const email = correo_docente;
         try {
             const estudiante = await Student.findOne({ where: { idUser: id_usuario } });
             if (!estudiante) throw new Error("No se encontró un estudiante con ese usuario.");
@@ -46,7 +48,8 @@ export class EntregaModel {
                 descripcion
             });
 
-            await EmailService.SendEmailEntregaCreada(correo_docente, id_estudiante, descripcion);
+            EmailService.SendEmailEntregaCreada(email, id_estudiante, descripcion)
+             .catch(err => console.error("⚠️ Error enviando correo:", err.message))
 
             return entrega;
         } catch (error) {
