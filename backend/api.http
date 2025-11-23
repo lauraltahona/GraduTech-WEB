@@ -104,11 +104,11 @@ POST http://localhost:5001/jurado
 Content-Type: application/json
 
 {
-    "idJurado": "123456789",
+    "idJurado": "1546978523",
     "carrera": "Ingenieria de sistemas",
     "usuario": {
-    "nombre": "Zamir Villamil",
-    "correo": "jurado1@unicesar.edu.co",
+    "nombre": "P",
+    "correo": "prueba@unicesar.edu.co",
     "contraseña": "hola1234"
     }
 }
@@ -124,7 +124,7 @@ POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "lvaltahona@unicesar.edu.co",
+  "correo": "lauraaltahona01@gmail.com",
   "password": "hola1234"
 }
 
@@ -144,7 +144,7 @@ GET http://localhost:5001/proyectos/asignados/9
 GET http://localhost:5001/entrega/asignadas/7
 
 ###PROYECTOS ASIGNADOS
-GET http://localhost:5001/proyectos/asignados/jurado/9
+GET http://localhost:5001/proyectos/asignados/jurado/29
 ###GET PLANES DE ENTREGA POR PROYECTO
 GET http://localhost:5001/entrega/proyecto/1
 
@@ -166,7 +166,7 @@ PATCH http://localhost:5001/proyectos/cambiar-estado
 Content-Type: application/json
 
 {
-  "idProyecto": "2",
+  "idProyecto": "9",
   "estado": "APROBADO POR DOCENTE"
 }
 

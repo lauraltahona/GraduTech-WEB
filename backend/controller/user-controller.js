@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 export class UserController{
     static async login(req,res){
         const {correo, password} = req.body;
+        console.log(req.body);
         
         try{
             const user = await UserService.login({correo,password});
