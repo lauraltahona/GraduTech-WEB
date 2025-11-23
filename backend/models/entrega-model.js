@@ -47,7 +47,6 @@ export class EntregaModel {
                 ruta_documento,
                 descripcion
             });
-
             EmailService.SendEmailEntregaCreada(email, id_estudiante, descripcion)
              .catch(err => console.error("⚠️ Error enviando correo:", err.message))
 
@@ -59,9 +58,10 @@ export class EntregaModel {
     }
 
     static async comentarRetroalimentación(id_entrega, retroalimentacion, ruta_retroalimentacion) {
-        console.log(id_entrega);
-
         try {
+            if (!retroalimentacion) {
+                throw new Error('La retroalimentación es obligatoria.');
+            }
             const entrega = await Entrega.findByPk(id_entrega);
 
             if (!entrega) {

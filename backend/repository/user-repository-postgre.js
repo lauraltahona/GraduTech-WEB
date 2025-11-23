@@ -21,11 +21,11 @@ export class UserRepository{
         where: { correo },
         include: [{ model: Rol, attributes: ['nombreRol'] }]
       });      
-      console.log(user.toJSON());
+      
       if (!user) {
         throw new Error("El correo no existe");
       }
-      
+      console.log(user.toJSON());
       const isValid = await bcrypt.compare(password, user.password);
       if (!isValid) {
         throw new Error("Contraseña incorrecta");
