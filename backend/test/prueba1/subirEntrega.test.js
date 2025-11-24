@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { EntregaModel } from '../models/entrega-model.js';
+import { EntregaModel } from '../../models/entrega-model.js';
 
 describe('EntregaModel - subirEntrega', () => {
   let subirEntregaSpy;

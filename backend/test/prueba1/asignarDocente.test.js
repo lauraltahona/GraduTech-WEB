@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
-import { ProjectService } from '../service/proyect-service.js';
-import { ProjectRepository } from '../repository/project-repository.js';
+import { ProjectService } from '../../service/proyect-service.js';
+import { ProjectRepository } from '../../repository/project-repository.js';
 
 describe('ProjectModel - asignarDocenteAProyecto', () => {
   let asignarDocenteAProyectoSpy;
