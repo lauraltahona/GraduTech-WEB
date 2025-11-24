@@ -33,7 +33,7 @@ app.disable('x-powered-by');
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🔒 PASO 2 - Middleware de seguridad ANTES que TODO
+// 🔒 PASO 2 - Middleware de seguridad 
 app.use(securityHeadersMiddleware);
 
 // 🔒 PASO 3 - CORS ANTES de archivos estáticos
@@ -66,8 +66,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Project Management API' });
 });
 
-// Exportar app para pruebas
-export { app };
 
 const start = async () => {
   await Connect();

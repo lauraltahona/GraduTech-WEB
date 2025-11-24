@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export class EmailService {
-  static async SendEmailProgramarReunion(email, fecha, hora, lugar) {
+  static async SendEmailProgramarReunion(fecha, hora, lugar, email) {
     const email2 = "lauraaltahona01@gmail.com"
     try {
       const htmlPath = path.join(__dirname, '../views/ProgramarReunion.html');

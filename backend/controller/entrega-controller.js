@@ -9,6 +9,7 @@ export class EntregaController{
         const {id_proyecto, nro_entrega, titulo, descripcion, fecha_limite, correo} = result
         try{
             const plan = await EntregaModel.crearPlanEntrega(id_proyecto, nro_entrega,titulo, descripcion,fecha_limite, correo);
+            log('Plan de entrega creado:', plan);
             return res.status(200).json({message: 'Plan de entrega creado con exito'});
         } catch(error){
             console.log(error);
@@ -108,6 +109,7 @@ export class EntregaController{
             console.log(infoEmail);
             
             const result = await EmailService.SendEmailRetroalimentacionCreada(infoEmail.email,infoEmail.nombre,infoEmail.titulo)
+            console.log('Email enviado:', result);
             
         
             res.status(200).json({message:"correo mandado correctamente"})
