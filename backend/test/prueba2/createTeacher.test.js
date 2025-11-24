@@ -1,30 +1,32 @@
 import { jest } from '@jest/globals';
-import { StudentService } from '../service/student-service.js';
-import { StudentRepository } from '../repository/student-repository.js';
+import { TeacherService } from '../../service/teacher-service.js';
+import { TeacherRepository } from '../../repository/teacher-repository.js';
 
-describe('Validaciones en StudentService.createStudent', () => {
-  let createStudentSpy;
+describe('Validaciones en TeacherModel.createTeacher', () => {
+  let createTeacherSpy;
 
   beforeEach(() => {
     jest.restoreAllMocks();
-    createStudentSpy = jest.spyOn(StudentRepository, 'createStudent');
+    createTeacherSpy = jest.spyOn(TeacherRepository, 'createTeacher');
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-  it('debería crear un estudiante exitosamente', async () => {
+  it('debería crear un docente exitosamente', async () => {
     const mockData = {
+      id_usuario: 1,
       cedula: '1234567890',
       nombre: 'Juan Pérez',
-      carrera: 'Ingeniería de Sistemas',
-      semestre: 5
+      profesion: 'Ingeniero',
+      disponibilidad: 'DISPONIBLE',
+      carrera: 'Ingeniería de Sistemas'
     };
 
     const inputData = {
+      profesion: 'Ingeniero',
       carrera: 'Ingeniería de Sistemas',
-      semestre: 5,
       usuario: {
         cedula: '6666695874',
         nombre: 'Juan Pérez',
@@ -33,26 +35,26 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    createStudentSpy.mockResolvedValue(mockData);
+    createTeacherSpy.mockResolvedValue(mockData);
 
-    const result = await StudentService.createStudent(inputData);
+    const result = await TeacherService.createTeacher(inputData);
 
     expect(result).toEqual(mockData);
-    expect(createStudentSpy).toHaveBeenCalledTimes(1);
-    expect(createStudentSpy).toHaveBeenCalledWith({
+    expect(createTeacherSpy).toHaveBeenCalledTimes(1);
+    expect(createTeacherSpy).toHaveBeenCalledWith({
+      profesion: inputData.profesion,
       carrera: inputData.carrera,
-      semestre: inputData.semestre,
       usuario: inputData.usuario
     });
   });
 
   // ============================================================
-  // 1. ID ESTUDIANTE (cedula)
+  // 1. ID DOCENTE (cedula)
   // ============================================================
   it('debería lanzar un error si la cédula es menor a 8 dígitos', async () => {
     const inputData = {
+      profesion: 'Ingeniero',
       carrera: 'Ingeniería de Sistemas',
-      semestre: 5,
       usuario: {
         cedula: '1',
         nombre: 'Juan',
@@ -61,8 +63,8 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
+    await expect(TeacherService.createTeacher(inputData))
+      .rejects.toThrow('EMAIL_ALREADY_REGISTERED');
   });
 
   // ============================================================
@@ -70,8 +72,8 @@ describe('Validaciones en StudentService.createStudent', () => {
   // ============================================================
   it('debería lanzar un error si el nombre tiene menos de 3 caracteres', async () => {
     const inputData = {
+      profesion: 'Ingeniero',
       carrera: 'Ingeniería de Sistemas',
-      semestre: 5,
       usuario: {
         cedula: '12345678',
         nombre: 'Jo',
@@ -80,27 +82,8 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
-  });
-
-  // ============================================================
-  // 3. CORREO
-  // ============================================================
-  it('debería lanzar un error si el correo no tiene formato válido', async () => {
-    const inputData = {
-      carrera: 'Ingeniería de Sistemas',
-      semestre: 5,
-      usuario: {
-        cedula: '12345678',
-        nombre: 'Juan',
-        correo: 'correo-invalido',
-        password: 'abcdef'
-      }
-    };
-
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
+    await expect(TeacherService.createTeacher(inputData))
+      .rejects.toThrow('EMAIL_ALREADY_REGISTERED');
   });
 
   // ============================================================
@@ -108,8 +91,8 @@ describe('Validaciones en StudentService.createStudent', () => {
   // ============================================================
   it('debería lanzar un error si la contraseña tiene menos de 6 caracteres', async () => {
     const inputData = {
+      profesion: 'Ingeniero',
       carrera: 'Ingeniería de Sistemas',
-      semestre: 5,
       usuario: {
         cedula: '12345678',
         nombre: 'Juan',
@@ -118,17 +101,17 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
+    await expect(TeacherService.createTeacher(inputData))
+      .rejects.toThrow('EMAIL_ALREADY_REGISTERED');
   });
 
   // ============================================================
-  // 5. SEMESTRE
+  // 5. PROFESIÓN
   // ============================================================
-  it('debería lanzar un error si el semestre no es válido', async () => {
+  it('debería lanzar un error si la profesión está vacía', async () => {
     const inputData = {
+      profesion: '',
       carrera: 'Ingeniería de Sistemas',
-      semestre: 0,
       usuario: {
         cedula: '12345678',
         nombre: 'Juan',
@@ -137,8 +120,8 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
+    await expect(TeacherService.createTeacher(inputData))
+      .rejects.toThrow('EMAIL_ALREADY_REGISTERED');
   });
 
   // ============================================================
@@ -146,8 +129,8 @@ describe('Validaciones en StudentService.createStudent', () => {
   // ============================================================
   it('debería lanzar un error si la carrera no es válida', async () => {
     const inputData = {
+      profesion: 'Ingeniero',
       carrera: 'Arquitectura',
-      semestre: 5,
       usuario: {
         cedula: '12345678',
         nombre: 'Juan',
@@ -156,8 +139,8 @@ describe('Validaciones en StudentService.createStudent', () => {
       }
     };
 
-    await expect(StudentService.createStudent(inputData))
-      .rejects.toThrow('ALREADY_REGISTERED');
+    await expect(TeacherService.createTeacher(inputData))
+      .rejects.toThrow('EMAIL_ALREADY_REGISTERED');
   });
 
 });
