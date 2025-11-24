@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { StudentService } from '../service/student-service.js';
 import { StudentRepository } from '../repository/student-repository.js';
 
-describe('Validaciones en StudentModel.createStudent', () => {
+describe('Validaciones en StudentService.createStudent', () => {
   let createStudentSpy;
 
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe('Validaciones en StudentModel.createStudent', () => {
 
     createStudentSpy.mockResolvedValue(mockData);
 
-    const result = await StudentModel.createStudent(inputData);
+    const result = await StudentService.createStudent(inputData);
 
     expect(result).toEqual(mockData);
     expect(createStudentSpy).toHaveBeenCalledTimes(1);

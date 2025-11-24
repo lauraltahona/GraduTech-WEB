@@ -3,66 +3,67 @@ import { EmailService } from "../service/emailSevice.js";
 import { StudentService } from "../service/student-service.js";
 
 
-export class StudentController{
-    static async createStudent(req,res){
+export class StudentController {
+    static async createStudent(req, res) {
         console.log(req.body);
-        
-        const result = validateStudent(req.body); 
-        
-        if(!result.success){
-            return res.status(400).json({error: `Error con datos del estudiante: ${(result.error)}`})
-        }
-        
-        const { carrera, semestre, usuario} = result.data;
 
-        try{
+        const result = validateStudent(req.body);
+
+        if (!result.success) {
+            const firstError = result.error.errors[0].message;
+            return res.status(400).json({ error: firstError });
+        }
+
+        const { carrera, semestre, usuario } = result.data;
+
+        try {
 
             const estudiante = await StudentService.createStudent({
                 carrera, semestre, usuario
             })
-            res.status(200).json({message: 'Estudiante registrado', estudiante});
-        } catch(error){
+            res.status(200).json({ message: 'Estudiante registrado', estudiante });
+        } catch (error) {
             console.log(error);
-            res.status(500).json({error: 'Error al registrar estudiante'});
-            
+            res.status(500).json({ error: 'Error al registrar estudiante' });
+
         }
     }
 
-    static async getAllStudents(req, res){
-        try{
+    static async getAllStudents(req, res) {
+        try {
             const students = await StudentService.getAllStudents();
             return res.status(200).json(students);
-        } catch(error){
+        } catch (error) {
             console.log(error);
-            res.status(500).json({error: 'Error al registrar estudiante'});
+            res.status(500).json({ error: 'Error al registrar estudiante' });
         }
     }
 
-    static async getStudentById(req, res){
-        const {idEstudiante} = req.params;
+    static async getStudentById(req, res) {
+        const { idEstudiante } = req.params;
         console.log(idEstudiante);
-        
-        try{
+
+        try {
             const student = await StudentService.getStudentById(idEstudiante);
             console.log(student);
-            
+
             return res.status(200).json(student);
-        } catch (error){
+        } catch (error) {
             console.log(error);
-            res.status(400).json({error: 'Error al encontrar estudiante'});
+            res.status(400).json({ error: 'Error al encontrar estudiante' });
         }
     }
 
-    static async deleteStudent(req, res){
-        const {idEstudiante} = req.params;
+    static async deleteStudent(req, res) {
+        const { idEstudiante } = req.params;
         console.log(idEstudiante);
-        
-        try{
+
+        try {
             const message = await StudentService.deleteStudent(idEstudiante);
             return res.status(200).json(message);
-        } catch (error){
+        } catch (error) {
             console.log(error);
-            res.status(400).json({error: 'Error al eliminar estudiante'});
+            res.status(400).json({ error: 'Error al eliminar estudiante' });
         }
     }
 }

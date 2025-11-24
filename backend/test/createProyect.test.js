@@ -35,7 +35,7 @@ describe('Validaciones en ProjectModel.createProject', () => {
 
     createProjectSpy.mockResolvedValue(mockData);
 
-    const result = await ProjectModel.createProject(inputData);
+    const result = await ProjectService.createProject(inputData);
 
     expect(result).toEqual(mockData);
     expect(createProjectSpy).toHaveBeenCalledTimes(1);

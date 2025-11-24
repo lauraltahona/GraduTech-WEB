@@ -10,7 +10,7 @@ export class JuryRepository {
       const existingJury = await UserService.findById(usuario.cedula);
       if (existingUser || existingJury) throw new Error('ALREADY_REGISTERED');
 
-      usuario.idRol = 4; //rol Jurado
+      usuario.idRol = 3; //rol Jurado
       const user = await UserService.createUser(usuario);
 
       const jury = Jury.create({

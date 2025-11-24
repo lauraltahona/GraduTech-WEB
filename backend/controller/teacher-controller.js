@@ -4,13 +4,14 @@ import { TeacherService } from "../service/teacher-service.js";
 export class TeacherController{
     static async createTeacher(req, res){
         //llama la función de validación
-        const resultTeacher = validateTeacher(req.body);
+        const result = validateTeacher(req.body);
 
-        if(!resultTeacher.success){
-            return res.status(400).json({message: 'Datos invalidos', error: resultTeacher.error.format()});
+        if (!result.success) {
+            const firstError = result.error.errors[0].message;
+            return res.status(400).json({ error: firstError });
         }
-
-        const { profesion, carrera, usuario} = resultTeacher.data;
+        
+        const { profesion, carrera, usuario} = result.data;
         
         try{
             const docente = await TeacherService.createTeacher(
