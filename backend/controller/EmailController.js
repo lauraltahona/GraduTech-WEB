@@ -2,7 +2,7 @@ import { EmailService } from "../service/email-service-render.js";
 
 export class EmailController{
     static async programarReunión(req,res){
-        const {correo, fecha, hora, lugar} = req.body;
+        const {fecha, hora, lugar, email} = req.body;
         console.log('ESTOY EN CONTROLLER', req.body);
         
         try{

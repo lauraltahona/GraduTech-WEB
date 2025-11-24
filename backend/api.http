@@ -6,9 +6,9 @@ Content-Type: application/json
     "carrera": "Ingeniería de Sistemas",
     "semestre": 10,
     "usuario": {
-    "cedula": "1067592444",
-    "nombre": "Natalia Caballero",  
-    "correo": "natalia@unicesar.edu.co",
+    "cedula": "1",
+    "nombre": "La",  
+    "correo": "lvaltahona@unicesar.edu.co",
     "password": "hola1234"
     }
 }
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 ###GET ALL JURADO
-GET http://localhost:5001/jurado/getAll
+GET http://localhost:5001/estudiante/getAll
 
 ### GET BY ID '
 GET http://localhost:5001/estudiante/id=/01235678
@@ -124,7 +124,7 @@ POST http://localhost:5001/usuario/login
 Content-Type: application/json
 
 {
-  "correo": "lauraaltahona01@gmail.com",
+  "correo": "admin@unicesar.edu.co",
   "password": "hola1234"
 }
 
@@ -155,7 +155,7 @@ GET http://localhost:5001/entrega/entrega-por-plan/2
 GET http://localhost:5001/proyectos/obtener/7
 
 ### GET FECHAS LIMITES
-GET http://localhost:5001/entrega/fechas/7
+GET http://localhost:5001/entrega/fechas/8
 
 ### GET PROYECTOS POR TIPO
 GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Proyecto de grado

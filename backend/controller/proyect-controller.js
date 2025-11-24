@@ -7,8 +7,9 @@ export class ProyectController{
         const result = validateProyect(req.body);
         console.log("esto llego a controller: ", result);
         
-        if(!result.success){
-            return res.status(401).json({error: 'error con los datos del proyecto'});
+        if (!result.success) {
+            const firstError = result.error.errors[0].message;
+            return res.status(400).json({ error: firstError });
         }
 
         const {title, tipo, rutaDocumento, idEstudiante, descripcion} = result.data;

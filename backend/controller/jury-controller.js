@@ -9,9 +9,11 @@ export class JuryController{
         const result = validateJury(req.body);
         console.log('Validation result:', result);
         
-        if(!result.success){
-            return res.status(400).json({error: `Error con datos del jurado: ${(result.error.format())}`})
+        if (!result.success) {
+            const firstError = result.error.errors[0].message;
+            return res.status(400).json({ error: firstError });
         }
+        
         const { carrera, usuario} = result.data;
         try{        
             const jurado = await JuryService.createJury(
