@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
-import { JuryService } from '../service/juryService.js';
-import { JuryRepository } from '../repository/jury-repository.js';
+import { JuryService } from '../../service/juryService.js';
+import { JuryRepository } from '../../repository/jury-repository.js';
 
 describe('Validaciones en JuryModel.createJury', () => {
   let createJurySpy;
