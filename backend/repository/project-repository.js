@@ -10,8 +10,8 @@ import { Op, where } from "sequelize";
 export class ProjectRepository {
   // Crear proyecto 
   static async createProject({ title, tipo, rutaDocumento, idEstudiante, descripcion }) {
-    console.log('estoy en repository: ',title, tipo, rutaDocumento, idEstudiante);
-    
+    console.log('estoy en repository: ', title, tipo, rutaDocumento, idEstudiante);
+
     const t = await Project.sequelize.transaction();
     try {
 
@@ -56,11 +56,27 @@ export class ProjectRepository {
     }
   }
 
-  static async updateProject(idProyecto, title, rutaDocumento, descripcion){
-    try{
-      
+  static async getAllProjects() {
+    try {
+      const projects = await Project.findAll({
+        attributes: ['idProyecto', 'title', 'tipo', 'estado', 'rutaDocumento', 'descripcion', 'createdAt'],
+        include: [
+          {
+            model: Student,
+            attributes: ['carrera'],
+          }]
+        }
+      );
+      return projects;
+    } catch (error) {
+      throw new Error("Error al obtener proyectos: " + error.message);
+    }
+  }
+  static async updateProject(idProyecto, title, rutaDocumento, descripcion) {
+    try {
+
       const project = await Project.findOne({
-        where: {idProyecto: idProyecto}
+        where: { idProyecto: idProyecto }
       });
 
       project.title = title;
@@ -68,7 +84,7 @@ export class ProjectRepository {
       project.descripcion = descripcion;
       await project.save();
       return project;
-    }catch(error){
+    } catch (error) {
       throw new Error("Error al actualizar proyecto: " + error.message);
     }
 
@@ -261,12 +277,12 @@ export class ProjectRepository {
         `SELECT "idJurado" FROM juries WHERE "idUser" = $1`,
         [id_usuario]
       );
-      
+
       if (juradoResult.length === 0) {
         throw new Error("No se encontró un jurado con ese usuario.");
       }
       const id_jurado = juradoResult.rows[0].idJurado;
-      
+
       const rows = await db.query(`
           SELECT 
               p."idProyecto", 
@@ -285,6 +301,6 @@ export class ProjectRepository {
       return rows.rows;
     } catch (error) {
       throw new Error("Error al obtener proyectos asignados: " + error.message);
-    } 
+    }
   }
 }

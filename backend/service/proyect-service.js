@@ -9,6 +9,11 @@ import { db } from "../db.js";
         return project;
     }
     
+    static async getAllProjects() {
+        const projects = await ProjectRepository.getAllProjects();
+        return projects;
+    }
+    
     static async obtenerProyecto(idUser){
         const project = await ProjectRepository.obtenerProyecto(idUser);
         return project;
