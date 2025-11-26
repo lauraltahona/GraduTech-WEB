@@ -2,5 +2,5 @@ projectKey=GraduTech
 serverUrl=http://localhost:9000
 serverVersion=25.11.0.114957
 dashboardUrl=http://localhost:9000/dashboard?id=GraduTech
-ceTaskId=0949b5da-c0b3-4fa7-9585-99934e368d4e
-ceTaskUrl=http://localhost:9000/api/ce/task?id=0949b5da-c0b3-4fa7-9585-99934e368d4e
+ceTaskId=867d4afe-96bb-4af4-981d-eb8f248a3f76
+ceTaskUrl=http://localhost:9000/api/ce/task?id=867d4afe-96bb-4af4-981d-eb8f248a3f76

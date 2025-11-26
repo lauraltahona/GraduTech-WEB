@@ -25,6 +25,7 @@ const menuItems = [
   { id: "menuConsultas", label: "Consultar", icon: Package },
   { id: "asignarDocente", label: "Asignar docente", icon: Users },
   { id: "asignarJurado", label: "Asignar Jurado", icon: Archive },
+  {id: "estadisticas", label: "Estadísticas", icon: Calendar },
 ];
 
 const MenuAdmin = () => {
