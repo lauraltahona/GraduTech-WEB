@@ -38,6 +38,9 @@ Content-Type: application/json
   "correo_docente": "docente1@unicesar.edu.co",
 }
 
+### GET ALL PROYECTOS
+GET http://localhost:5001/proyectos/getAll
+
 ###GET ALL JURADO
 GET http://localhost:5001/estudiante/getAll
 
@@ -158,7 +161,7 @@ GET http://localhost:5001/proyectos/obtener/7
 GET http://localhost:5001/entrega/fechas/8
 
 ### GET PROYECTOS POR TIPO
-GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Proyecto de grado
+GET http://localhost:5001/proyectos/mostrarProyectos?tipo=Pasantía
 
 
 ### PATCH RETRO

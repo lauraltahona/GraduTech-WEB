@@ -61,7 +61,7 @@ const RegistrarJurado = () => {
         setMensaje(`✅ ${data.message || "Jurado registrado correctamente"}`);
       } else {
         setMensaje(
-          `❌ Error: ${data.error || "No se pudo registrar el jurado"}`
+          `❌ Error: ${data.error || "El jurado ya existe"}`
         );
       }
     } catch (error) {

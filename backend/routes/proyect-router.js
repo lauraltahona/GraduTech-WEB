@@ -5,6 +5,7 @@ const proyectRouter = Router();
 
 proyectRouter.post('/', ProyectController.createProyect);
 proyectRouter.get('/asignados/:id_usuario', ProyectController.getProyectosAsignados);
+proyectRouter.get('/getAll', ProyectController.getAllProyects);
 proyectRouter.get('/asignados/jurado/:id_usuario', ProyectController.getProyectosAsignadosJurado);
 proyectRouter.get('/obtener/:id_usuario', ProyectController.obtenerProyectos);
 proyectRouter.patch('/update/:idProyecto', ProyectController.updateProyect);

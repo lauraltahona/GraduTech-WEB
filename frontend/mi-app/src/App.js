@@ -29,6 +29,7 @@ import MostrarProyectos from "./pages/repositorio/MostrarProyectos.jsx";
 import ConsultaAuditoria from "./pages/admin/ConsultaAuditoria.jsx";
 import BienvenidaMenu from "./pages/inicio/BienvenidaMenu.jsx";
 import EditarProyecto from "./pages/estudiante/EditarProyecto.jsx";
+import Estadisticas from "./pages/admin/estadisticas.jsx";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
             <Route path="consultarDocente" element={<ConsultaDocente />} />
             <Route path="consultarAuditoria" element={<ConsultaAuditoria />} />
           </Route>
+          <Route path="estadisticas" element={<Estadisticas />} />
         </Route>
 
         <Route path="/proyectosJurado" element={<Proyectos />} />

@@ -41,7 +41,7 @@ function Login() {
       if(user.rol === "Jurado"){
         navigate("/proyectosJurado");
       }
-      if (user.rol === "Administrador") {
+      if (user.rol === "Admin") {
         navigate("/menuAdmin");
       }
     } else {

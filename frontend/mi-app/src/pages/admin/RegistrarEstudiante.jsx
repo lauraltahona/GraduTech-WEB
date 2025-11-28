@@ -143,7 +143,8 @@ const RegistrarEstudiante = () => {
                 name="semestre"
                 placeholder="Ingrese su semestre actual"
                 type="number"
-                min="1"
+                min="8"
+                max="16"
                 value={form.semestre}
                 onChange={handleChange}
                 className="form-input"

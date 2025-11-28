@@ -24,6 +24,15 @@ export class ProyectController{
         }
     }
 
+    static async getAllProyects(req, res) {
+        try{
+            console.log(req);
+            const projects = await ProjectService.getAllProjects();
+            res.status(200).json(projects);
+        }catch(error){
+            res.status(500).json({message: 'Error al obtener proyectos: ' + error.message});
+        }
+    }
     static async updateProyect(req, res){
         const {idProyecto} = req.params;
         const newProject = validateUpdateProyect(req.body);
