@@ -1,9 +1,7 @@
-// services/cloudinaryUploadService.js
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
 import path from 'path';
 
-// Configurar Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -20,8 +18,8 @@ export const uploadToCloudinary = (file) => {
             file.name.endsWith('.zip');
 
         // Obtener la extensión del archivo
-        const extension = path.extname(file.name); // Ej: ".pdf"
-        const baseName = path.basename(file.name, extension); // Ej: "documento"
+        const extension = path.extname(file.name); 
+        const baseName = path.basename(file.name, extension); 
 
         // Crear stream desde el buffer del archivo
         const uploadStream = cloudinary.uploader.upload_stream(
@@ -30,7 +28,7 @@ export const uploadToCloudinary = (file) => {
                 resource_type: isPdfOrDoc ? 'raw' : 'auto',
                 use_filename: true,
                 unique_filename: true,
-                // ✅ CRÍTICO: Agregar la extensión al public_id
+                // CRÍTICO: Agregar la extensión al public_id
                 public_id: `${baseName}_${Date.now()}${extension}`, // Incluye extensión
             },
             (error, result) => {
@@ -43,7 +41,7 @@ export const uploadToCloudinary = (file) => {
                 console.log('📎 URL completa:', result.secure_url);
                 console.log('📎 Public ID:', result.public_id);
 
-                // ✅ Retornar URL completa con extensión
+                // Retornar URL completa con extensión
                 resolve(result.secure_url);
             }
         );
