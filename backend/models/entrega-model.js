@@ -19,9 +19,9 @@ export class EntregaModel {
 
             console.log('nuevo plan: ', nuevoPlan);
 
-            const email = "lauraaltahona01@gmail.com";
-            EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion)
-            .catch(err => console.error("⚠️ Error enviando correo:", err.message));
+            // const email = "lauraaltahona01@gmail.com";
+            // EmailService.SendEMailPlanEntregaCreado(email, titulo, descripcion)
+            // .catch(err => console.error("⚠️ Error enviando correo:", err.message));
 
             return nuevoPlan;
         } catch (error) {
