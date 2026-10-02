@@ -120,7 +120,7 @@ class DocenteUser(HttpUser):
         """Login como docente"""
         response = self.client.post("/usuario/login", 
             json={
-                "correo": "patino@unicesar.edu.co",
+                "correo": "disabelvargas2000@gmail.com",
                 "contraseña": "hola1234"
             },
             name="Login Docente"
@@ -182,7 +182,7 @@ class EstudianteIntensiveUser(HttpUser):
     def on_start(self):
         response = self.client.post("/usuario/login", 
             json={
-                "correo": "lvaltahona@unicesar.edu.co",
+                "correo": "lauraaltahona01@gmail.com",
                 "contraseña": "hola1234"
             }
         )
@@ -197,10 +197,6 @@ class EstudianteIntensiveUser(HttpUser):
         headers = {"Authorization": f"Bearer {self.token}"}
         
         # Consulta proyecto
-        self.client.get("/proyectos/obtener/7", headers=headers, name="GET Mi Proyecto")
+        self.client.get("/proyectos/obtener/2", headers=headers, name="GET Mi Proyecto")
         
-        # Consulta entregas
-        self.client.get("/entrega/asignadas/7", headers=headers, name="GET Entregas")
         
-        # Consulta fechas
-        self.client.get("/entrega/fechas/7", headers=headers, name="GET Fechas")
